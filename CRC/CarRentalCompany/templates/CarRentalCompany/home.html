@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+
+<body>
+    {% include "./Includes/header.html" %}
+    <div id="banner">
+        <form id="recommend">
+            <div>
+                <label for="purpose">Purpose of trip</label><br>
+                <select name="purpose">
+                    <option name="purpose" value="option 1">Option 1</option>
+                    <option name="purpose" value="option 2">Option 2</option>
+                    <option name="purpose" value="option 3">Option 3</option>
+                </select>
+            </div>
+            <div>
+                <label for="seats">Seats</label><br>
+                <select name="seats">
+                    <option name="seats" value="option 1">Option 1</option>
+                    <option name="seats" value="option 2">Option 2</option>
+                    <option name="seats" value="option 3">Option 3</option>
+                </select>
+            </div>
+            <div>
+                <label for="transmission">Transmission</label><br>
+                <select name="transmission">
+                    <option name="transmission" value="option 1">Option 1</option>
+                    <option name="transmission" value="option 2">Option 2</option>
+                    <option name="transmission" value="option 3">Option 3</option>
+                </select>
+            </div><br>
+            <div>
+                <label for="purpose">Month of trip</label><br>
+                <select name="purpose">
+                    <option name="purpose" value="option 1">Option 1</option>
+                    <option name="purpose" value="option 2">Option 2</option>
+                    <option name="purpose" value="option 3">Option 3</option>
+                </select>
+            </div>
+            <div>
+                <label for="birthday">Date of Birth</label><br>
+                <input type="date" name="birthday"></input>
+            </div>
+            <div>
+                <input type="submit" class="button" value="Find me a car"></input>
+            </div>
+        </form>
+    </div>
+    <div id="content">
+        <h1>Top Cars</h1>
+        <div class="grid">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <h1>Locations Near you</h1>
+        <div class="grid">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</body>
+{% include "./Includes/footer.html" %}
+</html>

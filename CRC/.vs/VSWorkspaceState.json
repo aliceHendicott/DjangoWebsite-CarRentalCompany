@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\CarRentalCompany",
+    "\\CarRentalCompany\\static",
+    "\\CarRentalCompany\\static\\CarRentalCompany",
+    "\\CarRentalCompany\\templates",
+    "\\CarRentalCompany\\templates\\CarRentalCompany",
+    "\\CarRentalCompany\\templates\\CarRentalCompany\\Images",
+    "\\CarRentalCompany\\templates\\CarRentalCompany\\Includes",
+    "\\CRC"
+  ],
+  "SelectedNode": "\\CarRentalCompany\\templates\\CarRentalCompany\\stores.html",
+  "PreviewInSolutionExplorer": false
+}

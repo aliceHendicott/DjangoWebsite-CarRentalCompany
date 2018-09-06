@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+
+<body>
+    {% include "./Includes/header.html" %}
+    <div id="content">
+        {{ car  }}
+        <ul>
+            <li>{{ car.car_bodytype }}</li>
+        </ul>
+
+        Orders:
+        <ul>
+        {% for order in car.order_set.all %}
+            <li>{{ order }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+{% include "./Includes/footer.html" %}
+</html>
