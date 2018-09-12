@@ -2,6 +2,7 @@ from django.shortcuts import HttpResponse, render
 from django.template import loader
 
 from .models import Car, Store, Order, User
+from .forms import LoginForm
 
 
 # Create your views here #
@@ -19,9 +20,17 @@ def index(request):
                   {'car_list': Car.objects.all(),
                    'store_list' : Store.objects.all()})
 def login(request):
+    username = "not logged in"
+    if request.method == "POST":
+        #Get the posted form
+        MyLoginForm = LoginForm(request.POST)
+        if MyLoginForm.is_valid():
+            username = MyLoginForm.cleaned_data['username']
+    else:
+        MyLoginForm = LoginForm()
     return render(request,
-                  'CarRentalCompany/login.html',
-                  {})
+                  'CarRentalCompany/loggedin.html',
+                  {"username" : username})
 
 '''
 ' SPRINT 2
@@ -181,3 +190,20 @@ def reports_custom(request):
 
 
 # -------- TEST -------- #
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = NameForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/loggedin/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NameForm()
+
+    return render(request, 'name.html', {'form': form})

@@ -1,12 +1,15 @@
 {% extends './base.html' %}
 
+<!-- Title goes here -->
 {% block title %}
 CRC Stores
 {% endblock %}
 
+<!-- Extra styling goes here -->
 {% block stylesheet %}
 {% endblock %}
 
+<!-- Content goes here -->
 {% block content %}
 <div id="banner2"></div>
 <div id="content">
@@ -21,7 +24,6 @@ CRC Stores
             </select>
         </div>
     </div>
-
     <div class="grid listing">
         {% for store in stores_list.all %}
         <div>
@@ -36,9 +38,9 @@ CRC Stores
         </div>
         {% endfor %}
     </div>
-
 </div>
 {% endblock %}
 
+<!-- Extra javascript goes here -->
 {% block javascript %}
 {% endblock %}
