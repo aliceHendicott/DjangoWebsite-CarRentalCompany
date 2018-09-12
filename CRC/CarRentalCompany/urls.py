@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -9,6 +10,8 @@ urlpatterns = [
     # Login & Register
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
+    # FAQ
+    path('FAQ/', views.FAQ, name='FAQ'),
     
     ## Customers
     # Customer acount
@@ -43,9 +46,6 @@ urlpatterns = [
     #  Customer reports
     path('reports/customers/demographics/', views.reports_customer_demographics, name='reports_customer_demographics'),
 
-    ## FAQ
-    path('FAQ/', views.FAQ, name='FAQ'),
-
     ## TEST
-
+    path('connection/', TemplateView.as_view(template_name = 'CarRentalCompany/login.html')),
 ]

@@ -1,12 +1,15 @@
 {% extends './base.html' %}
 
+<!-- Title goes here -->
 {% block title %}
-CRC Stores
+CRC {{ car.car_name }}
 {% endblock %}
 
+<!-- Extra styling goes here -->
 {% block stylesheet %}
 {% endblock %}
 
+<!-- Content goes here -->
 {% block content %}
 <div id="content">
     {{ car  }}
@@ -23,5 +26,6 @@ CRC Stores
 </div>
 {% endblock %}
 
+<!-- Extra javascript goes here -->
 {% block javascript %}
 {% endblock %}
