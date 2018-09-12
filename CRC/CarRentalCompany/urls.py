@@ -47,4 +47,5 @@ urlpatterns = [
     path('FAQ/', views.FAQ, name='FAQ'),
 
     ## TEST
+
 ]
