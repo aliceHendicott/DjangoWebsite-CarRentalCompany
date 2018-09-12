@@ -58,7 +58,7 @@ def car_recommend(request):
 def stores(request):
     return render(request,
                   'CarRentalCompany/stores.html',
-                  {'store_list': Store.objects.all()})
+                  {'stores_list': Store.objects.all()})
 def store(request, store_id):
     store = Store.objects.get(pk = store_id)
     return render(request,

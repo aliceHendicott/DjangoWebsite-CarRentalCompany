@@ -21,6 +21,22 @@ CRC Stores
             </select>
         </div>
     </div>
+
+    <div class="grid listing">
+        {% for store in stores_list.all %}
+        <div>
+            <div>
+                <h3>{{ store.store_location }} Store</h3>
+                <p>3761 N. 14th St, Alexandria, NSW</p>
+                <p><i class="fas fa-phone"></i> {{ store.store_phone_number }}</p>
+                <!-- Django template tags -->
+                <p><i class="fas fa-envelope"></i> {{ store.store_location|lower }}_store@crc.com</p>
+            </div>
+            <div>0.6km away</div>
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 {% endblock %}
 
