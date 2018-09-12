@@ -1,7 +1,7 @@
 from django.shortcuts import HttpResponse, render
 from django.template import loader
 
-from .models import Car, Store, Order
+from .models import Car, Store, Order, User
 
 # Create your views here #
 # ---------------------- #
@@ -14,7 +14,9 @@ def index(request):
                   {'car_list': Car.objects.all(),
                    'store_list' : Store.objects.all()})
 def login(request):
-    return HttpResponse("Login")
+    return render(request,
+                  'CarRentalCompany/login.html',
+                  {})
 def register(request):
     return HttpResponse("Register")
 
@@ -86,23 +88,5 @@ def FAQ(request):
                   {'store_list': Store.objects.all()})
 
 # -------- TEST -------- #
-import random
-import datetime
-import time
 
-#from graphos.sources.simple import SimpleDataSource
-#   from graphos.renderers.gchart import LineChart
 
-def TEST_PAGE(request):
-    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
-    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
-
-    extra_serie = {"tooltip": {"y_start": "", "y_end": " cal"}}
-    chartdata = {'x': xdata, 'y1': ydata, 'extra1': extra_serie}
-    charttype = "pieChart"
-
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-    }
-    return render(request, 'CarRentalCompany/test.html', data)

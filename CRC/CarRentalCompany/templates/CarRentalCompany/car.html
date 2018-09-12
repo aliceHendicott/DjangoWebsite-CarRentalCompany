@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html>
+{% extends './base.html' %}
 
-{% load static %}
+{% block title %}
+CRC Stores
+{% endblock %}
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-</head>
+{% block stylesheet %}
+{% endblock %}
 
-<body>
-    {% include "./Includes/header.html" %}
-    <div id="content">
-        {{ car  }}
-        <ul>
-            <li>{{ car.car_bodytype }}</li>
-        </ul>
+{% block content %}
+<div id="content">
+    {{ car  }}
+    <ul>
+        <li>{{ car.car_bodytype }}</li>
+    </ul>
 
-        Orders:
-        <ul>
+    Orders:
+    <ul>
         {% for order in car.order_set.all %}
-            <li>{{ order }}</li>
+        <li>{{ order }}</li>
         {% endfor %}
-        </ul>
-    </div>
-</body>
-{% include "./Includes/footer.html" %}
-</html>
+    </ul>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

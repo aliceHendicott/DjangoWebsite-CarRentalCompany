@@ -1,26 +1,26 @@
-<!DOCTYPE html>
-<html>
+{% extends './base.html' %}
 
-{% load static %}
+{% block title %}
+CRC Stores
+{% endblock %}
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-</head>
+{% block stylesheet %}
+{% endblock %}
 
-<body>
-    {% include "./Includes/header.html" %}
-    <div id="content">
-        <ul>
-            {% for car in cars_list.all %}
-                <li><a href="./{{ car.id }}/">{{ car.car_name }}</a></li>
-                <ul style="padding-left: 10px;">
-                    <li>{{ car.car_bodytype }}</li>
-                </ul>
-            {% endfor %}   
+{% block content %}
+<div id="content">
+    <ul>
+        {% for car in cars_list.all %}
+        <li><a href="./{{ car.id }}/">{{ car.car_name }}</a></li>
+        <ul style="padding-left: 10px;">
+            <li>{{ car.car_bodytype }}</li>
         </ul>
-    </div>
-</body>
-{% include "./Includes/footer.html" %}
-</html>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+

@@ -47,5 +47,4 @@ urlpatterns = [
     path('FAQ/', views.FAQ, name='FAQ'),
 
     ## TEST
-    path('TEST/', views.TEST_PAGE, name='TEST_PAGE')
 ]

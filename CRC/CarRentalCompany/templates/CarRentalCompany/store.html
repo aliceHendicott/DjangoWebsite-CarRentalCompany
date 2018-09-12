@@ -1,113 +1,39 @@
-<!DOCTYPE html>
-<html>
+{% extends './base.html' %}
 
-{% load static %}
+{% block title %}
+{{ store.store_location }} Store
+{% endblock %}
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-</head>
+{% block stylesheet %}
+{% endblock %}
 
-<body>
-    {% include "./Includes/header.html" %}
-    <div id="banner2"></div>
-    <div id="content">
-	    <div id="title">
-		    <div id="title-left"><h1>Locations</h1></div>
-		    <div id="title-right">
-			    Sort by:
-			    <select name="sort">
-				    <option name="sort" value="option 1">Option 1</option>
-				    <option name="sort" value="option 2">Option 2</option>
-				    <option name="sort" value="option 3">Option 3</option>
-			    </select>
-		    </div>
-	    </div>
-	    <div class="grid listing">
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-				    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-				    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-		    <div>
-			    <div>
-				    <h3>Alexandria Store</h3>
-				    <p>3761 N. 14th St, Alexandria, NSW</p>
-				    <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-				    <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
-			    </div>
-			    <div>0.6km away</div>
-		    </div>
-	    </div>
+{% block content %}
+<div id="banner2"></div>
+<div id="content">
+    <div id="title">
+        <div id="title-left"><h1>Locations</h1></div>
+        <div id="title-right">
+            Sort by:
+            <select name="sort">
+                <option name="sort" value="option 1">Option 1</option>
+                <option name="sort" value="option 2">Option 2</option>
+                <option name="sort" value="option 3">Option 3</option>
+            </select>
+        </div>
     </div>
-</body>
-{% include "./Includes/footer.html" %}
-</html>
+    <div class="grid listing">
+        <div>
+            <div>
+                <h3>Alexandria Store</h3>
+                <p>3761 N. 14th St, Alexandria, NSW</p>
+                <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
+                <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
+            </div>
+            <div>0.6km away</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
