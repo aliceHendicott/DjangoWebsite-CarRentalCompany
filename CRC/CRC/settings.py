@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django_ajax',
+    #'django_ajax',
     'CarRentalCompany.apps.CarrentalcompanyConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crc_central_database',
         'USER': 'root',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
     }
 } 
 
