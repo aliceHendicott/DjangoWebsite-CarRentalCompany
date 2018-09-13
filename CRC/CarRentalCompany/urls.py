@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 
 from . import views
@@ -8,7 +8,7 @@ urlpatterns = [
     #  Home page
     path('', views.index, name='index'),
     # Login & Register
-    path('login/', views.login, name='login'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
     # FAQ
     path('FAQ/', views.FAQ, name='FAQ'),
@@ -47,5 +47,5 @@ urlpatterns = [
     path('reports/customers/demographics/', views.reports_customer_demographics, name='reports_customer_demographics'),
 
     ## TEST
-    path('connection/', TemplateView.as_view(template_name = 'CarRentalCompany/login.html')),
+    path('connection/', TemplateView.as_view(template_name ='CarRentalCompany/../templates/registration/login.html')),
 ]

@@ -19,7 +19,13 @@ def index(request):
                   'CarRentalCompany/home.html',
                   {'car_list': Car.objects.all(),
                    'store_list' : Store.objects.all()})
+
 def login(request):
+    return render(request,
+                  'CarRentalCompany/login.html',
+                  {})
+
+def loggedin(request):
     username = "not logged in"
     if request.method == "POST":
         #Get the posted form
