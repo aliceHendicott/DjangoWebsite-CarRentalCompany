@@ -1,12 +1,17 @@
     <div id="header">
         <a id="recommend-button" class="button" href="/cars/recommend_me">Recommend me a car</a>
         <div id="header-right">
-            <form id="log-in">
-                <input type="text" placeholder="Username">
-                <input type="text" placeholder="Password">
-                <input type="submit" class="button" name="login" value="Log in">
-            </form>
-            <a id="register" class="button" href="#">Register</a>
+            {% if not request.user.is_authenticated %}
+                <form id="log-in" method="POST">{% csrf_token %}
+                    <input type="text" placeholder="Username" name="username" id="id_username">
+                    <input type="password" placeholder="Password" name="password" id="id_password">
+                    <button type="submit" class="button">Login</button>
+                </form>
+                <a id="register" class="button" href="#">Register</a>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                Logged in
+            {%  endif %}
         </div>
     </div>
     <div id="nav-bar">

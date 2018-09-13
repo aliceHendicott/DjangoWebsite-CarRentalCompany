@@ -1,5 +1,6 @@
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -8,13 +9,14 @@ urlpatterns = [
     #  Home page
     path('', views.index, name='index'),
     # Login & Register
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls'), name='login'),
+    #path(r'^login/$', auth_views.LoginView, {'template_name': 'templates/CarRentalCompany/includes/header.html'}),
     path('register/', views.register, name='register'),
     # FAQ
     path('FAQ/', views.FAQ, name='FAQ'),
     
     ## Customers
-    # Customer acount
+    # Customer account
     path('my_account/', views.my_account, name='my_account'),
 
     ## Staff

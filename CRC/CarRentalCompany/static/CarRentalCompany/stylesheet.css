@@ -31,6 +31,12 @@ h3{
 #content{
 	margin: 50px 100px;
 }
+#content-style2{
+    margin: 50px 100px;
+	display:grid;
+	grid-template-columns: auto 32%;
+	grid-column-gap: 20px;
+}
 .button{
 	padding:10px;
 	color:#ffffff;
@@ -132,6 +138,9 @@ h3{
 	width:100%;
 	font-size:14px;
 	font-family:Raleway, sans-serif;
+}
+#columns2{
+    grid-template-columns: 49% 49%;
 }
 .grid{
 	display:grid;

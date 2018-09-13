@@ -11,16 +11,35 @@ CRC Cars
 
 <!-- Content goes here -->
 {% block content %}
-<div id="content">
-    <ul>
-        {% for car in cars_list.all %}
-        <li><a href="./{{ car.id }}/">{{ car.car_name }}</a></li>
-        <ul style="padding-left: 10px;">
-            <li>{{ car.car_bodytype }}</li>
-        </ul>
-        {% endfor %}
-    </ul>
-</div>
+        <div id="content-style2">
+            <div id="main-section">
+                <div id="title">
+                    <div id="title-left"><h1>Cars</h1></div>
+                    <div id="title-right">
+                        Sort by:
+                        <select name="sort">
+                            <option name="sort" value="option 1">Option 1</option>
+                            <option name="sort" value="option 2">Option 2</option>
+                            <option name="sort" value="option 3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid listing" id="columns2">
+                    {% for car in cars_list.all %}
+                    <div>
+                        <div>
+                            <a href="./{{ car.id }}/"><h3>{{ car.car_name }}</h3></a>
+                            <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                            <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seatingCapacity }} people</p>
+                            <p><i class="fas fa-cog"></i> {{ car.car_transmission }}</p>
+                        </div>
+                        <div>0.6km away</div>
+                    </div>
+                    {%  endfor %}
+                </div>
+            </div>
+            <div id="sidebar"></div>
+        </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->
