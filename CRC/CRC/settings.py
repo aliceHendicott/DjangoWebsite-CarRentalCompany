@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django_ajax',
+    #'django_ajax',
     'CarRentalCompany.apps.CarrentalcompanyConfig',
     'django.contrib.admin',
     'django.contrib.auth',
