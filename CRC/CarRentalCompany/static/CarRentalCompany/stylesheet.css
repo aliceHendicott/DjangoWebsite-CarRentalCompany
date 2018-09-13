@@ -202,3 +202,24 @@ h3{
 	height:40px;
 	margin-left:10px;
 }
+.question{
+	background-color:var(--secondary-color);
+	color:#ffffff;
+	margin-bottom:0px;
+	padding:15px;
+	margin-top:30px;
+}
+.answer{
+	margin-top:0px;
+	padding:15px;
+	background-color:#ffffff;
+	border:2px solid var(--secondary-color);
+	visibility: hidden;
+}
+#faq-question input {
+    width: 100%;
+}
+#faq-question [type='text']{
+    margin-bottom: 5px;
+    width:calc(100% - 20px);
+}

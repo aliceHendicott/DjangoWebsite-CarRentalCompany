@@ -11,6 +11,21 @@ CRC FAQ
 
 <!-- Content goes here -->
 {% block content %}
+
+    <div id="content">
+        <h1>Frequently Asked Questions</h1>
+        <div class="question" onclick="LoadAnswer('a1')">Can I log in as a customer?</div>
+        <div class="answer" id="a1">Yes, you can. If you haven't made an account already, click 'Register' from the main menu and sign up now!</div>
+
+        <h1>Ask a Question</h1>
+        <p>Enter a question below along with your email address and we will get back to you as soon as possible.</p>
+        <form id="faq-question">
+            <input type="text" placeholder="Enter your question here" name="question"><br />
+            <input type="text" placeholder="Email Address" name="email"><br />
+            <input type="submit" class="button" value="Submit">
+        </form>
+    </div>
+
 {% endblock %}
 
 <!-- Extra javascript goes here -->
