@@ -27,13 +27,10 @@ CRC Cars
                 <div class="grid listing" id="columns2">
                     {% for car in cars_list.all %}
                     <div>
-                        <div>
                             <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
                             <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
                             <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
                             <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}</p>
-                        </div>
-                        <div>0.6km away</div>
                     </div>
                     {%  endfor %}
                 </div>
