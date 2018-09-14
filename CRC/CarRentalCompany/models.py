@@ -73,8 +73,8 @@ class Order(models.Model):
     def __str__(self):
         return self.order_pickup_store_id.store_name + ": " + self.order_pickup_date.strftime("%d-%b-%y")
 
-'''
 
+'''
 c = Car(id = row['Car_ID'],
     car_makename = row['Car_MakeName'],
     car_model = row['Car_Model'],
@@ -102,7 +102,9 @@ u = User(id = row['Customer_ID'],
     user_name = row['Customer_Name'],
 	user_phone = int(row['Customer_Phone'].replace("-", "")),
 	user_address = row['Customer_Address'],
-	user_birthday = date((int(row['Customer_Birthday'].split("-")[2]) + 1900), int(row['Customer_Birthday'].split("-")[1]), int(row['Customer_Birthday'].split("-")[0])),
+	user_birthday = date((int(row['Customer_Birthday'].split("-")[2]) + 1900),
+                      int(row['Customer_Birthday'].split("-")[1]),
+                      int(row['Customer_Birthday'].split("-")[0])),
 	user_occupation = row['Customer_Occupation'],
 	user_gender = row['Customer_Gender'],
 	user_password = row['Customer_Password'])
@@ -110,10 +112,15 @@ u = User(id = row['Customer_ID'],
 o = Order(id = row['Order_ID'],
     car_id = Car.objects.get(pk = row['Car_ID']),
     customer_id = User.objects.get(pk = row['Customer_ID']),
-    order_create_date = date((int(row['Order_Create_Date'].split("-")[2]) + 2000), int(row['Order_Create_Date'].split("-")[1]), int(row['Order_Create_Date'].split("-")[0])),
+    order_create_date = date((int(row['Order_Create_Date'].split("-")[2]) + 2000),
+                             int(row['Order_Create_Date'].split("-")[1]),
+                             int(row['Order_Create_Date'].split("-")[0])),
     order_pickup_store_id = Store.objects.get(pk = row['Order_Pickup_Store']),
-    order_pickup_date = date((int(row['Order_Pickup_Date'].split("-")[2]) + 2000), int(row['Order_Pickup_Date'].split("-")[1]), int(row['Order_Pickup_Date'].split("-")[0])),
+    order_pickup_date = date((int(row['Order_Pickup_Date'].split("-")[2]) + 2000), 
+                             int(row['Order_Pickup_Date'].split("-")[1]),
+                             int(row['Order_Pickup_Date'].split("-")[0])),
     order_return_store_id = Store.objects.get(pk = row['Order_Return_Store']),
-    order_return_date = date((int(row['Order_Return_Date'].split("-")[2]) + 2000), int(row['Order_Return_Date'].split("-")[1]), int(row['Order_Return_Date'].split("-")[0])))
-
+    order_return_date = date((int(row['Order_Return_Date'].split("-")[2]) + 2000), 
+                             int(row['Order_Return_Date'].split("-")[1]), 
+                             int(row['Order_Return_Date'].split("-")[0])))
 '''
