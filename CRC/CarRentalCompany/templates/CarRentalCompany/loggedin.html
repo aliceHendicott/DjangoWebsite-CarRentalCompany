@@ -2,7 +2,7 @@
 
 <!-- Title goes here -->
 {% block title %}
-CRC FAQ
+LOG IN
 {% endblock %}
 
 <!-- Extra styling goes here -->
@@ -11,7 +11,21 @@ CRC FAQ
 
 <!-- Content goes here -->
 {% block content %}
-You are : <strong>{{ username }}</strong>
+    <div id="content">
+        {% if not request.user.is_authenticated %}
+            <form id="log-in" method="POST" action="">{% csrf_token %}
+                <!--<input type="text" placeholder="Username" name="username" id="id_username">
+                <input type="password" placeholder="Password" name="password" id="id_password">-->
+                {{ form.as_p }}
+                <input type="submit" class="button" value="Login">
+            </form>
+            <!--<a id="register" class="button" href="#">Register</a>-->
+        {% endif %}
+        {% if request.user.is_authenticated %}
+            <div id="user-logged-in">Welcome {{ user.username }}</div>
+            <a id="logout" class="button" href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+    </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

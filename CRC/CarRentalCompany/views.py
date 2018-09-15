@@ -1,8 +1,11 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render, redirect, reverse
 from django.template import loader
+from django.contrib.auth.decorators import login_required
 
-from .models import Car, Store, Order, User
+from .models import Car, Store, Order, User, UserProfile
 from .forms import LoginForm
+
+from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
 
 # Create your views here #
@@ -20,23 +23,29 @@ def index(request):
                   {'car_list': Car.objects.all(),
                    'store_list' : Store.objects.all()})
 
-def login(request):
-    return render(request,
-                  'CarRentalCompany/login.html',
-                  {})
 
-def loggedin(request):
-    username = "not logged in"
+'''
+' LOGIN FUNCTIONS
+'''
+
+def logout_view(request):
+    logout(request)
+    return render(request, "CarRentalCompany/home.html", {})
+
+def login_view(request):
+    MyLoginForm = LoginForm()
     if request.method == "POST":
-        #Get the posted form
+        # Get the posted form
         MyLoginForm = LoginForm(request.POST)
         if MyLoginForm.is_valid():
             username = MyLoginForm.cleaned_data['username']
+            password = MyLoginForm.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            # return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+            return render(request, "CarRentalCompany/home.html", {})
     else:
-        MyLoginForm = LoginForm()
-    return render(request,
-                  'CarRentalCompany/loggedin.html',
-                  {"username" : username})
+        return render(request, 'CarRentalCompany/loggedin.html', {'form': MyLoginForm})
 
 '''
 ' SPRINT 2
@@ -158,12 +167,22 @@ def store(request, store_id):
 ' SPRINT 1
 ' The following are sprint 1:
 '''
+
+
+@login_required
 def reports_dashboard(request):
-    return render(request,
-                  'CarRentalCompany/reports_dashboard.html',
-                  {'cars_list': Car.objects.all(),
-                   'stores_list': Store.objects.all(),
-                   'users_list': User.objects.all()})
+    user_profile = request.user.userprofile
+    customer = user_profile.is_customer
+    floor_staff = user_profile.is_floorStaff
+    if not customer and not floor_staff:
+        return render(request,
+                      'CarRentalCompany/reports_dashboard.html',
+                      {'cars_list': Car.objects.all(),
+                       'stores_list': Store.objects.all(),
+                       'users_list': User.objects.all()})
+    else:
+        return redirect('index')
+
 def reports_cars_seasonal(request):
     return render(request,
                   'CarRentalCompany/reports_cars_seasonal.html',
@@ -193,23 +212,3 @@ def reports_custom(request):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})
-
-
-# -------- TEST -------- #
-def get_name(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/loggedin/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NameForm()
-
-    return render(request, 'name.html', {'form': form})

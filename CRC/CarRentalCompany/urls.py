@@ -9,8 +9,8 @@ urlpatterns = [
     #  Home page
     path('', views.index, name='index'),
     # Login & Register
-    path('accounts/', include('django.contrib.auth.urls'), name='login'),
-    #path(r'^login/$', auth_views.LoginView, {'template_name': 'templates/CarRentalCompany/includes/header.html'}),
+    path('login/', views.login_view, name="login"),
+    path('logout/', views.logout_view, name="logout"),
     path('register/', views.register, name='register'),
     # FAQ
     path('FAQ/', views.FAQ, name='FAQ'),

@@ -1,16 +1,17 @@
-    <div id="header">
+<div id="header">
         <a id="recommend-button" class="button" href="/cars/recommend_me">Recommend me a car</a>
         <div id="header-right">
             {% if not request.user.is_authenticated %}
-                <form id="log-in" method="POST">{% csrf_token %}
+                <form action="/loginTest" method="POST" id="log-in">{% csrf_token %}
                     <input type="text" placeholder="Username" name="username" id="id_username">
                     <input type="password" placeholder="Password" name="password" id="id_password">
-                    <button type="submit" class="button">Login</button>
+                    <input type="submit" class="button" value="Login">
                 </form>
-                <a id="register" class="button" href="#">Register</a>
+                <!--<a id="register" class="button" href="#">Register</a>-->
             {% endif %}
-            {% if not request.user.is_authenticated %}
-                Logged in
+            {% if request.user.is_authenticated %}
+                <div id="user-logged-in">Welcome {{user.username}}</div>
+                <a id="logout" class="button" href="{% url 'logout' %}">Logout</a>
             {%  endif %}
         </div>
     </div>
@@ -21,8 +22,12 @@
             <a href="/cars/">View Cars</a>
             <a href="/FAQ/">FAQ</a>
         </div>
-        <div id="nav-bar-right">
-            <a href="#">Data</a>
-            <a href="/reports/dashboard/">Report</a>
-        </div>
+        {% if request.user.is_authenticated and not request.user.userprofile.is_customer %}
+            <div id="nav-bar-right">
+                <a href="#">Data</a>
+                {% if request.user.userprofile.is_generalManager or request.user.userprofile.is_boardMember %}
+                    <a href="/reports/dashboard/">Report</a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>

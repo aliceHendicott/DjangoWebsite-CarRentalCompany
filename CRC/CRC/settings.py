@@ -85,6 +85,7 @@ DATABASES = {
 } 
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -104,6 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#AUTH_PROFILE_MODULE = "CarRentalCompany.UserProfile"
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

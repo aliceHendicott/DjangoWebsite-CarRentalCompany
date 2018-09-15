@@ -1,8 +1,17 @@
 from django.db import models
 from django.utils import timezone
 from datetime import *
+from django.contrib.auth.models import User
 
 # Create your models here.
+'''SETUP USER GROUPS'''
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
+    is_customer = models.BooleanField(default=False)
+    is_floorStaff = models.BooleanField(default=False)
+    is_generalManager = models.BooleanField(default=False)
+    is_boardMember = models.BooleanField(default=False)
 
 '''
 PROCESS ---
