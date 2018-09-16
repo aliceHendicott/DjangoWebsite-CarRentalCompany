@@ -2,10 +2,10 @@
         <a id="recommend-button" class="button" href="/cars/recommend_me">Recommend me a car</a>
         <div id="header-right">
             {% if not request.user.is_authenticated %}
-                <form action="/loginTest" method="POST" id="log-in">{% csrf_token %}
+                <form action="/loginTest" method="POST" id="log-in" onsubmit="return false;">{% csrf_token %}
                     <input type="text" placeholder="Username" name="username" id="id_username">
                     <input type="password" placeholder="Password" name="password" id="id_password">
-                    <input type="submit" class="button" value="Login">
+                    <input type="submit" class="button" onclick="handleLogin()" value="Login">
                 </form>
                 <!--<a id="register" class="button" href="#">Register</a>-->
             {% endif %}
@@ -17,16 +17,20 @@
     </div>
     <div id="nav-bar">
         <div id="nav-bar-left">
-            <a href="/../" id="current-page">Home</a>
-            <a href="/stores/">View Stores</a>  
-            <a href="/cars/">View Cars</a>
-            <a href="/FAQ/">FAQ</a>
+            <a href="/../" id="home"
+            {% if "stores" not in request.path and "cars" not in request.path and "FAQ" not in request.path and "data" not in request.path and "reports" not in request.path %} class="current-page" {% endif %}
+
+
+            >Home</a>
+            <a href="/stores/" id="stores" {% if "stores" in request.path %} class="current-page" {% endif %}>View Stores</a>
+            <a href="/cars/" id="cars" {% if "cars" in request.path %} class="current-page" {% endif %}>View Cars</a>
+            <a href="/FAQ/" id="faq" {% if "FAQ" in request.path %} class="current-page" {% endif %}>FAQ</a>
         </div>
         {% if request.user.is_authenticated and not request.user.userprofile.is_customer %}
             <div id="nav-bar-right">
-                <a href="#">Data</a>
+                <a href="#" {% if "data" in request.path %} class="current-page" {% endif %}>Data</a>
                 {% if request.user.userprofile.is_generalManager or request.user.userprofile.is_boardMember %}
-                    <a href="/reports/dashboard/">Report</a>
+                    <a href="/reports/dashboard/" {% if "reports" in request.path %} class="current-page" {% endif %}>Report</a>
                 {% endif %}
             </div>
         {% endif %}

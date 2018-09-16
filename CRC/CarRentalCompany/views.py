@@ -1,5 +1,6 @@
 from django.shortcuts import HttpResponse, render, redirect, reverse
 from django.template import loader
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Car, Store, Order, User, UserProfile
@@ -30,22 +31,25 @@ def index(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, "CarRentalCompany/home.html", {})
+    return redirect("index")
 
-def login_view(request):
-    MyLoginForm = LoginForm()
+
+def handle_login(request):
     if request.method == "POST":
-        # Get the posted form
-        MyLoginForm = LoginForm(request.POST)
-        if MyLoginForm.is_valid():
-            username = MyLoginForm.cleaned_data['username']
-            password = MyLoginForm.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            # return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-            return render(request, "CarRentalCompany/home.html", {})
-    else:
-        return render(request, 'CarRentalCompany/loggedin.html', {'form': MyLoginForm})
+        # handle login as JSON
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        a = login(request, user)
+
+        if (user.is_authenticated):
+            return JsonResponse({'response': '200'})
+        else:
+            return JsonResponse({'response': '403'})
+
+    return JsonResponse({'response': '500'})
+
+
 
 '''
 ' SPRINT 2
@@ -154,7 +158,8 @@ pass
 def stores(request):
     return render(request,
                   'CarRentalCompany/stores.html',
-                  {'stores_list': Store.objects.all()})
+                  {'stores_list': Store.objects.all().order_by('-' + field)})
+
 def store(request, store_id):
     store = Store.objects.get(pk = store_id)
     return render(request,

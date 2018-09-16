@@ -9,7 +9,7 @@ urlpatterns = [
     #  Home page
     path('', views.index, name='index'),
     # Login & Register
-    path('login/', views.login_view, name="login"),
+    path('loginjs/', views.handle_login, name="loginjs"),
     path('logout/', views.logout_view, name="logout"),
     path('register/', views.register, name='register'),
     # FAQ

@@ -57,6 +57,8 @@ class Store(models.Model):
     store_phone = models.BigIntegerField(default = -1)
     store_city = models.CharField(max_length = 128, default = "null")
     store_state = models.CharField(max_length = 128, default = "null")
+    store_latitude = models.CharField(max_length = 128, default = "null")
+    store_longitude = models.CharField(max_length = 128, default = "null")
     def __str__(self):
         return self.store_name
 

@@ -1,0 +1,41 @@
+id,store_address,store_city,store_name,store_phone,store_state,store_latitude,store_longitude
+1,"3761 N. 14th St","Alexandria                    ",Alexandria_store,5435350162,"New South Wales",-33.9081748,151.174343
+2,"2243 W St.","Coffs Harbour                 ","Coffs Harbour_store",5435350110,"New South Wales",-30.2972461,153.0286007
+3,"5844 Linden Land","Darlinghurst                  ",Darlinghurst_store,5435350184,"New South Wales",-33.8794075,151.2164518
+4,"1825 Village Pl.","Goulburn                      ",Goulburn_store,5435350162,"New South Wales",-34.7445504,149.6450659
+5,"7553 Harness Circle","Lane Cove                     ","Lane Cove_store",5435350131,"New South Wales",-33.8180143,151.1562778
+6,"7305 Humphrey Drive","Lavender Bay                  ","Lavender Bay_store",5435350151,"New South Wales",-33.8438497,151.2054226
+7,"2612 Berry Dr","Malabar                       ",Malabar_store,5435350184,"New South Wales",-33.9642173,151.2365495
+8,"942 Brook Street","Matraville                    ",Matraville_store,5435350126,"New South Wales",-33.9640097,151.2160083
+9,"624 Peabody Road","Milsons Point                 ","Milsons Point_store",5435350164,"New South Wales",-33.8470977,151.2071664
+10,"3839 Northgate Road","Newcastle                     ",Newcastle_store,5435350110,"New South Wales",-32.9762968,151.5496145
+11,"7800 Corrinne Court","North Ryde                    ","North Ryde_store",5435350169,"New South Wales",-33.7967283,151.1156917
+12,"1224 Shoenic","North Sydney                  ","North Sydney_store",5435350117,"New South Wales",-33.8365981,151.2008305
+13,"4785 Scott Street","Port Macquarie                ","Port Macquarie_store",7175350164,"New South Wales",-31.4610498,152.8236603
+14,"7902 Hudson Ave.","Rhodes                        ",Rhodes_store,8175350185,"New South Wales",-33.8300019,151.0799181
+15,"9011 Tank Drive","Silverwater                   ",Silverwater_store,4315350156,"New South Wales",-33.8338878,151.0364601
+16,"244 Willow Pass Road","Springwood                    ",Springwood_store,2085350142,"New South Wales",-33.692011,150.5397619
+17,"9666 Northridge Ct.","St. Leonards                  ","St. Leonards_store",1355350171,"New South Wales",-33.692011,150.5397619
+18,"7330 Saddlehill Lane","Sydney                        ",Sydney_store,5435350195,"New South Wales",-33.8473567,150.6517836
+19,"244 Rivewview","Wollongong                    ",Wollongong_store,5435350137,"New South Wales",-34.4390853,150.5787146
+20,"7832 Landing Dr","Brisbane                      ",Brisbane_store,2625350112,Queensland,-27.3812533,152.7130018
+21,"7156 Rose Dr.","Caloundra                     ",Caloundra_store,5505350163,Queensland,-26.7974025,153.110508
+22,"8148 W. Lake Dr.","East Brisbane                 ","East Brisbane_store",6225350158,Queensland,-27.4830662,153.0392293
+23,"1769 Nicholas Drive","Gold Coast                    ","Gold Coast_store",5895350185,Queensland,-27.9533313,153.089167
+24,"4499 Valley Crest","Hawthorne                     ",Hawthorne_store,4525350188,Queensland,-27.4646088,153.0498721
+25,"8734 Oxford Place","Hervey Bay                    ","Hervey Bay_store",7465350186,Queensland,-25.2902163,152.7368324
+26,"2596 Franklin Canyon Road","Rockhampton                   ",Rockhampton_store,5435350178,Queensland,-23.3794728,150.5012518
+27,"8211 Leeds Ct.","Townsville                    ",Townsville_store,5435350131,Queensland,-19.2964247,146.6151498
+28,"213 Valencia Place","Cloverdale                    ",Cloverdale_store,5435350184,"South Australia",-31.9627092,115.9248736
+29,"9111 Rose Ann Ave","Findon                        ",Findon_store,5435350116,"South Australia",-34.8984588,138.5261631
+30,"6385 Mark Twain","Perth                         ",Perth_store,5435350146,"South Australia",-32.0376667,115.4010688
+31,"636 Vine Hill Way","Hobart                        ",Hobart_store,5435350182,Tasmania,-42.8823241,147.3198016
+32,"6465 Detroit Ave.","Bendigo                       ",Bendigo_store,5435350195,Victoria,-36.7368013,144.1422392
+33,"626 Bentley Street","Cranbourne                    ",Cranbourne_store,5435350169,Victoria,-38.11271,145.2372955
+34,"5927 Rainbow Dr","Geelong                       ",Geelong_store,5435350137,Victoria,-38.132245,144.2994238
+35,"5167 Condor Place","Melbourne                     ",Melbourne_store,5435350136,Victoria,-37.9701541,144.4926841
+36,"1873 Mt. Whitney Dr","Melton                        ",Melton_store,5435350177,Victoria,-37.6776571,144.5288162
+37,"3981 Augustine Drive","Seaford                       ",Seaford_store,1155350183,Victoria,-38.1061855,145.1071066
+38,"8915 Woodside Way","South Melbourne               ","South Melbourne_store",2295350112,Victoria,-37.8340408,144.9473004
+39,"8357 Sandy Cove Lane","Sunbury                       ",Sunbury_store,5435350114,Victoria,-37.5532351,144.6364496
+40,"9353 Creekside Dr.","Warrnambool                   ",Warrnambool_store,5435350183,Victoria,-38.3785818,142.4416857
