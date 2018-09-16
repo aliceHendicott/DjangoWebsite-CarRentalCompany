@@ -1,4 +1,16 @@
 Database queries
 
-test
+Cars By Season
+
+Location Activity
+
+Customer Demographic
+
+Available Car Parks
+- Must show cars that have been returned and are currently sitting in location and cars that were picked up from location but not returned to same location
+- 578 orders
+- 232 order were returned to same store
+- 346 orders were not returned to same store
+
+Inactive Cars
 
