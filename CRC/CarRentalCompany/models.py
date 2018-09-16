@@ -107,7 +107,9 @@ s = Store(id = row['Store_ID'],
 	store_address = row['Store_Address'],
 	store_phone = int(row['Store_Phone'].replace("-", "").replace(" ", "")[-10:]),
 	store_city = row['Store_City'],
-	store_state = row['Store_State_Name'])
+	store_state = row['Store_State_Name'],
+    store_latitude = row['Store_Latitude'],
+    store_longitude = row['Store_Longitude'])
 
 u = User(id = row['Customer_ID'],
     user_name = row['Customer_Name'],
