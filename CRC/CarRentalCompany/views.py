@@ -158,7 +158,7 @@ pass
 def stores(request):
     return render(request,
                   'CarRentalCompany/stores.html',
-                  {'stores_list': Store.objects.all().order_by('-' + field)})
+                  {'stores_list': Store.objects.all()})
 
 def store(request, store_id):
     store = Store.objects.get(pk = store_id)
