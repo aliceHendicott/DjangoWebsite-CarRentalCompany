@@ -1,23 +1,33 @@
-    <div id="header">
-        <a id="recommend-button" class="button" href="#">Recommend me a car</a>
+<div id="header">
+        <a id="recommend-button" class="button" href="/cars/recommend_me">Recommend me a car</a>
         <div id="header-right">
-            <form id="log-in">
-                <input type="text" placeholder="Username">
-                <input type="text" placeholder="Password">
-                <input type="submit" class="button" name="login" value="Log in">
-            </form>
-            <a id="register" class="button" href="#">Register</a>
+            {% if not request.user.is_authenticated %}
+                <form action="/loginTest" method="POST" id="log-in">{% csrf_token %}
+                    <input type="text" placeholder="Username" name="username" id="id_username">
+                    <input type="password" placeholder="Password" name="password" id="id_password">
+                    <input type="submit" class="button" value="Login">
+                </form>
+                <!--<a id="register" class="button" href="#">Register</a>-->
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <div id="user-logged-in">Welcome {{user.username}}</div>
+                <a id="logout" class="button" href="{% url 'logout' %}">Logout</a>
+            {%  endif %}
         </div>
     </div>
     <div id="nav-bar">
         <div id="nav-bar-left">
-            <a href=".." id="current-page">Home</a>
-            <a href="/stores/">View Stores</a>
+            <a href="/../" id="current-page">Home</a>
+            <a href="/stores/">View Stores</a>  
             <a href="/cars/">View Cars</a>
             <a href="/FAQ/">FAQ</a>
         </div>
-        <div id="nav-bar-right">
-            <a href="#">Data</a>
-            <a href="#">Report</a>
-        </div>
+        {% if request.user.is_authenticated and not request.user.userprofile.is_customer %}
+            <div id="nav-bar-right">
+                <a href="#">Data</a>
+                {% if request.user.userprofile.is_generalManager or request.user.userprofile.is_boardMember %}
+                    <a href="/reports/dashboard/">Report</a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>

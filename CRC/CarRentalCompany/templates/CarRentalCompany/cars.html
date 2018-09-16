@@ -1,26 +1,46 @@
-<!DOCTYPE html>
-<html>
+{% extends './base.html' %}
 
-{% load static %}
+<!-- Title goes here -->
+{% block title %}
+CRC Cars
+{% endblock %}
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-</head>
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
 
-<body>
-    {% include "./Includes/header.html" %}
-    <div id="content">
-        <ul>
-            {% for car in cars_list.all %}
-                <li><a href="./{{ car.id }}/">{{ car.car_name }}</a></li>
-                <ul style="padding-left: 10px;">
-                    <li>{{ car.car_bodytype }}</li>
-                </ul>
-            {% endfor %}   
-        </ul>
-    </div>
-</body>
-{% include "./Includes/footer.html" %}
-</html>
+<!-- Content goes here -->
+{% block content %}
+        <div id="content-style2">
+            <div id="main-section">
+                <div id="title">
+                    <div id="title-left"><h1>Cars</h1></div>
+                    <div id="title-right">
+                        Sort by:
+                        <select name="sort">
+                            <option name="sort" value="option 1">Option 1</option>
+                            <option name="sort" value="option 2">Option 2</option>
+                            <option name="sort" value="option 3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid listing" id="columns2">
+                    {% for car in cars_list.all %}
+                    <div>
+                            <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                            <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                            <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                            <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}</p>
+                    </div>
+                    {%  endfor %}
+                </div>
+            </div>
+            <div id="sidebar"></div>
+        </div>
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+{% block javascript %}
+{% endblock %}
+
+

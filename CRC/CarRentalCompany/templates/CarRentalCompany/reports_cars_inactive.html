@@ -2,7 +2,7 @@
 
 <!-- Title goes here -->
 {% block title %}
-CRC {{ car.car_name }}
+CRC Cars Inactive
 {% endblock %}
 
 <!-- Extra styling goes here -->
@@ -11,19 +11,6 @@ CRC {{ car.car_name }}
 
 <!-- Content goes here -->
 {% block content %}
-<div id="content">
-    {{ car  }}
-    <ul>
-        <li>{{ car.car_bodytype }}</li>
-    </ul>
-
-    Orders:
-    <ul>
-        {% for order in car.order_set.all %}
-        <li>{{ order }}</li>
-        {% endfor %}
-    </ul>
-</div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

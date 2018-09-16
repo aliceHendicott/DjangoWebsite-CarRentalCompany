@@ -2,7 +2,7 @@
 
 <!-- Title goes here -->
 {% block title %}
-CRC Home
+CRC Car Recommendation
 {% endblock %}
 
 <!-- Extra styling goes here -->
@@ -11,7 +11,9 @@ CRC Home
 
 <!-- Content goes here -->
 {% block content %}
-<div id="banner">
+
+    <div id="content">
+    <h1>Car Recommendation</h1>
     <form id="recommend">
         <div>
             <label for="purpose">Purpose of trip</label><br>
@@ -53,22 +55,8 @@ CRC Home
             <input type="submit" class="button" value="Find me a car"></input>
         </div>
     </form>
-</div>
-<div id="content">
-    <h1>Top Cars</h1>
-    <div class="grid">
-        <div></div>
-        <div></div>
-        <div></div>
     </div>
-    <h1>Locations Near you</h1>
-    <div class="grid">
-        <div></div>
-        <div></div>
 
-        <div></div>
-    </div>
-</div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

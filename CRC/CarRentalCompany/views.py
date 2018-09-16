@@ -1,45 +1,132 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render, redirect, reverse
 from django.template import loader
+from django.contrib.auth.decorators import login_required
 
-from .models import Car, Store, Order
+from .models import Car, Store, Order, User, UserProfile
+from .forms import LoginForm
+
+from django.contrib.auth import (authenticate, login, get_user_model, logout)
+
 
 # Create your views here #
 # ---------------------- #
 
 
 # ------- GENERAL ------ #
+'''
+' SPRINT 1
+' The following are sprint 1:
+'''
 def index(request):
     return render(request,
                   'CarRentalCompany/home.html',
                   {'car_list': Car.objects.all(),
                    'store_list' : Store.objects.all()})
-def login(request):
-    return HttpResponse("Login")
+
+
+'''
+' LOGIN FUNCTIONS
+'''
+
+def logout_view(request):
+    logout(request)
+    return render(request, "CarRentalCompany/home.html", {})
+
+def login_view(request):
+    MyLoginForm = LoginForm()
+    if request.method == "POST":
+        # Get the posted form
+        MyLoginForm = LoginForm(request.POST)
+        if MyLoginForm.is_valid():
+            username = MyLoginForm.cleaned_data['username']
+            password = MyLoginForm.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            # return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+            return render(request, "CarRentalCompany/home.html", {})
+    else:
+        return render(request, 'CarRentalCompany/loggedin.html', {'form': MyLoginForm})
+
+'''
+' SPRINT 2
+' The following are sprint 2:
+'''
+def FAQ(request):
+    return render(request,
+                  'CarRentalCompany/faq.html',
+                  {'store_list': Store.objects.all()})
 def register(request):
-    return HttpResponse("Register")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
+
 
 
 # ------ CUSTOMERS ----- #
+'''
+' SPRINT 1
+' The following are sprint 1:
+'''
+pass
+
+'''
+' SPRINT 2
+' The following are sprint 2:
+'''
 def my_account(request):
-    return HttpResponse("My Account")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
+
 
 
 # -------- STAFF ------- #
+'''
+' SPRINT 1
+' The following are sprint 1:
+'''
+pass
+
+'''
+' SPRINT 2
+' The following are sprint 2:
+'''
 def staff_orders(request):
-    return HttpResponse("Orders:")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
 def staff_order(request, order_id):
-    return HttpResponse("Order:")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
 def staff_customers(request):
-    return HttpResponse("Customers:")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
 def staff_customer(request, customer_id):
-    return HttpResponse("Customer:")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
+
 
 
 # -------- CARS -------- #
+'''
+' SPRINT 1
+' The following are sprint 1:
+'''
 def cars(request):
     return render(request,
                   'CarRentalCompany/cars.html',
                   {'cars_list': Car.objects.all()})
+def car_recommend(request):
+    return render(request,
+                  'CarRentalCompany/car_recommend.html',
+                  {'cars_list': Car.objects.all()})
+'''
+' SPRINT 2
+' The following are sprint 2:
+'''
 def car(request, car_id):
     car = Car.objects.get(pk = car_id)
     return render(request,
@@ -47,16 +134,27 @@ def car(request, car_id):
                   {'car': car})
 def car_request(request, car_id):
     car = Car.objects.get(pk = car_id)
-    return HttpResponse("<b>REQUEST CAR:</b> <br>{0}<br>{1}".format(car.car_name, car.car_bodytype))
-def car_recommend(request):
-    return HttpResponse("<b>RECOMMENDATIONS:</b>")
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})
+
 
 
 # ------- STORES -------- #
+'''
+' SPRINT 1
+' The following are sprint 1:
+'''
+pass
+
+'''
+' SPRINT 2
+' The following are sprint 2:
+'''
 def stores(request):
     return render(request,
                   'CarRentalCompany/stores.html',
-                  {'store_list': Store.objects.all()})
+                  {'stores_list': Store.objects.all()})
 def store(request, store_id):
     store = Store.objects.get(pk = store_id)
     return render(request,
@@ -65,44 +163,52 @@ def store(request, store_id):
 
 
 # ------- REPORTS ------ #
+'''
+' SPRINT 1
+' The following are sprint 1:
+'''
+
+
+@login_required
 def reports_dashboard(request):
-    return HttpResponse("<b>REPORTS DASH:</b>")
+    user_profile = request.user.userprofile
+    customer = user_profile.is_customer
+    floor_staff = user_profile.is_floorStaff
+    if not customer and not floor_staff:
+        return render(request,
+                      'CarRentalCompany/reports_dashboard.html',
+                      {'cars_list': Car.objects.all(),
+                       'stores_list': Store.objects.all(),
+                       'users_list': User.objects.all()})
+    else:
+        return redirect('index')
+
 def reports_cars_seasonal(request):
-    return HttpResponse("<b>SEASONAL CARS:</b>")
-def reports_cars_inactive(request):
-    return HttpResponse("<b>INACTIVE CARS:</b>")
-def reports_store_activity(request):
-    return HttpResponse("<b>STORE ACTIVIY:</b>")
-def reports_store_parking(request):
-    return HttpResponse("<b>STORE PARKING:</b>")
-def reports_customer_demographics(request):
-    return HttpResponse("<b>CUSTOMER DEMOGRAPHICS:</b>")
-
-
-# --------- FAQ -------- #
-def FAQ(request):
     return render(request,
-                  'CarRentalCompany/faq.html',
-                  {'store_list': Store.objects.all()})
+                  'CarRentalCompany/reports_cars_seasonal.html',
+                  {'cars_list': Car.objects.all()})
+def reports_cars_inactive(request):
+    return render(request,
+                  'CarRentalCompany/reports_cars_inactive.html',
+                  {'cars_list': Car.objects.all()})
+def reports_store_activity(request):
+    return render(request,
+                  'CarRentalCompany/reports_store_activity.html',
+                  {'stores_list': Store.objects.all()})
+def reports_store_parking(request):
+    return render(request,
+                  'CarRentalCompany/reports_store_parking.html',
+                  {'stores_list': Store.objects.all()})
+def reports_customer_demographics(request):
+    return render(request,
+                  'CarRentalCompany/reports_customer_demographics.html',
+                  {'users_list': User.objects.all()})
 
-# -------- TEST -------- #
-import random
-import datetime
-import time
-
-#from graphos.sources.simple import SimpleDataSource
-#   from graphos.renderers.gchart import LineChart
-
-def TEST_PAGE(request):
-    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
-    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
-
-    extra_serie = {"tooltip": {"y_start": "", "y_end": " cal"}}
-    chartdata = {'x': xdata, 'y1': ydata, 'extra1': extra_serie}
-    charttype = "pieChart"
-
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-    }
-    return render(request, 'CarRentalCompany/test.html', data)
+'''
+' SPRINT 2
+' The following are sprint 2:
+'''
+def reports_custom(request):
+    return render(request,
+                  'CarRentalCompany/xxx.html',
+                  {})

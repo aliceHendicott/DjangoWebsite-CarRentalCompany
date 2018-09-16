@@ -1,4 +1,6 @@
-from django.urls import path
+from django.urls import path, include
+from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -7,11 +9,14 @@ urlpatterns = [
     #  Home page
     path('', views.index, name='index'),
     # Login & Register
-    path('login/', views.login, name='login'),
+    path('login/', views.login_view, name="login"),
+    path('logout/', views.logout_view, name="logout"),
     path('register/', views.register, name='register'),
+    # FAQ
+    path('FAQ/', views.FAQ, name='FAQ'),
     
     ## Customers
-    # Customer acount
+    # Customer account
     path('my_account/', views.my_account, name='my_account'),
 
     ## Staff
@@ -43,9 +48,6 @@ urlpatterns = [
     #  Customer reports
     path('reports/customers/demographics/', views.reports_customer_demographics, name='reports_customer_demographics'),
 
-    ## FAQ
-    path('FAQ/', views.FAQ, name='FAQ'),
-
     ## TEST
-    path('TEST/', views.TEST_PAGE, name='TEST_PAGE')
+    path('connection/', TemplateView.as_view(template_name ='CarRentalCompany/../templates/registration/login.html')),
 ]
