@@ -112,7 +112,7 @@ for orders in order_data:
     data=data_A+data_B+data_C
     cdata=cdata.drop(cdata.index[data])
 
-#Make sure there are no duplicates
+#cdata = cdata[cdata.
 
 # Create the clean csv file to be put into the database
 cdata.to_csv('Clean_DB_Central.csv', index=False)
