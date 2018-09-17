@@ -250,9 +250,13 @@ def reports_cars_inactive(request):
                   'CarRentalCompany/reports_cars_inactive.html',
                   {'cars_list': Car.objects.all()})
 def reports_store_activity(request):
+    locations = []
+    for store in Store.objects.all():
+        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
     return render(request,
                   'CarRentalCompany/reports_store_activity.html',
-                  {'stores_list': Store.objects.all()})
+                  {'stores_list': Store.objects.all(),
+                   'location_maps' : locations})
 def reports_store_parking(request):
     return render(request,
                   'CarRentalCompany/reports_store_parking.html',
