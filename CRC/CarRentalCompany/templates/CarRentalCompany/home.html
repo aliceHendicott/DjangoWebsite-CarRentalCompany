@@ -33,10 +33,15 @@ CRC Home
 </div>
 <div id="content">
     <h1>Top Cars</h1>
-    <div class="grid">
-        <div></div>
-        <div></div>
-        <div></div>
+    <div class="grid listing">
+        {% for car in top_3_cars %}
+            <div>
+                <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}</p>
+            </div>
+        {% endfor %}
     </div>
     <h1>Locations Near you</h1>
     <div class="grid">

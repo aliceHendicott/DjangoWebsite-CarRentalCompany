@@ -6,6 +6,7 @@ from django.db import connection
 
 from .models import Car, Store, Order, User, UserProfile
 from .forms import RecommendForm
+from .custom_sql import top3cars
 from .recommendation import handle_recommendation
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
@@ -38,11 +39,13 @@ def index(request):
                          'recommended_cars': recommended_cars,
                          'no_results': no_results,
                          'form_actioned': form_actioned})
+    top_3_cars = top3cars()
     return render(request,
                   'CarRentalCompany/home.html',
                   {'car_list': Car.objects.all(),
                    'store_list': Store.objects.all(),
-                   'form': form})
+                   'form': form,
+                   'top_3_cars': top_3_cars})
 
 
 '''
