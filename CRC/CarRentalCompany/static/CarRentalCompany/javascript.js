@@ -47,8 +47,6 @@ function sortStores() {
     $('#sort-div-stores').load(document.location + ' #sort-div-stores');
 }
 
-
-
 function getGeoLocation(callback) {
 
         // User isn't using chrome

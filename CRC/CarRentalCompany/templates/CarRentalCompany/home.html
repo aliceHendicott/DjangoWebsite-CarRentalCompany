@@ -12,45 +12,50 @@ CRC Home
 <!-- Content goes here -->
 {% block content %}
 <div id="banner">
-    <form id="recommend">
+    <form id="recommend" method="POST" action="/">{% csrf_token %}
         <div>
             <label for="purpose">Purpose of trip</label><br>
             <select name="purpose">
-                <option name="purpose" value="option 1">Option 1</option>
-                <option name="purpose" value="option 2">Option 2</option>
-                <option name="purpose" value="option 3">Option 3</option>
+                <option name="purpose" value="1">Four wheel driving</option>
+                <option name="purpose" value="2">Family trip</option>
+                <option name="purpose" value="3">Road trip</option>
+                <option name="purpose" value="4">Other</option>
             </select>
         </div>
         <div>
             <label for="seats">Seats</label><br>
             <select name="seats">
-                <option name="seats" value="option 1">Option 1</option>
-                <option name="seats" value="option 2">Option 2</option>
-                <option name="seats" value="option 3">Option 3</option>
+                <option name="seats" value="1">1 or 2</option>
+                <option name="seats" value="2">3 - 5</option>
+                <option name="seats" value="3">more than 5</option>
             </select>
         </div>
         <div>
             <label for="transmission">Transmission</label><br>
             <select name="transmission">
-                <option name="transmission" value="option 1">Option 1</option>
-                <option name="transmission" value="option 2">Option 2</option>
-                <option name="transmission" value="option 3">Option 3</option>
+                <option name="transmission" value="1">Automatic</option>
+                <option name="transmission" value="2">Manual</option>
             </select>
         </div><br>
         <div>
-            <label for="purpose">Month of trip</label><br>
-            <select name="purpose">
-                <option name="purpose" value="option 1">Option 1</option>
-                <option name="purpose" value="option 2">Option 2</option>
-                <option name="purpose" value="option 3">Option 3</option>
+            <label for="month">Month of trip</label><br>
+            <select name="month">
+                <option name="month" value="1">January</option>
+                <option name="month" value="2">February</option>
+                <option name="month" value="3">March</option>
+                <option name="month" value="4">April</option>
+                <option name="month" value="5">May</option>
+                <option name="month" value="6">June</option>
+                <option name="month" value="7">March</option>
+                <option name="month" value="8">March</option>
+                <option name="month" value="9">March</option>
+                <option name="month" value="10">March</option>
+                <option name="month" value="11">March</option>
+                <option name="month" value="12">March</option>
             </select>
         </div>
         <div>
-            <label for="birthday">Date of Birth</label><br>
-            <input type="date" name="birthday"></input>
-        </div>
-        <div>
-            <input type="submit" class="button" value="Find me a car"></input>
+            <input type="submit" class="button" value="Find me a car">
         </div>
     </form>
 </div>
