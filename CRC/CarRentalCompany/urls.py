@@ -17,15 +17,15 @@ urlpatterns = [
     
     ## Customers
     # Customer account
-    path('my_account/', views.my_account, name='my_account'),
+    path('my_account/', views_customers.my_account, name='my_account'),
 
     ## Staff
     #  Orders
-    path('staff/orders/', views.staff_orders, name='staff_orders'),
-    path('staff/orders/<int:order_id>', views.staff_order, name='staff_order'),
+    path('staff/orders/', views_staff.orders, name='staff_orders'),
+    path('staff/orders/<int:order_id>', views_staff.order, name='staff_order'),
     #  Customers
-    path('staff/customers/', views.staff_customers, name='staff_customers'),
-    path('staff/customers/<int:customer_id>', views.staff_customer, name='staff_customer'),
+    path('staff/customers/', views_staff.customers, name='staff_customers'),
+    path('staff/customers/<int:customer_id>', views_staff.customer, name='staff_customer'),
     
     ## Cars
     path('cars/', views.cars, name='cars'),
@@ -34,8 +34,8 @@ urlpatterns = [
     path('cars/recommend_me/', views.car_recommend, name='car_recommend'),
 
     ## Stores
-    path('stores/', views.stores, name='stores'),
-    path('stores/<int:store_id>/', views.store, name='store'),
+    path('stores/', views_stores.stores, name='stores'),
+    path('stores/<int:store_id>/', views.views_stores, name='store'),
 
     ## Reports
     path('reports/dashboard/', views_reports.dashboard, name='reports_dashboard'),

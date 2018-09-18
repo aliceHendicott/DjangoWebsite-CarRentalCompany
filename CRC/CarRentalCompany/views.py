@@ -89,55 +89,6 @@ def register(request):
                   {})
 
 
-
-# ------ CUSTOMERS ----- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def my_account(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
-# -------- STAFF ------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def staff_orders(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_order(request, order_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_customers(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_customer(request, customer_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
 # -------- CARS -------- #
 '''
 ' SPRINT 1
@@ -185,27 +136,3 @@ def car_request(request, car_id):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})
-
-
-
-# ------- STORES -------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def stores(request):
-    return render(request,
-                  'CarRentalCompany/stores.html',
-                  {'stores_list': Store.objects.all()})
-
-def store(request, store_id):
-    store = Store.objects.get(pk = store_id)
-    return render(request,
-                  'CarRentalCompany/store.html',
-                  {'store': store})

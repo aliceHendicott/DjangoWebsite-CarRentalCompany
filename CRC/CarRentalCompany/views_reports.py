@@ -13,6 +13,21 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
 
 # ------- REPORTS ------ #
+
+
+## Supporting
+def cars_seasonal_graph():
+    pass
+def cars_inactive_graph():
+    pass
+def store_parking_graph():
+    pass
+def store_activity_graph():
+    pass
+def cars_seasonal_graph():
+    pass
+
+
 '''
 ' SPRINT 1
 ' The following are sprint 1:
