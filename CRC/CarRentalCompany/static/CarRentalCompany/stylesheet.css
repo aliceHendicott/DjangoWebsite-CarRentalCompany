@@ -147,6 +147,9 @@ h3{
 #columns2{
     grid-template-columns: 49% 49%;
 }
+#reports-row2{
+	margin-top:-30px;
+}
 .grid{
 	display:grid;
 	grid-template-columns: 32% 32% 32%;
@@ -237,4 +240,26 @@ h3{
 #faq-question [type='text']{
     margin-bottom: 5px;
     width:calc(100% - 20px);
+}
+table{
+	border:0px;
+	border-spacing: 0px;
+}
+table td{
+	border-bottom:1px solid #282828;
+	border-right:1px solid #282828;
+	border-left:0px;
+	border-top:0px;
+	padding:7px;
+	font-size:13px;
+}
+table tr:last-of-type td{
+	border-bottom:0px;
+}
+table td:last-of-type{
+	border-right:0px;
+}
+.table-heading td{
+	font-weight:bold;
+	font-size:15px;
 }

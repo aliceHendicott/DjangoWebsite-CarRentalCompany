@@ -16,21 +16,45 @@ CRC Reports Dashboard
         <h1>Reports</h1>
         <div class="grid listing" id="columns2">
             <div>
-                <h3>Cars by Season</h3>
+                <a href="/reports/cars/seasonal/"><h3>Cars by Season</h3></a>
+                <table>
+                    <tr class="table-heading">
+                        <td>Car Model</td>
+                        <td>Rental Frequency</td>
+                    </tr>
+                    {% for car in seasonal_cars %}
+                        <tr>
+                            <td>{{ car }}</td>
+                            <td>{{ car.number_of_orders }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
              <div>
-                <h3>Location Activity</h3>
+                <a href="/reports/stores/activity/"><h3>Store Activity</h3></a>
+                 <table>
+                    <tr class="table-heading">
+                        <td>Store Location</td>
+                        <td>Rental Frequency</td>
+                    </tr>
+                    {% for store in store_activity %}
+                        <tr>
+                            <td>{{ store.store_city }}</td>
+                            <td>{{ store.number_of_orders }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
-        <div class="grid listing" id="columns2">
+        <div class="grid listing" id="reports-row2">
             <div>
-                <h3>Customer Demographic</h3>
+                <a href="/reports/customers/demographics/"><h3>Customer Demographic</h3></a>
             </div>
              <div>
-                <h3>Available Car Parks</h3>
+                <a href="/reports/stores/parking/"><h3>Available Car Parks</h3></a>
             </div>
             <div>
-                <h3>Inactive Cars</h3>
+                <a href="/reports/cars/inactive/"><h3>Inactive Cars</h3></a>
         </div>
     </div>
 

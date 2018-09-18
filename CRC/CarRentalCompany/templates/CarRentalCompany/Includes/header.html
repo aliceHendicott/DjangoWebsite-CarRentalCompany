@@ -19,8 +19,6 @@
         <div id="nav-bar-left">
             <a href="/../" id="home"
             {% if "stores" not in request.path and "cars" not in request.path and "FAQ" not in request.path and "data" not in request.path and "reports" not in request.path %} class="current-page" {% endif %}
-
-
             >Home</a>
             <a href="/stores/" id="stores" {% if "stores" in request.path %} class="current-page" {% endif %}>View Stores</a>
             <a href="/cars/" id="cars" {% if "cars" in request.path %} class="current-page" {% endif %}>View Cars</a>
@@ -29,7 +27,7 @@
         {% if request.user.is_authenticated and not request.user.userprofile.is_customer %}
             <div id="nav-bar-right">
                 <a href="#" {% if "data" in request.path %} class="current-page" {% endif %}>Data</a>
-                {% if request.user.userprofile.is_generalManager or request.user.userprofile.is_boardMember %}
+                {% if not request.user.userprofile.is_customer and not request.user.userprofile.is_floor_staff %}
                     <a href="/reports/dashboard/" {% if "reports" in request.path %} class="current-page" {% endif %}>Report</a>
                 {% endif %}
             </div>

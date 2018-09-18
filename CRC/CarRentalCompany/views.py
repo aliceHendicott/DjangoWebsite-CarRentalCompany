@@ -6,7 +6,7 @@ from django.db import connection
 
 from .models import Car, Store, Order, User, UserProfile
 from .forms import RecommendForm
-from .custom_sql import top3cars
+from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
@@ -223,11 +223,12 @@ def reports_dashboard(request):
     customer = user_profile.is_customer
     floor_staff = user_profile.is_floorStaff
     if not customer and not floor_staff:
+        seasonal_cars = seasonal_cars_preview()
+        store_activity = store_activity_preview()
         return render(request,
                       'CarRentalCompany/reports_dashboard.html',
-                      {'cars_list': Car.objects.all(),
-                       'stores_list': Store.objects.all(),
-                       'users_list': User.objects.all()})
+                      {'seasonal_cars': seasonal_cars,
+                       'store_activity': store_activity})
     else:
         return redirect('index')
 
