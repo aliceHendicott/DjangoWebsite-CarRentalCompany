@@ -38,15 +38,15 @@ urlpatterns = [
     path('stores/<int:store_id>/', views.store, name='store'),
 
     ## Reports
-    path('reports/dashboard/', views_reports.reports_dashboard, name='reports_dashboard'),
+    path('reports/dashboard/', views_reports.dashboard, name='reports_dashboard'),
     #  Car reports
-    path('reports/cars/seasonal/', views_reports.reports_cars_seasonal, name='reports_cars_seasonal'),
-    path('reports/cars/inactive/', views_reports.reports_cars_inactive, name='reports_cars_inactive'),
+    path('reports/cars/seasonal/', views_reports.cars_seasonal, name='reports_cars_seasonal'),
+    path('reports/cars/inactive/', views_reports.cars_inactive, name='reports_cars_inactive'),
     #  Store reports
-    path('reports/stores/activity/', views_reports.reports_store_activity, name='reports_store_activity'),
-    path('reports/stores/parking/', views_reports.reports_store_parking, name='reports_store_parking'),
+    path('reports/stores/activity/', views_reports.store_activity, name='reports_store_activity'),
+    path('reports/stores/parking/', views_reports.store_parking, name='reports_store_parking'),
     #  Customer reports
-    path('reports/customers/demographics/', views_reports.reports_customer_demographics, name='reports_customer_demographics'),
+    path('reports/customers/demographics/', views_reports.customer_demographics, name='reports_customer_demographics'),
 
     ## TEST
     path('connection/', TemplateView.as_view(template_name ='CarRentalCompany/../templates/registration/login.html')),

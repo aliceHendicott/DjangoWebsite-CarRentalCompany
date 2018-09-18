@@ -19,7 +19,7 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 '''
 
 @login_required
-def reports_dashboard(request):
+def dashboard(request):
     user_profile = request.user.userprofile
     customer = user_profile.is_customer
     floor_staff = user_profile.is_floorStaff
@@ -32,17 +32,17 @@ def reports_dashboard(request):
                        'store_activity': store_activity})
     else:
         return redirect('index')
-def reports_cars_seasonal(request):
+def cars_seasonal(request):
     drawGraph('bar', 'cars_seasonal', 1)
     return render(request,
                   'CarRentalCompany/reports_cars_seasonal.html',
                   {'cars_list': Car.objects.all()})
-def reports_cars_inactive(request):
+def cars_inactive(request):
     drawGraph('horizBar', 'cars_inactive', 1)
     return render(request,
                   'CarRentalCompany/reports_cars_inactive.html',
                   {'cars_list': Car.objects.all()})
-def reports_store_activity(request):
+def store_activity(request):
     drawGraph('pie', 'store_activity', 1)
     locations = []
     for store in Store.objects.all():
@@ -51,12 +51,12 @@ def reports_store_activity(request):
                   'CarRentalCompany/reports_store_activity.html',
                   {'stores_list': Store.objects.all(),
                    'location_maps' : locations})
-def reports_store_parking(request):
+def store_parking(request):
     drawGraph('horizBar', 'store_parking', 1)
     return render(request,
                   'CarRentalCompany/reports_store_parking.html',
                   {'stores_list': Store.objects.all()})
-def reports_customer_demographics(request):
+def customer_demographics(request):
     return render(request,
                   'CarRentalCompany/reports_customer_demographics.html',
                   {'users_list': User.objects.all()})
@@ -65,7 +65,7 @@ def reports_customer_demographics(request):
 ' SPRINT 2
 ' The following are sprint 2:
 '''
-def reports_custom(request):
+def custom(request):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})

@@ -209,14 +209,3 @@ def store(request, store_id):
     return render(request,
                   'CarRentalCompany/store.html',
                   {'store': store})
-
-
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def reports_custom(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
