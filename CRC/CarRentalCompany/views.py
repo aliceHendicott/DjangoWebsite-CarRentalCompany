@@ -211,55 +211,6 @@ def store(request, store_id):
                   {'store': store})
 
 
-# ------- REPORTS ------ #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-
-
-@login_required
-def reports_dashboard(request):
-    user_profile = request.user.userprofile
-    customer = user_profile.is_customer
-    floor_staff = user_profile.is_floorStaff
-    if not customer and not floor_staff:
-        seasonal_cars = seasonal_cars_preview()
-        store_activity = store_activity_preview()
-        return render(request,
-                      'CarRentalCompany/reports_dashboard.html',
-                      {'seasonal_cars': seasonal_cars,
-                       'store_activity': store_activity})
-    else:
-        return redirect('index')
-
-def reports_cars_seasonal(request):
-    return render(request,
-                  'CarRentalCompany/reports_cars_seasonal.html',
-                  {'cars_list': Car.objects.all()})
-def reports_cars_inactive(request):
-    return render(request,
-                  'CarRentalCompany/reports_cars_inactive.html',
-                  {'cars_list': Car.objects.all()})
-def reports_store_activity(request):
-    locations = []
-    for store in Store.objects.all():
-        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
-    testGraph()
-    testGraph1()
-    testGraph2()
-    return render(request,
-                  'CarRentalCompany/reports_store_activity.html',
-                  {'stores_list': Store.objects.all(),
-                   'location_maps' : locations})
-def reports_store_parking(request):
-    return render(request,
-                  'CarRentalCompany/reports_store_parking.html',
-                  {'stores_list': Store.objects.all()})
-def reports_customer_demographics(request):
-    return render(request,
-                  'CarRentalCompany/reports_customer_demographics.html',
-                  {'users_list': User.objects.all()})
 
 '''
 ' SPRINT 2
