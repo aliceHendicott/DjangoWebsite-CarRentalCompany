@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
-from . import views, views_reports
+from . import views, views_customer, views_reports, views_staff, views_store
 
 urlpatterns = [
     ## General
@@ -17,7 +17,7 @@ urlpatterns = [
     
     ## Customers
     # Customer account
-    path('my_account/', views_customers.my_account, name='my_account'),
+    path('my_account/', views_customer.my_account, name='my_account'),
 
     ## Staff
     #  Orders
@@ -34,8 +34,8 @@ urlpatterns = [
     path('cars/recommend_me/', views.car_recommend, name='car_recommend'),
 
     ## Stores
-    path('stores/', views_stores.stores, name='stores'),
-    path('stores/<int:store_id>/', views.views_stores, name='store'),
+    path('stores/', views_store.stores, name='stores'),
+    path('stores/<int:store_id>/', views_store.store, name='store'),
 
     ## Reports
     path('reports/dashboard/', views_reports.dashboard, name='reports_dashboard'),
