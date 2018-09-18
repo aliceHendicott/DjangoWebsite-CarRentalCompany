@@ -27,7 +27,7 @@ def seasonal_cars_preview():
     return results
 
 def store_activity_preview():
-    query = ('''SELECT pip3 CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_orders
+    query = ('''SELECT CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_orders
                 FROM CarRentalCompany_store
                 LEFT JOIN CarRentalCompany_order
                 ON (CarRentalCompany_order.order_pickup_store_id_id = CarRentalCompany_store.id)
