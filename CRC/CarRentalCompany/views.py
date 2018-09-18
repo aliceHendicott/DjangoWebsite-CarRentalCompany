@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 
+from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
 from .forms import RecommendForm
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
@@ -244,6 +245,9 @@ def reports_store_activity(request):
     locations = []
     for store in Store.objects.all():
         locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
+    testGraph()
+    testGraph1()
+    testGraph2()
     return render(request,
                   'CarRentalCompany/reports_store_activity.html',
                   {'stores_list': Store.objects.all(),
