@@ -4,7 +4,7 @@ Database queries
 Cars By Season
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Query #1 - Most Common Car Bodytype
+-- Query #1 - Most Common Car Bodytype
 
 USE crc_central_database;
 
@@ -38,7 +38,7 @@ Location Activity
 Customer Demographic
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Query #1 - Ages by Range
+-- Query #1 - Ages by Range
 
 USE crc_central_database;
 
@@ -65,7 +65,7 @@ GROUP BY
 ORDER BY 
     Ages;
 
-Query #2 - Bodytype Count by Gender
+-- Query #2 - Bodytype Count by Gender
 
 USE crc_central_database;
 
@@ -77,7 +77,7 @@ INNER JOIN carrentalcompany_order ON carrentalcompany_user.id=carrentalcompany_o
 INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
 GROUP BY car_bodytype;
 
-Query #3 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Males)
+-- Query #3 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Males)
 
 USE crc_central_database;
 
@@ -90,7 +90,7 @@ INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcom
 GROUP BY car_bodytype
 ORDER BY Male DESC;
 
-Query #3.1 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Males)
+-- Query #3.1 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Males)
 
 USE crc_central_database;
 
@@ -103,7 +103,7 @@ INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcom
 GROUP BY car_bodytype
 ORDER BY Male DESC;
 
-Query #3.2 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Females)
+-- Query #3.2 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Females)
 
 USE crc_central_database;
 
@@ -120,13 +120,13 @@ ORDER BY Female DESC;
 Available Car Parks:
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Query #1 - Total Pickup Count Per Store
+-- Query #1 - Total Pickup Count Per Store
 
 USE crc_central_database;
     
 SELECT order_pickup_store_id_id, COUNT(id) FROM carrentalcompany_order GROUP BY order_pickup_store_id_id;
 
-Query #2 - Total Return Count Per Store
+-- Query #2 - Total Return Count Per Store
 
 USE crc_central_database;
 
@@ -135,3 +135,23 @@ SELECT order_return_store_id_id, COUNT(id) FROM carrentalcompany_order GROUP BY 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Inactive Cars
 ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Query #1 - Last Rented Bodytype
+
+USE crc_central_database;
+
+SELECT carrentalcompany_car.car_bodytype, MAX(carrentalcompany_order.order_return_date) AS `Return Date`
+FROM carrentalcompany_order
+INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
+GROUP BY car_bodytype
+ORDER BY `Return Date` ASC;
+
+-- Query #2 - Last Rented Make
+
+USE crc_central_database;
+
+SELECT carrentalcompany_car.car_makename, MAX(carrentalcompany_order.order_return_date) AS `Return Date`
+FROM carrentalcompany_order
+INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
+GROUP BY car_makename
+ORDER BY `Return Date` ASC;
