@@ -24,18 +24,62 @@ CRC Cars
                         </select>
                     </div>
                 </div>
+                {% if filters != "" %}
+                    <p><b>Current Filters:</b> {% for filter in filters %} <span class="filter">{{ filter }}</span> | {% endfor %}</p>
+                {% endif %}
                 <div class="grid listing" id="columns2">
-                    {% for car in cars_list.all %}
-                    <div>
-                            <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
-                            <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
-                            <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
-                            <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}</p>
-                    </div>
-                    {%  endfor %}
+                    {% if filtered_cars != -1 and filtered_cars != -2 and filtered_cars != ""%}
+                        {% for car in filtered_cars %}
+                            <div>
+                                <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                                <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                                <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                                <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% for car in cars_list.all %}
+                            <div>
+                                <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                                <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                                <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                                <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
-            <div id="sidebar"></div>
+            <div id="sidebar">
+                <h1>Filter Cars</h1>
+                <div class="filtered-cars-error">
+                    {% if filtered_cars == -1 %}
+                    <span>Your filter returned no results, please try again</span>
+                {% endif %}
+                {% if filtered_cars == -2 %}
+                    <span>Please enter a filter and try again</span>
+                {% endif %}
+                </div>
+                <form id="cars-filter-form" method="POST" action="/cars/">{% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field.errors }}
+                        {{ hidden_field }}
+                    {% endfor %}
+                    {% for field in form.visible_fields %}
+                        <div>
+                            {{ field.label_tag }}<br />
+                            {{ field.errors }}
+                            {{ field }}<br />
+                            {{ field.help_text }}
+                        </div>
+                    {% endfor %}
+                    <div>
+                        <button type="submit" class="button">Apply</button>
+                    </div>
+                </form>
+            </div>
         </div>
 {% endblock %}
 

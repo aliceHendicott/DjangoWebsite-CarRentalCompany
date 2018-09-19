@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 from .models import Car, Store, Order, User, UserProfile
-from .forms import RecommendForm
+from .forms import RecommendForm,CarFilterForm
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
+from .filter_cars import handle_filter_cars, current_filter
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
 
@@ -143,9 +144,26 @@ def staff_customer(request, customer_id):
 ' The following are sprint 1:
 '''
 def cars(request):
+    form = CarFilterForm()
+    filtered_cars = ""
+    filters = ""
+    if request.method == "POST":
+        series_year = request.POST['minimum_series_year']
+        body_type = request.POST['body_type']
+        seating_capacity = request.POST['minimum_seating_capacity']
+        make = request.POST['make_name']
+        engine_size = request.POST['engine_size']
+        fuel_system = request.POST['fuel_system']
+        tank_capacity = request.POST['tank_capacity']
+        power = request.POST['power']
+        filtered_cars = handle_filter_cars(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
+        filters = current_filter(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
     return render(request,
                   'CarRentalCompany/cars.html',
-                  {'cars_list': Car.objects.all()})
+                  {'cars_list': Car.objects.all(),
+                   'form': form,
+                   'filtered_cars': filtered_cars,
+                   'filters': filters})
 
 def car_recommend(request):
     form = RecommendForm()

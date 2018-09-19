@@ -263,3 +263,37 @@ table td:last-of-type{
 	font-weight:bold;
 	font-size:15px;
 }
+#sidebar{
+	margin-left:30px;
+}
+[type="range"]{
+	width:100%;
+}
+#cars-filter-form select{
+	width:100%;
+	height:30px;
+	background-color:#ffffff;
+	border:0px;
+	border-radius:5px;
+	margin-top:3px;
+}
+#cars-filter-form div{
+	margin-bottom:15px;
+}
+#cars-filter-form label{
+	font-size:14px;
+}
+#cars-filter-form button{
+	width:100%;
+}
+.filtered-cars-error{
+    margin-bottom:15px;
+}
+.filtered-cars-error span{
+    color:red;
+    font-size:13px;
+}
+.filter{
+    font-size:13px;
+    margin-left:8px; margin-right:8px;
+}
