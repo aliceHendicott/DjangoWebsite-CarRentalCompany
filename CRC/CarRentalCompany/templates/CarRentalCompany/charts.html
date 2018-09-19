@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+
+<!-- Title goes here -->
+{% block title %}
+CRC Charts
+{% endblock %}
+
+<!-- Extra JQuery goes here -->
+<script>
+{% block jquery %}
+    var endpoint = '/api/data/'
+    var customersDjango = parseInt("{{ cutomers }}") * 237
+    $.ajax({
+        method: "GET"
+        url: endpoint,
+        success: function (data) {
+            console.log(data)
+            console.log(data.customers * 234)
+        },
+        error: function (error_data) {
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+{% endblock %}
+</script>
+
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+{% block javascript %}
+{% endblock %}

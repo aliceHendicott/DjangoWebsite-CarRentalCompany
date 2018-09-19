@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 
+from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
 from .forms import RecommendForm,CarFilterForm
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
@@ -89,55 +90,6 @@ def register(request):
                   {})
 
 
-
-# ------ CUSTOMERS ----- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def my_account(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
-# -------- STAFF ------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def staff_orders(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_order(request, order_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_customers(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_customer(request, customer_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
 # -------- CARS -------- #
 '''
 ' SPRINT 1
@@ -199,87 +151,6 @@ def car(request, car_id):
                   {'car': car})
 def car_request(request, car_id):
     car = Car.objects.get(pk = car_id)
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
-# ------- STORES -------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def stores(request):
-    return render(request,
-                  'CarRentalCompany/stores.html',
-                  {'stores_list': Store.objects.all()})
-
-def store(request, store_id):
-    store = Store.objects.get(pk = store_id)
-    return render(request,
-                  'CarRentalCompany/store.html',
-                  {'store': store})
-
-
-# ------- REPORTS ------ #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-
-
-@login_required
-def reports_dashboard(request):
-    user_profile = request.user.userprofile
-    customer = user_profile.is_customer
-    floor_staff = user_profile.is_floorStaff
-    if not customer and not floor_staff:
-        seasonal_cars = seasonal_cars_preview()
-        store_activity = store_activity_preview()
-        return render(request,
-                      'CarRentalCompany/reports_dashboard.html',
-                      {'seasonal_cars': seasonal_cars,
-                       'store_activity': store_activity})
-    else:
-        return redirect('index')
-
-def reports_cars_seasonal(request):
-    return render(request,
-                  'CarRentalCompany/reports_cars_seasonal.html',
-                  {'cars_list': Car.objects.all()})
-def reports_cars_inactive(request):
-    return render(request,
-                  'CarRentalCompany/reports_cars_inactive.html',
-                  {'cars_list': Car.objects.all()})
-def reports_store_activity(request):
-    locations = []
-    for store in Store.objects.all():
-        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
-    return render(request,
-                  'CarRentalCompany/reports_store_activity.html',
-                  {'stores_list': Store.objects.all(),
-                   'location_maps' : locations})
-def reports_store_parking(request):
-    return render(request,
-                  'CarRentalCompany/reports_store_parking.html',
-                  {'stores_list': Store.objects.all()})
-def reports_customer_demographics(request):
-    return render(request,
-                  'CarRentalCompany/reports_customer_demographics.html',
-                  {'users_list': User.objects.all()})
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def reports_custom(request):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})

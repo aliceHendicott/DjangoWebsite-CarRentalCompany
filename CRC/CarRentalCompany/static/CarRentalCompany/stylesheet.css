@@ -28,6 +28,10 @@ h3{
 	height:40px;
 	font-size:16px;
 }
+#chart {
+    width: 300px !important;
+    height: 300px !important;
+}
 #content{
 	margin: 50px 100px;
 }
