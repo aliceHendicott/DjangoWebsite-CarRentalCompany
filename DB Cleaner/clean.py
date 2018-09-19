@@ -24,6 +24,12 @@ def update_store_name (store_name):
     rpl_store_string = store_string.replace('_store','_Store')
     return rpl_store_string
 
+def update_car_seats (int):
+    seats = float(int)
+    if seats < 3:
+        seats = 4
+    return seats
+
 # removes the prefix ffrom the phone number and cleans up some inconsistantcy 
 def convert_to_number (phone_cur_format):
     string_number = str(phone_cur_format)
@@ -98,7 +104,6 @@ for storename in storenames:
 sdata['Store_Name'] = sdata['Store_Name'].apply(update_store_name)
 
 # clean the customer addresses
-
 cdata['Customer_Address'] = cdata['Customer_Address'].apply(rmv_spc_char)
 
 # find null and remove null data
@@ -112,7 +117,8 @@ for orders in order_data:
     data=data_A+data_B+data_C
     cdata=cdata.drop(cdata.index[data])
 
-#cdata = cdata[cdata.
+# Remove 0's from car seating
+cdata['Car_SeatingCapacity'] = cdata['Car_SeatingCapacity'].apply(update_car_seats)
 
 # Create the clean csv file to be put into the database
 cdata.to_csv('Clean_DB_Central.csv', index=False)
