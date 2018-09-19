@@ -11,35 +11,86 @@ CRC Cars
 
 <!-- Content goes here -->
 {% block content %}
+
+    <script type="text/javascript">
+        var cars_json = {{ cars_json|safe }};
+    </script>
+
         <div id="content-style2">
             <div id="main-section">
                 <div id="title">
                     <div id="title-left"><h1>Cars</h1></div>
                     <div id="title-right">
                         Sort by:
-                        <select name="sort">
-                            <option name="sort" value="option 1">Option 1</option>
-                            <option name="sort" value="option 2">Option 2</option>
-                            <option name="sort" value="option 3">Option 3</option>
+                        <select name="sort" id="cars-sort" onchange="sortCarsList(this)">
+                            <option name="sort" value="make">Make (A-Z)</option>
+                            <option name="sort" value="popularity">Popularity</option>
+                            <option name="sort" value="price">Price (Low to High)</option>
+                            <option name="sort" value="body">Body type (A-Z)</option>
                         </select>
                     </div>
                 </div>
+                {% if filters != "" %}
+                    <p><b>Current Filters:</b> {% for filter in filters %} <span class="filter">{{ filter }}</span> | {% endfor %}</p>
+                {% endif %}
                 <div class="grid listing" id="columns2">
-                    {% for car in cars_list.all %}
-                    <div>
-                            <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
-                            <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
-                            <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
-                            <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}</p>
-                    </div>
-                    {%  endfor %}
+                    {% if filtered_cars != -1 and filtered_cars != -2 and filtered_cars != ""%}
+                        {% for car in filtered_cars %}
+                            <div>
+                                <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                                <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                                <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                                <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% for car in cars_list.all %}
+                            <div>
+                                <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                                <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                                <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                                <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
-            <div id="sidebar"></div>
+            <div id="sidebar">
+                <h1>Filter Cars</h1>
+                <div class="filtered-cars-error">
+                    {% if filtered_cars == -1 %}
+                    <span>Your filter returned no results, please try again</span>
+                {% endif %}
+                {% if filtered_cars == -2 %}
+                    <span>Please enter a filter and try again</span>
+                {% endif %}
+                </div>
+                <form id="cars-filter-form" method="POST" action="/cars/">{% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field.errors }}
+                        {{ hidden_field }}
+                    {% endfor %}
+                    {% for field in form.visible_fields %}
+                        <div>
+                            {{ field.label_tag }}<br />
+                            {{ field.errors }}
+                            {{ field }}<br />
+                            {{ field.help_text }}
+                        </div>
+                    {% endfor %}
+                    <div>
+                        <button type="submit" class="button">Apply</button>
+                    </div>
+                </form>
+            </div>
         </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->
+
 {% block javascript %}
 {% endblock %}
 

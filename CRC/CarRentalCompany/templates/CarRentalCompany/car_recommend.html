@@ -13,48 +13,42 @@ CRC Car Recommendation
 {% block content %}
 
     <div id="content">
-    <h1>Car Recommendation</h1>
-    <form id="recommend">
-        <div>
-            <label for="purpose">Purpose of trip</label><br>
-            <select name="purpose">
-                <option name="purpose" value="option 1">Option 1</option>
-                <option name="purpose" value="option 2">Option 2</option>
-                <option name="purpose" value="option 3">Option 3</option>
-            </select>
-        </div>
-        <div>
-            <label for="seats">Seats</label><br>
-            <select name="seats">
-                <option name="seats" value="option 1">Option 1</option>
-                <option name="seats" value="option 2">Option 2</option>
-                <option name="seats" value="option 3">Option 3</option>
-            </select>
-        </div>
-        <div>
-            <label for="transmission">Transmission</label><br>
-            <select name="transmission">
-                <option name="transmission" value="option 1">Option 1</option>
-                <option name="transmission" value="option 2">Option 2</option>
-                <option name="transmission" value="option 3">Option 3</option>
-            </select>
-        </div><br>
-        <div>
-            <label for="purpose">Month of trip</label><br>
-            <select name="purpose">
-                <option name="purpose" value="option 1">Option 1</option>
-                <option name="purpose" value="option 2">Option 2</option>
-                <option name="purpose" value="option 3">Option 3</option>
-            </select>
-        </div>
-        <div>
-            <label for="birthday">Date of Birth</label><br>
-            <input type="date" name="birthday"></input>
-        </div>
-        <div>
-            <input type="submit" class="button" value="Find me a car"></input>
-        </div>
-    </form>
+        <h1>Car Recommendation</h1>
+        <form id="recommend" method="POST" action="/cars/recommend_me/">{% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field.errors }}
+                {{ hidden_field }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                <div>
+                    {{ field.label_tag }}
+                    {{ field.errors }}
+                    {{ field }}
+                    {{ field.help_text }}
+                </div>
+            {% endfor %}
+            <div>
+                <button type="submit" class="button">Find me a car</button>
+            </div>
+        </form>
+        {% if form_actioned %}
+            <h1>Results</h1>
+            {% if no_results %}
+                <p>Your search has returned no results. Please try again</p>
+            {% else %}
+                <div class="grid listing">
+                    {% for car in recommended_cars %}
+                        <div>
+                            <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
+                            <p><i class="fas fa-car"></i> {{ car.car_bodytype }}</p>
+                            <p><i class="fas fa-user-alt"></i> Seats up to {{ car.car_seating_capacity }} people</p>
+                            <p><i class="fas fa-cog"></i> {{ car.car_standard_transmission }}, {{ car.car_drive }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
 
 {% endblock %}

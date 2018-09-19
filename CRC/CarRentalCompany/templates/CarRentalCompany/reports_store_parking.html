@@ -11,6 +11,21 @@ CRC Store Parking
 
 <!-- Content goes here -->
 {% block content %}
+    <div id="content">
+        <div style="width: 300px; height: 300px;">{% include './Charts/store_parking.svg' %}</div>
+        <table>
+            <tr class="table-heading">
+                <td>Store</td>
+                <td>Available Car Parks</td>
+            </tr>
+            {% for store in queried_stores %}
+                <tr>
+                    <td>{{ store.store_city }}</td>
+                    <td>{{ store.picked_up }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

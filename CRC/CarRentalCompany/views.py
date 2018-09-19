@@ -2,11 +2,16 @@ from django.shortcuts import HttpResponse, render, redirect, reverse
 from django.template import loader
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.db import connection
 
+from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
-from .forms import LoginForm
-
+from .forms import RecommendForm,CarFilterForm
+from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
+from .recommendation import handle_recommendation
+from .filter_cars import handle_filter_cars, current_filter
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
+from django.core import serializers
 
 
 # Create your views here #
@@ -19,10 +24,31 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 ' The following are sprint 1:
 '''
 def index(request):
+    form = RecommendForm()
+    if request.method == "POST":
+        # pull data from form if filled out
+        purpose = request.POST['purpose']
+        seats = request.POST['seats']
+        transmission = request.POST['transmission']
+        month = request.POST['month']
+        recommended_cars = handle_recommendation(purpose, seats, transmission, month)
+        num_results = len(list(recommended_cars))
+        no_results = False
+        if num_results == 0:
+            no_results = True
+        form_actioned = True
+        return redirect("car_recommend",
+                        {'form': form,
+                         'recommended_cars': recommended_cars,
+                         'no_results': no_results,
+                         'form_actioned': form_actioned})
+    top_3_cars = top3cars()
     return render(request,
                   'CarRentalCompany/home.html',
                   {'car_list': Car.objects.all(),
-                   'store_list' : Store.objects.all()})
+                   'store_list': Store.objects.all(),
+                   'form': form,
+                   'top_3_cars': top_3_cars})
 
 
 '''
@@ -65,68 +91,61 @@ def register(request):
                   {})
 
 
-
-# ------ CUSTOMERS ----- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def my_account(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
-# -------- STAFF ------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def staff_orders(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_order(request, order_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_customers(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-def staff_customer(request, customer_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
 # -------- CARS -------- #
 '''
 ' SPRINT 1
 ' The following are sprint 1:
 '''
 def cars(request):
+    form = CarFilterForm()
+    filtered_cars = ""
+    filters = ""
+    if request.method == "POST":
+        series_year = request.POST['minimum_series_year']
+        body_type = request.POST['body_type']
+        seating_capacity = request.POST['minimum_seating_capacity']
+        make = request.POST['make_name']
+        engine_size = request.POST['engine_size']
+        fuel_system = request.POST['fuel_system']
+        tank_capacity = request.POST['tank_capacity']
+        power = request.POST['power']
+        filtered_cars = handle_filter_cars(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
+        filters = current_filter(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
+    if filtered_cars == "" or filtered_cars == -1 or filtered_cars == -2:
+        cars_json = serializers.serialize("json", Car.objects.all())
+    else:
+        cars_json = serializers.serialize("json", filtered_cars)
     return render(request,
                   'CarRentalCompany/cars.html',
-                  {'cars_list': Car.objects.all()})
+                  {'cars_list': Car.objects.all(),
+                   'form': form,
+                   'filtered_cars': filtered_cars,
+                   'filters': filters,
+                   'cars_json': cars_json})
+
 def car_recommend(request):
+    form = RecommendForm()
+    recommended_cars = []
+    no_results = False
+    form_actioned = False
+    if request.method == "POST":
+        # pull data from form if filled out
+        purpose = request.POST['purpose']
+        seats = request.POST['seats']
+        transmission = request.POST['transmission']
+        month = request.POST['month']
+        recommended_cars = handle_recommendation(purpose, seats, transmission, month)
+        num_results = len(list(recommended_cars))
+        if num_results == 0:
+            no_results = True
+        form_actioned = True
     return render(request,
                   'CarRentalCompany/car_recommend.html',
-                  {'cars_list': Car.objects.all()})
+                  {'form': form,
+                   'recommended_cars': recommended_cars,
+                   'no_results': no_results,
+                   'form_actioned': form_actioned})
+
 '''
 ' SPRINT 2
 ' The following are sprint 2:
@@ -138,86 +157,6 @@ def car(request, car_id):
                   {'car': car})
 def car_request(request, car_id):
     car = Car.objects.get(pk = car_id)
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
-
-
-# ------- STORES -------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-pass
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def stores(request):
-    return render(request,
-                  'CarRentalCompany/stores.html',
-                  {'stores_list': Store.objects.all()})
-
-def store(request, store_id):
-    store = Store.objects.get(pk = store_id)
-    return render(request,
-                  'CarRentalCompany/store.html',
-                  {'store': store})
-
-
-# ------- REPORTS ------ #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-
-
-@login_required
-def reports_dashboard(request):
-    user_profile = request.user.userprofile
-    customer = user_profile.is_customer
-    floor_staff = user_profile.is_floorStaff
-    if not customer and not floor_staff:
-        return render(request,
-                      'CarRentalCompany/reports_dashboard.html',
-                      {'cars_list': Car.objects.all(),
-                       'stores_list': Store.objects.all(),
-                       'users_list': User.objects.all()})
-    else:
-        return redirect('index')
-
-def reports_cars_seasonal(request):
-    return render(request,
-                  'CarRentalCompany/reports_cars_seasonal.html',
-                  {'cars_list': Car.objects.all()})
-def reports_cars_inactive(request):
-    return render(request,
-                  'CarRentalCompany/reports_cars_inactive.html',
-                  {'cars_list': Car.objects.all()})
-def reports_store_activity(request):
-    locations = []
-    for store in Store.objects.all():
-        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
-    return render(request,
-                  'CarRentalCompany/reports_store_activity.html',
-                  {'stores_list': Store.objects.all(),
-                   'location_maps' : locations})
-def reports_store_parking(request):
-    return render(request,
-                  'CarRentalCompany/reports_store_parking.html',
-                  {'stores_list': Store.objects.all()})
-def reports_customer_demographics(request):
-    return render(request,
-                  'CarRentalCompany/reports_customer_demographics.html',
-                  {'users_list': User.objects.all()})
-
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def reports_custom(request):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})

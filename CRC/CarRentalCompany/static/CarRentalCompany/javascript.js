@@ -47,8 +47,6 @@ function sortStores() {
     $('#sort-div-stores').load(document.location + ' #sort-div-stores');
 }
 
-
-
 function getGeoLocation(callback) {
 
         // User isn't using chrome
@@ -73,3 +71,30 @@ function getGeoLocation(callback) {
 // } catch {
 //     console.log("geolocation not enabled");
 // }
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
+function sortCarsList(element) {
+    var sortBy = $(element).val;
+    if (sortBy == "make"){
+        cars_json.sort(dynamicSort("car_makename"))
+    }
+    if (sortBy == "body"){
+        cars_json.sort(dynamicSort("car_bodytype"))
+    }
+    if (sortBy == "price"){
+        cars_json.sort(dynamicSort("car_price_new"))
+    }
+    var data = {"new_car_list": cars_json}
+
+}
