@@ -26,8 +26,8 @@ def update_store_name (store_name):
 
 def update_car_seats (int):
     seats = float(int)
-    if seats < 3:
-        seats = 4
+    if seats < 2:
+        seats = 2
     return seats
 
 # removes the prefix ffrom the phone number and cleans up some inconsistantcy 
