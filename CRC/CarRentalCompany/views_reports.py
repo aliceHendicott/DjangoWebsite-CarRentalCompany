@@ -7,7 +7,7 @@ from django.db import connection
 from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
 from .forms import RecommendForm
-from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
+from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview, store_parking_query
 from .recommendation import handle_recommendation
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
@@ -66,11 +66,15 @@ def store_activity(request):
                   'CarRentalCompany/reports_store_activity.html',
                   {'stores_list': Store.objects.all(),
                    'location_maps' : locations})
+
 def store_parking(request):
     drawGraph('horizBar', 'store_parking', 1)
+    results = store_parking_query()
     return render(request,
                   'CarRentalCompany/reports_store_parking.html',
-                  {'stores_list': Store.objects.all()})
+                  {'queried_stores': results,
+                   'stores': Store.objects.all()})
+
 def customer_demographics(request):
     return render(request,
                   'CarRentalCompany/reports_customer_demographics.html',

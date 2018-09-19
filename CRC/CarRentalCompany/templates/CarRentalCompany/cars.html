@@ -11,16 +11,22 @@ CRC Cars
 
 <!-- Content goes here -->
 {% block content %}
+
+    <script type="text/javascript">
+        var cars_json = {{ cars_json|safe }};
+    </script>
+
         <div id="content-style2">
             <div id="main-section">
                 <div id="title">
                     <div id="title-left"><h1>Cars</h1></div>
                     <div id="title-right">
                         Sort by:
-                        <select name="sort">
-                            <option name="sort" value="option 1">Option 1</option>
-                            <option name="sort" value="option 2">Option 2</option>
-                            <option name="sort" value="option 3">Option 3</option>
+                        <select name="sort" id="cars-sort" onchange="sortCarsList(this)">
+                            <option name="sort" value="make">Make (A-Z)</option>
+                            <option name="sort" value="popularity">Popularity</option>
+                            <option name="sort" value="price">Price (Low to High)</option>
+                            <option name="sort" value="body">Body type (A-Z)</option>
                         </select>
                     </div>
                 </div>
@@ -84,6 +90,7 @@ CRC Cars
 {% endblock %}
 
 <!-- Extra javascript goes here -->
+
 {% block javascript %}
 {% endblock %}
 

@@ -11,6 +11,7 @@ from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
 from .filter_cars import handle_filter_cars, current_filter
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
+from django.core import serializers
 
 
 # Create your views here #
@@ -110,12 +111,17 @@ def cars(request):
         power = request.POST['power']
         filtered_cars = handle_filter_cars(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
         filters = current_filter(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
+    if filtered_cars == "" or filtered_cars == -1 or filtered_cars == -2:
+        cars_json = serializers.serialize("json", Car.objects.all())
+    else:
+        cars_json = serializers.serialize("json", filtered_cars)
     return render(request,
                   'CarRentalCompany/cars.html',
                   {'cars_list': Car.objects.all(),
                    'form': form,
                    'filtered_cars': filtered_cars,
-                   'filters': filters})
+                   'filters': filters,
+                   'cars_json': cars_json})
 
 def car_recommend(request):
     form = RecommendForm()
