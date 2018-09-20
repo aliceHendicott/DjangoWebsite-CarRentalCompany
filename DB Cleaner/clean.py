@@ -24,7 +24,7 @@ def update_store_name (store_name):
     rpl_store_string = store_string.replace('_store','_Store')
     return rpl_store_string
 
-# Fixes any invalid car_seat numbers - Marco Fiumara
+# Fixes any invalid car_seat numbers - Chris Stock
 def update_car_seats (int):
     seats = float(int)
     if seats < 3:
@@ -45,7 +45,7 @@ def convert_to_number (phone_cur_format):
             phone_return2 = phone_format(string_number)
             return phone_return2
 
-# Function for removing special characters - Marco Fiumara
+# Function for removing special characters - Chris Stock
 def rmv_spc_char (data_input):
     invalid_characters = ['!','@','#','$','%','^','&','*',',',' ',]
     string_input = str(data_input)
@@ -60,7 +60,7 @@ cdata = panda.read_csv('DB_Central.csv')
 # Open the unclean Store.csv file to be cleaned - Chris Stock
 sdata = panda.read_csv('DB_Store.csv')
 
-# Set any blanks or NAN's to null - Chris Stock
+# Set any blanks or NAN's to null - Marco Fiumara
 cdata = cdata.replace(np.nan, 'null', regex=True)
 sdata = sdata.replace(np.nan, 'null', regex=True)
 cdata = cdata.replace('', 'null', regex=True)
@@ -68,7 +68,7 @@ sdata = sdata.replace('', 'null', regex=True)
 cdata = cdata.replace('  ', '', regex=True)
 sdata = sdata.replace('  ', '', regex=True)
 
-# Rename name incorrectly spelt headers and rename some for consitancy - Chris Stock
+# Rename name incorrectly spelt headers and rename some for consitancy - Marco Fiumara
 cdata.rename(columns={'Order_CreateDate': 'Order_Create_Date',
                     'Order_PickupDate': 'Order_Pickup_Date',
                     'Order_PickupStore': 'Order_Pickup_Store',
@@ -82,16 +82,15 @@ cdata.rename(columns={'Order_CreateDate': 'Order_Create_Date',
 stores = sdata[['Store_ID', 'Store_Name', 'Store_Address', 'Store_Phone',
 	           'Store_City', 'Store_State_Name']]
 
-#Clean all the Customer_Phone data remove (*) -- Marco Coded this line, confimed working
+#Clean all the Customer_Phone data remove (*) -- Chris Stock
 cdata['Customer_Phone'] = cdata['Customer_Phone'].str.slice(0,-1)
 
-# Date data clean/rearrange -- Marco asissted with coding
+# Date data clean/rearrange -- Chris Stock
 datenames = ['Order_Create_Date', 'Order_Pickup_Date', 'Order_Return_Date' ]
 for datename in datenames:
     cdata[datename] = cdata[datename].apply(convert_to_date)
 
-# remove any phone number pre fixes - Marco Assisted with the coding   
-
+# remove any phone number pre fixes - Chris Stock  
 phonenames = ['Pickup_Store_Phone','Return_Store_Phone','Customer_Phone']
 for phonename in phonenames:
     cdata[phonename] = cdata[phonename].apply(convert_to_number)
