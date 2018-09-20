@@ -11,20 +11,22 @@ CRC Cars Seasonal
 
 <!-- Content goes here -->
 {% block content %}
-    <div id="content">
-        <table>
-            <tr class="table-heading">
-                <td>Car Model</td>
-                <td>Rental Frequency</td>
-            </tr>
-            {% for car in seasonal_cars %}
-                <tr>
-                    <td>{{ car }}</td>
-                    <td>{{ car.number_of_orders }}</td>
+    <div id="content" class="report-page">
+        <div>
+            <table>
+                <tr class="table-heading">
+                    <td>Car Model</td>
+                    <td>Rental Frequency</td>
                 </tr>
-            {% endfor %}
-        </table>
-        <div style="width: 300px; height: 300px;">{% include './Charts/cars_seasonal.svg' %}</div>
+                {% for car in seasonal_cars %}
+                    <tr>
+                        <td>{{ car }}</td>
+                        <td>{{ car.number_of_orders }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div style="width: 500px; height: 500px;">{% include './Charts/cars_seasonal.svg' %}</div>
     </div>
 {% endblock %}
 

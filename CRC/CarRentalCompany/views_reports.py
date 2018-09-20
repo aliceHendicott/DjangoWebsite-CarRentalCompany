@@ -16,41 +16,49 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
 ## Supporting
 def cars_seasonal_graph():
-    graphdata = [['Fibonaccia', 11],
-                 ['Fibonaccib', 12],
-                 ['Fibonaccic', 13],
-                 ['Fibonaccid', 14],
-                 ['Fibonaccie', 15],
-                 ['Fibonaccif', 16]]
+    graphdata = [['WRX', 11],
+                 ['Toyota Prius', 12],
+                 ['Lancer', 13],
+                 ['Viper', 14],
+                 ['Benz', 15],
+                 ['Forester', 16]]
     drawGraph('bar', 'cars_seasonal', graphdata)
 
 def cars_inactive_graph():
-    graphdata = [['Fibonaccia', 11],
-                 ['Fibonaccib', 12],
-                 ['Fibonaccic', 13],
-                 ['Fibonaccid', 14],
-                 ['Fibonaccie', 15],
-                 ['Fibonaccif', 16]]
+    graphdata = [['VW Golf', 11],
+                 ['Getz', 12],
+                 ['Falcon', 13],
+                 ['Vento', 14],
+                 ['Lotus x', 15],
+                 ['Tesla', 16]]
     drawGraph('horizBar', 'cars_inactive', graphdata)
 
 def store_parking_graph():
-    graphdata = [['Fibonaccia', 11],
-                 ['Fibonaccib', 12],
-                 ['Fibonaccic', 13],
-                 ['Fibonaccid', 14],
-                 ['Fibonaccie', 15],
-                 ['Fibonaccif', 16]]
+    graphdata = [['Brisbane', 11],
+                 ['Warrnambool', 12],
+                 ['Sydney', 13],
+                 ['Gold Coast', 14],
+                 ['Perth', 15],
+                 ['Adelaide', 16]]
     drawGraph('horizBar', 'store_parking', graphdata)
 
 def store_activity_graph():
-    graphdata = [['Fibonaccia', 11],
-                 ['Fibonaccib', 12],
-                 ['Fibonaccic', 13],
-                 ['Fibonaccid', 14],
-                 ['Fibonaccie', 15],
-                 ['Fibonaccif', 16]]
+    graphdata = [['Brisbane', 11],
+                 ['Warrnambool', 12],
+                 ['Sydney', 13],
+                 ['Gold Coast', 14],
+                 ['Perth', 15],
+                 ['Adelaide', 16]]
     drawGraph('pie', 'store_activity', graphdata)
 
+def customer_demographics_graph():
+    graphdata = [['Female 18 - 25', 1],
+                 ['Male 35 - 45', 3],
+                 ['Male 18 - 25', 6],
+                 ['Female 65+', 2],
+                 ['Female 35-45', 9],
+                 ['Male +', 1]]
+    drawGraph('pie', 'customer_demographics', graphdata)
 
 
 '''
@@ -64,6 +72,7 @@ def dashboard(request):
         cars_inactive_graph()
         store_parking_graph()
         store_activity_graph()
+        customer_demographics_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -157,6 +166,7 @@ def store_parking(request):
 
 def customer_demographics(request):
     if request.user.is_authenticated:
+        customer_demographics_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
