@@ -4,16 +4,16 @@ Database queries
 Cars By Season
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
--- Query #1 - Most Common Car Bodytype
 
-USE crc_central_database;
-
-SELECT car_bodytype, COUNT(car_bodytype) AS `Most Frequent` FROM carrentalcompany_car GROUP BY car_bodytype ORDER BY `Most Frequent` DESC LIMIT 1;
-
-
-
-
-
+SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
+                FROM CarRentalCompany_car
+                LEFT JOIN CarRentalCompany_order
+                ON (CarRentalCompany_order.car_id_id = CarRentalCompany_car.id)
+                WHERE
+			MONTH(CarRentalCompany_order.order_pickup_date)=2 AND YEAR(CarRentalCompany_order.order_pickup_date)=2007
+                GROUP BY
+	                CarRentalCompany_car.id
+                ORDER BY number_of_orders DESC
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -22,16 +22,15 @@ Location Activity
 
 
 
-
-
-
-
-
-
-
-
-
-
+SELECT CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_orders
+                FROM CarRentalCompany_store
+                LEFT JOIN CarRentalCompany_order
+                ON (CarRentalCompany_order.order_pickup_store_id_id = CarRentalCompany_store.id)
+                WHERE
+					MONTH(CarRentalCompany_order.order_pickup_date)=2 AND YEAR(CarRentalCompany_order.order_pickup_date)=2007
+                GROUP BY
+	                CarRentalCompany_store.id
+                ORDER BY number_of_orders DESC
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,9 +39,7 @@ Customer Demographic
 
 -- Query #1 - Ages by Range
 
-USE crc_central_database;
-
-SELECT COUNT(*) AS 'Number of Users'
+SELECT COUNT(*) AS 'number_of_users', user_gender,
             CASE
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
@@ -60,70 +57,42 @@ SELECT COUNT(*) AS 'Number of Users'
             FROM CarRentalCompany_User
             GROUP BY 
             CASE
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M'
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M' 
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M'
                 WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
             END 
             ORDER BY Ages
--- Query #2 - Bodytype Count by Gender
+
+-- Query #2 - Most popular body type
 
 USE crc_central_database;
 
-SELECT carrentalcompany_car.car_bodytype,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='M' then 1 end) as Male,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='F' then 1 end) as Female
-FROM carrentalcompany_user
-INNER JOIN carrentalcompany_order ON carrentalcompany_user.id=carrentalcompany_order.customer_id_id
-INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
-GROUP BY car_bodytype;
-
--- Query #3 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Males)
-
-USE crc_central_database;
-
-SELECT carrentalcompany_car.car_bodytype,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='M' then 1 end) as Male,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='F' then 1 end) as Female
-FROM carrentalcompany_user
-INNER JOIN carrentalcompany_order ON carrentalcompany_user.id=carrentalcompany_order.customer_id_id
-INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
-GROUP BY car_bodytype
-ORDER BY Male DESC;
-
--- Query #3.1 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Males)
-
-USE crc_central_database;
-
-SELECT carrentalcompany_car.car_bodytype,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='M' then 1 end) as Male,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='F' then 1 end) as Female
-FROM carrentalcompany_user
-INNER JOIN carrentalcompany_order ON carrentalcompany_user.id=carrentalcompany_order.customer_id_id
-INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
-GROUP BY car_bodytype
-ORDER BY Male DESC;
-
--- Query #3.2 - Bodytype Count by Gender (Ordered By Most Popular Bodytype for Females)
-
-USE crc_central_database;
-
-SELECT carrentalcompany_car.car_bodytype,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='M' then 1 end) as Male,
-    COUNT(CASE WHEN carrentalcompany_user.user_gender='F' then 1 end) as Female
-FROM carrentalcompany_user
-INNER JOIN carrentalcompany_order ON carrentalcompany_user.id=carrentalcompany_order.customer_id_id
-INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
-GROUP BY car_bodytype
-ORDER BY Female DESC;
+SELECT CarRentalCompany_car.car_bodytype,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 then 1 end) as Male_30_39,
+	COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 then 1 end) as Male_39_49,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 then 1 end) as Male_50_59,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 then 1 end) as Male_60_69,
+	COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 then 1 end) as Male_70_79,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 then 1 end) as Male_80_89,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 then 1 end) as Female_30_39,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 then 1 end) as Female_40_49,
+	COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 then 1 end) as Female_50_59,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 then 1 end) as Female_60_69,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 then 1 end) as Female_70_79,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 then 1 end) as Female_80_79
+FROM CarRentalCompany_user
+INNER JOIN CarRentalCompany_order ON CarRentalCompany_user.id=CarRentalCompany_order.customer_id_id
+INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
+GROUP BY CarRentalCompany_car.car_bodytype
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Available Car Parks:
@@ -133,34 +102,25 @@ Available Car Parks:
 
 USE crc_central_database;
     
-SELECT order_pickup_store_id_id, COUNT(id) FROM carrentalcompany_order GROUP BY order_pickup_store_id_id;
+SELECT *, COUNT(CarRentalCompany_order.id) as picked_up FROM CarRentalCompany_order 
+LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id
+GROUP BY CarRentalCompany_order.order_pickup_store_id_id
 
 -- Query #2 - Total Return Count Per Store
 
 USE crc_central_database;
 
-SELECT order_return_store_id_id, COUNT(id) FROM carrentalcompany_order GROUP BY order_return_store_id_id;
+SELECT *, COUNT(CarRentalCompany_order.id) as returned FROM CarRentalCompany_order
+GROUP BY CarRentalCompany_order.order_return_store_id_id
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Inactive Cars
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
--- Query #1 - Last Rented Bodytype
-
 USE crc_central_database;
 
-SELECT carrentalcompany_car.car_bodytype, MAX(carrentalcompany_order.order_return_date) AS `Return Date`
-FROM carrentalcompany_order
-INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
-GROUP BY car_bodytype
-ORDER BY `Return Date` ASC;
-
--- Query #2 - Last Rented Make
-
-USE crc_central_database;
-
-SELECT carrentalcompany_car.car_makename, MAX(carrentalcompany_order.order_return_date) AS `Return Date`
-FROM carrentalcompany_order
-INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcompany_car.id
-GROUP BY car_makename
-ORDER BY `Return Date` ASC;
+SELECT CarRentalCompany_car.*,  MAX(CarRentalCompany_order.order_return_date) AS `Return_Date`
+                FROM CarRentalCompany_order
+                INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
+                GROUP BY CarRentalCompany_car.car_model
+                ORDER BY `Return_Date` ASC;
