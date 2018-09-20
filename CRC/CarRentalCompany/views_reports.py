@@ -59,7 +59,6 @@ def store_activity_graph():
 '''
 
 def dashboard(request):
-<<<<<<< HEAD
     if request.user.is_authenticated:
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
@@ -73,7 +72,6 @@ def dashboard(request):
                            'store_activity': store_activity})
         else:
             return redirect('index')
-=======
     cars_seasonal_graph()
     cars_inactive_graph()
     store_parking_graph()
@@ -88,12 +86,10 @@ def dashboard(request):
                       'CarRentalCompany/reports_dashboard.html',
                       {'seasonal_cars': seasonal_cars,
                        'store_activity': store_activity})
->>>>>>> 3f3a2e4e76dc5fd9ff9e858698d9569c0aca3550
     else:
         return redirect('index')
 
 def cars_seasonal(request):
-<<<<<<< HEAD
     if request.user.is_authenticated:
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
@@ -158,7 +154,6 @@ def store_parking(request):
             return redirect('index')
     else:
         return redirect('index')
-=======
     cars_seasonal_graph();
     return render(request,
                   'CarRentalCompany/reports_cars_seasonal.html',
@@ -185,7 +180,6 @@ def store_parking(request):
                   'CarRentalCompany/reports_store_parking.html',
                   {'queried_stores': results,
                    'stores': Store.objects.all()})
->>>>>>> 3f3a2e4e76dc5fd9ff9e858698d9569c0aca3550
 
 def customer_demographics(request):
     if request.user.is_authenticated:
