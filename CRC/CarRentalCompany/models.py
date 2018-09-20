@@ -50,6 +50,18 @@ class Car(models.Model):
     car_bodytype = models.CharField(max_length = 128, default = "null")
     def __str__(self):
         return self.car_makename + ": " + self.car_model
+    def top_cars(limit = 0):
+        query = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
+                FROM CarRentalCompany_car
+                LEFT JOIN CarRentalCompany_order
+                ON (CarRentalCompany_order.car_id_id = CarRentalCompany_car.id)
+                GROUP BY
+	                CarRentalCompany_car.id
+                ORDER BY number_of_orders DESC'''
+        if (limit > 0):
+            quert += " LIMIT " + strftime(limit)
+        return Car.objects.raw(query)
+
 
 class Store(models.Model):
     store_name = models.CharField(max_length = 128, default = "null")

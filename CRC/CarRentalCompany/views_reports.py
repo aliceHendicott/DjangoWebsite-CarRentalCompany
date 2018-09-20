@@ -14,18 +14,43 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
 # ------- REPORTS ------ #
 
-
 ## Supporting
 def cars_seasonal_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('bar', 'cars_seasonal', graphdata)
+
 def cars_inactive_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('horizBar', 'cars_inactive', graphdata)
+
 def store_parking_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('horizBar', 'store_parking', graphdata)
+
 def store_activity_graph():
-    pass
-def cars_seasonal_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('pie', 'store_activity', graphdata)
+
 
 
 '''
@@ -34,6 +59,7 @@ def cars_seasonal_graph():
 '''
 
 def dashboard(request):
+<<<<<<< HEAD
     if request.user.is_authenticated:
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
@@ -47,10 +73,27 @@ def dashboard(request):
                            'store_activity': store_activity})
         else:
             return redirect('index')
+=======
+    cars_seasonal_graph()
+    cars_inactive_graph()
+    store_parking_graph()
+    store_activity_graph()
+    user_profile = request.user.userprofile
+    customer = user_profile.is_customer
+    floor_staff = user_profile.is_floorStaff
+    if not customer and not floor_staff:
+        seasonal_cars = seasonal_cars_preview()
+        store_activity = store_activity_preview()
+        return render(request,
+                      'CarRentalCompany/reports_dashboard.html',
+                      {'seasonal_cars': seasonal_cars,
+                       'store_activity': store_activity})
+>>>>>>> 3f3a2e4e76dc5fd9ff9e858698d9569c0aca3550
     else:
         return redirect('index')
 
 def cars_seasonal(request):
+<<<<<<< HEAD
     if request.user.is_authenticated:
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
@@ -115,6 +158,34 @@ def store_parking(request):
             return redirect('index')
     else:
         return redirect('index')
+=======
+    cars_seasonal_graph();
+    return render(request,
+                  'CarRentalCompany/reports_cars_seasonal.html',
+                  {'cars_list': Car.objects.all()})
+def cars_inactive(request):
+    cars_inactive_graph()
+    return render(request,
+                  'CarRentalCompany/reports_cars_inactive.html',
+                  {'cars_list': Car.objects.all()})
+def store_activity(request):
+    store_activity_graph()
+    locations = []
+    for store in Store.objects.all():
+        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
+    return render(request,
+                  'CarRentalCompany/reports_store_activity.html',
+                  {'stores_list': Store.objects.all(),
+                   'location_maps' : locations})
+
+def store_parking(request):
+    store_parking_graph();
+    results = store_parking_query()
+    return render(request,
+                  'CarRentalCompany/reports_store_parking.html',
+                  {'queried_stores': results,
+                   'stores': Store.objects.all()})
+>>>>>>> 3f3a2e4e76dc5fd9ff9e858698d9569c0aca3550
 
 def customer_demographics(request):
     if request.user.is_authenticated:
