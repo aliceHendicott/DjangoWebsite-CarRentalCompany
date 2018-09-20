@@ -42,29 +42,38 @@ Customer Demographic
 
 USE crc_central_database;
 
-SELECT 
-    COUNT(*) AS 'Number of Users',
-    CASE
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 THEN '30-39'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 THEN '40-49'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 THEN '50-59'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 THEN '60-69' 
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 THEN '70-79'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 THEN '80-89'
-    END AS Ages
-FROM carrentalcompany_user
-GROUP BY 
-    CASE
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 THEN '30-39'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 THEN '40-49'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 THEN '50-59'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 THEN '60-69' 
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 THEN '70-79'
-        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 THEN '80-89'
-    END 
-ORDER BY 
-    Ages;
-
+SELECT COUNT(*) AS 'Number of Users'
+            CASE
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
+            END AS Ages
+            FROM CarRentalCompany_User
+            GROUP BY 
+            CASE
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
+            END 
+            ORDER BY Ages
 -- Query #2 - Bodytype Count by Gender
 
 USE crc_central_database;
