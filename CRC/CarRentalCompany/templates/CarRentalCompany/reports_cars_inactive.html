@@ -11,7 +11,23 @@ CRC Cars Inactive
 
 <!-- Content goes here -->
 {% block content %}
+    <div id="content">
+    <table>
+        <tr class="table-heading">
+            <td>Car Make</td>
+            <td>Car Model</td>
+            <td>Last Rented</td>
+        </tr>
+        {% for car in inactive_cars %}
+            <tr>
+                <td>{{ car.car_makename }}</td>
+                <td>{{ car.car_model }}</td>
+                <td>{{ car.Return_Date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 <div style="width: 300px; height: 300px;">{% include './Charts/cars_inactive.svg' %}</div>
+    </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

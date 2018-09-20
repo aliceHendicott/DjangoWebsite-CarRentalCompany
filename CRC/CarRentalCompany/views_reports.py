@@ -76,16 +76,6 @@ def dashboard(request):
                            'store_activity': store_activity})
         else:
             return redirect('index')
-    user_profile = request.user.userprofile
-    customer = user_profile.is_customer
-    floor_staff = user_profile.is_floorStaff
-    if not customer and not floor_staff:
-        seasonal_cars = seasonal_cars_preview()
-        store_activity = store_activity_preview()
-        return render(request,
-                      'CarRentalCompany/reports_dashboard.html',
-                      {'seasonal_cars': seasonal_cars,
-                       'store_activity': store_activity})
     else:
         return redirect('index')
 
@@ -96,9 +86,11 @@ def cars_seasonal(request):
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
         if not customer and not floor_staff:
+            seasonal_cars_results = seasonal_cars()
             return render(request,
                           'CarRentalCompany/reports_cars_seasonal.html',
-                          {'cars_list': Car.objects.all()})
+                          {'cars_list': Car.objects.all(),
+                           'seasonal_cars':  seasonal_cars_results})
         else:
             return redirect('index')
     else:
@@ -111,10 +103,11 @@ def cars_inactive(request):
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
         if not customer and not floor_staff:
-            drawGraph('horizBar', 'cars_inactive', 1)
+            inactive_car_results = inactive_cars()
             return render(request,
                           'CarRentalCompany/reports_cars_inactive.html',
-                          {'cars_list': Car.objects.all()})
+                          {'cars_list': Car.objects.all(),
+                           'inactive_cars': inactive_car_results})
         else:
             return redirect('index')
     else:
@@ -130,10 +123,12 @@ def store_activity(request):
             locations = []
             for store in Store.objects.all():
                 locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
+            store_results = store_activity_query()
             return render(request,
                           'CarRentalCompany/reports_store_activity.html',
                           {'stores_list': Store.objects.all(),
-                           'location_maps': locations})
+                           'location_maps': locations,
+                           'store_results': store_results})
         else:
             return redirect('index')
     else:
