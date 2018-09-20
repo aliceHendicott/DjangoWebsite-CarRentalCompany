@@ -14,18 +14,43 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 
 # ------- REPORTS ------ #
 
-
 ## Supporting
 def cars_seasonal_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('bar', 'cars_seasonal', graphdata)
+
 def cars_inactive_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('horizBar', 'cars_inactive', graphdata)
+
 def store_parking_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('horizBar', 'store_parking', graphdata)
+
 def store_activity_graph():
-    pass
-def cars_seasonal_graph():
-    pass
+    graphdata = [['Fibonaccia', 11],
+                 ['Fibonaccib', 12],
+                 ['Fibonaccic', 13],
+                 ['Fibonaccid', 14],
+                 ['Fibonaccie', 15],
+                 ['Fibonaccif', 16]]
+    drawGraph('pie', 'store_activity', graphdata)
+
 
 
 '''
@@ -35,6 +60,10 @@ def cars_seasonal_graph():
 
 @login_required
 def dashboard(request):
+    cars_seasonal_graph()
+    cars_inactive_graph()
+    store_parking_graph()
+    store_activity_graph()
     user_profile = request.user.userprofile
     customer = user_profile.is_customer
     floor_staff = user_profile.is_floorStaff
@@ -48,17 +77,17 @@ def dashboard(request):
     else:
         return redirect('index')
 def cars_seasonal(request):
-    drawGraph('bar', 'cars_seasonal', 1)
+    cars_seasonal_graph();
     return render(request,
                   'CarRentalCompany/reports_cars_seasonal.html',
                   {'cars_list': Car.objects.all()})
 def cars_inactive(request):
-    drawGraph('horizBar', 'cars_inactive', 1)
+    cars_inactive_graph()
     return render(request,
                   'CarRentalCompany/reports_cars_inactive.html',
                   {'cars_list': Car.objects.all()})
 def store_activity(request):
-    drawGraph('pie', 'store_activity', 1)
+    store_activity_graph()
     locations = []
     for store in Store.objects.all():
         locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
@@ -68,7 +97,7 @@ def store_activity(request):
                    'location_maps' : locations})
 
 def store_parking(request):
-    drawGraph('horizBar', 'store_parking', 1)
+    store_parking_graph();
     results = store_parking_query()
     return render(request,
                   'CarRentalCompany/reports_store_parking.html',
