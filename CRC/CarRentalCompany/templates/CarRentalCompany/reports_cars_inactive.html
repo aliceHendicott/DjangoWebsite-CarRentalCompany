@@ -11,7 +11,8 @@ CRC Cars Inactive
 
 <!-- Content goes here -->
 {% block content %}
-    <div id="content">
+    <div id="content" class="report-page">
+    <div>
     <table>
         <tr class="table-heading">
             <td>Car Make</td>
@@ -26,7 +27,8 @@ CRC Cars Inactive
             </tr>
         {% endfor %}
     </table>
-<div style="width: 300px; height: 300px;">{% include './Charts/cars_inactive.svg' %}</div>
+    </div>
+<div style="width: 500px; height: 500px;">{% include './Charts/cars_inactive.svg' %}</div>
     </div>
 {% endblock %}
 

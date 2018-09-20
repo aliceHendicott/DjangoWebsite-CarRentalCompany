@@ -11,8 +11,8 @@ CRC Store Parking
 
 <!-- Content goes here -->
 {% block content %}
-    <div id="content">
-        <div style="width: 300px; height: 300px;">{% include './Charts/store_parking.svg' %}</div>
+    <div id="content" class="report-page">
+    <div>
         <table>
             <tr class="table-heading">
                 <td>Store</td>
@@ -25,6 +25,8 @@ CRC Store Parking
                 </tr>
             {% endfor %}
         </table>
+    </div>
+    <div style="width: 500px; height: 500px;">{% include './Charts/store_parking.svg' %}</div>
     </div>
 {% endblock %}
 

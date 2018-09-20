@@ -15,42 +15,47 @@ CRC Reports Dashboard
     <div id="content">
         <h1>Reports</h1>
         <div class="grid listing" id="columns2">
-            <div>
+            <div class="report-page">
                 <a href="/reports/cars/seasonal/"><h3>Cars by Season</h3></a>
-                <table>
-                    <tr class="table-heading">
-                        <td>Car Model</td>
-                        <td>Rental Frequency</td>
-                    </tr>
-                    {% for car in seasonal_cars %}
-                        <tr>
-                            <td>{{ car }}</td>
-                            <td>{{ car.number_of_orders }}</td>
+                <div>
+                    <table>
+                        <tr class="table-heading">
+                            <td>Car Model</td>
+                            <td>Rental Frequency</td>
                         </tr>
-                    {% endfor %}
-                </table>
-                <div style="width: 300px; height: 300px">{% include './Charts/cars_seasonal.svg' %}</div>
+                        {% for car in seasonal_cars %}
+                            <tr>
+                                <td>{{ car }}</td>
+                                <td>{{ car.number_of_orders }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div style="width: 250px;">{% include './Charts/cars_seasonal.svg' %}</div>
             </div>
-             <div>
+            <div class="report-page">
                 <a href="/reports/stores/activity/"><h3>Store Activity</h3></a>
-                 <table>
-                    <tr class="table-heading">
-                        <td>Store Location</td>
-                        <td>Rental Frequency</td>
-                    </tr>
-                    {% for store in store_activity %}
-                        <tr>
-                            <td>{{ store.store_city }}</td>
-                            <td>{{ store.number_of_orders }}</td>
+                <div>
+                    <table>
+                        <tr class="table-heading">
+                            <td>Store Location</td>
+                            <td>Rental Frequency</td>
                         </tr>
-                    {% endfor %}
-                    <div style="width: 300px; height: 300px;">{% include './Charts/store_activity.svg' %}</div>
-                </table>
+                        {% for store in store_activity %}
+                            <tr>
+                                <td>{{ store.store_city }}</td>
+                                <td>{{ store.number_of_orders }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div style="width: 250px;">{% include './Charts/store_activity.svg' %}</div>
             </div>
         </div>
         <div class="grid listing" id="reports-row2">
             <div>
                 <a href="/reports/customers/demographics/"><h3>Customer Demographic</h3></a>
+                <div style="width: 250px;">{% include './Charts/customer_demographics.svg' %}</div>
             </div>
              <div>
                 <a href="/reports/stores/parking/"><h3>Available Car Parks</h3></a>
