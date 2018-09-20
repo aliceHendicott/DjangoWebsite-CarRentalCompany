@@ -11,6 +11,22 @@ CRC Customer Demographics
 
 <!-- Content goes here -->
 {% block content %}
+    <div id="content">
+        <table>
+            <tr class="table-heading">
+                <td>Age Range and Gender</td>
+                <td>Number of Users</td>
+                <td>Most Popular Body Type</td>
+            </tr>
+            {% for age_group in results %}
+                <tr>
+                    <td>{{ age_group.2 }}</td>
+                    <td>{{ age_group.0 }}</td>
+                    <td>{{ age_group.3 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

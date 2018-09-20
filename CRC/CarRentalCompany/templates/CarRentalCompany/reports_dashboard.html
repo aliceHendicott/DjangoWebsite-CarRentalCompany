@@ -29,6 +29,7 @@ CRC Reports Dashboard
                         </tr>
                     {% endfor %}
                 </table>
+                <div style="width: 300px; height: 300px">{% include './Charts/cars_seasonal.svg' %}</div>
             </div>
              <div>
                 <a href="/reports/stores/activity/"><h3>Store Activity</h3></a>
@@ -43,6 +44,7 @@ CRC Reports Dashboard
                             <td>{{ store.number_of_orders }}</td>
                         </tr>
                     {% endfor %}
+                    <div style="width: 300px; height: 300px;">{% include './Charts/store_activity.svg' %}</div>
                 </table>
             </div>
         </div>
@@ -52,9 +54,11 @@ CRC Reports Dashboard
             </div>
              <div>
                 <a href="/reports/stores/parking/"><h3>Available Car Parks</h3></a>
+                <div style="width: 300px; height: 300px;">{% include './Charts/store_parking.svg' %}</div>
             </div>
             <div>
                 <a href="/reports/cars/inactive/"><h3>Inactive Cars</h3></a>
+                <div style="width: 300px; height: 300px;">{% include './Charts/cars_inactive.svg' %}</div>
         </div>
     </div>
 

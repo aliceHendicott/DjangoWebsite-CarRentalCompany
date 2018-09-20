@@ -3,10 +3,14 @@
     "",
     "\\CarRentalCompany",
     "\\CarRentalCompany\\static",
+    "\\CarRentalCompany\\static\\CarRentalCompany",
+    "\\CarRentalCompany\\static\\CarRentalCompany\\Images",
     "\\CarRentalCompany\\templates",
     "\\CarRentalCompany\\templates\\CarRentalCompany",
+    "\\CarRentalCompany\\templates\\CarRentalCompany\\Charts",
+    "\\CarRentalCompany\\templates\\CarRentalCompany\\Includes",
     "\\CRC"
   ],
-  "SelectedNode": "\\CarRentalCompany\\graphs.py",
+  "SelectedNode": "\\CarRentalCompany\\views_reports.py",
   "PreviewInSolutionExplorer": false
 }
