@@ -51,6 +51,14 @@ def store_activity_graph():
                  ['Fibonaccif', 16]]
     drawGraph('pie', 'store_activity', graphdata)
 
+def customer_demographics_graph():
+    graphdata = [['Fibonaccia', 1],
+                 ['Fibonaccib', 3],
+                 ['Fibonaccic', 6],
+                 ['Fibonaccid', 2],
+                 ['Fibonaccie', 9],
+                 ['Fibonaccif', 1]]
+    drawGraph('pie', 'customer_demographics', graphdata)
 
 
 '''
@@ -64,6 +72,7 @@ def dashboard(request):
         cars_inactive_graph()
         store_parking_graph()
         store_activity_graph()
+        customer_demographics_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -157,6 +166,7 @@ def store_parking(request):
 
 def customer_demographics(request):
     if request.user.is_authenticated:
+        customer_demographics_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
