@@ -9,7 +9,7 @@ from .models import Car, Store, Order, User, UserProfile
 from .forms import RecommendForm,CarFilterForm
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
-from .filter_cars import handle_filter_cars, current_filter
+from .filter_cars import *
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
 from django.core import serializers
 
@@ -100,21 +100,20 @@ def cars(request):
     form = CarFilterForm()
     filtered_cars = ""
     filters = ""
+    # check if the car filter form has been submitted
     if request.method == "POST":
-        series_year = request.POST['minimum_series_year']
-        body_type = request.POST['body_type']
-        seating_capacity = request.POST['minimum_seating_capacity']
-        make = request.POST['make_name']
-        engine_size = request.POST['engine_size']
-        fuel_system = request.POST['fuel_system']
-        tank_capacity = request.POST['tank_capacity']
-        power = request.POST['power']
-        filtered_cars = handle_filter_cars(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
-        filters = current_filter(series_year, body_type, seating_capacity, make, engine_size, fuel_system, tank_capacity, power)
+        # pull the values posted into a python dictionary
+        fields = request.POST
+        # pull list of cars based on these filters
+        filtered_cars = handle_filter_cars(fields)
+        # pull list of filters used if the filters returned values
+        if filtered_cars != -1:
+            filters = get_current_filter(fields)
     if filtered_cars == "" or filtered_cars == -1 or filtered_cars == -2:
         cars_json = serializers.serialize("json", Car.objects.all())
     else:
         cars_json = serializers.serialize("json", filtered_cars)
+    #render cars.html passing all relevant variables
     return render(request,
                   'CarRentalCompany/cars.html',
                   {'cars_list': Car.objects.all(),
