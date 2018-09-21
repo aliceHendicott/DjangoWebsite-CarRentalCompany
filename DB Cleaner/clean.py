@@ -1,10 +1,10 @@
 import pandas as panda
 import numpy as np
 import datetime
+# Data Base Cleaner - Cleans the database for use in SQL
+# Author - Chris Stock, Marco Fiumara (each item worked on listed)
 
-
-#####FUNCTIONS###########################################################################################
-#Function for converting the date into a readable format.
+#Function for converting the date into a readable format. - Chris Stock
 def convert_to_date (date_cur_format):
     date_as_string = str(date_cur_format)
     year = date_as_string[0:4]
@@ -12,25 +12,26 @@ def convert_to_date (date_cur_format):
     day = date_as_string[6:8]
     return str( day + "/" + month + "/" + year)
 
-# Places all phone numbers in the format ###-###-#####
+# Places all phone numbers in the format ###-###-##### - Chris Stock
 def phone_format (phone_number):
         rmv_space = phone_number.replace(' ', '')
         rmv_dash = rmv_space.replace('-','')
         phone_consistancy = rmv_dash[0:3] + "-" + rmv_dash[3:6] + "-" + rmv_dash[6:]
         return phone_consistancy
-# Fix the store names for consistancy
+# Fix the store names for consistancy - Chris Stock
 def update_store_name (store_name):
     store_string = str(store_name)
     rpl_store_string = store_string.replace('_store','_Store')
     return rpl_store_string
 
+# Fixes any invalid car_seat numbers - Chris Stock
 def update_car_seats (int):
     seats = float(int)
-    if seats < 2:
-        seats = 2
+    if seats < 3:
+        seats = 4
     return seats
 
-# removes the prefix ffrom the phone number and cleans up some inconsistantcy 
+# removes the prefix from the phone number and cleans up some inconsistency  - Chris Stock
 def convert_to_number (phone_cur_format):
     string_number = str(phone_cur_format)
     if string_number == 'null':
@@ -44,7 +45,7 @@ def convert_to_number (phone_cur_format):
             phone_return2 = phone_format(string_number)
             return phone_return2
 
-# Function for removing special characters
+# Function for removing special characters - Chris Stock
 def rmv_spc_char (data_input):
     invalid_characters = ['!','@','#','$','%','^','&','*',',',' ',]
     string_input = str(data_input)
@@ -53,13 +54,13 @@ def rmv_spc_char (data_input):
 
 #########################################################################################################
 
-# Open the unclean central.csv file to be cleaned
+# Open the unclean central.csv file to be cleaned - Chris Stock
 cdata = panda.read_csv('DB_Central.csv')
 
-# Open the unclean Store.csv file to be cleaned
+# Open the unclean Store.csv file to be cleaned - Chris Stock
 sdata = panda.read_csv('DB_Store.csv')
 
-# Set any blanks or NAN's to null
+# Set any blanks or NAN's to null - Marco Fiumara
 cdata = cdata.replace(np.nan, 'null', regex=True)
 sdata = sdata.replace(np.nan, 'null', regex=True)
 cdata = cdata.replace('', 'null', regex=True)
@@ -67,7 +68,7 @@ sdata = sdata.replace('', 'null', regex=True)
 cdata = cdata.replace('  ', '', regex=True)
 sdata = sdata.replace('  ', '', regex=True)
 
-# Rename name incorrectly spelt headers and rename some for consitancy
+# Rename name incorrectly spelt headers and rename some for consitancy - Marco Fiumara
 cdata.rename(columns={'Order_CreateDate': 'Order_Create_Date',
                     'Order_PickupDate': 'Order_Pickup_Date',
                     'Order_PickupStore': 'Order_Pickup_Store',
@@ -77,36 +78,35 @@ cdata.rename(columns={'Order_CreateDate': 'Order_Create_Date',
                     'Customer_Brithday': 'Customer_Birthday'
                     }, inplace=True)
 
-# Get store data from store database and scrub
+# Get store data from store database and scrub - Chris Stock
 stores = sdata[['Store_ID', 'Store_Name', 'Store_Address', 'Store_Phone',
 	           'Store_City', 'Store_State_Name']]
 
-#Clean all the Customer_Phone data remove (*) -- Marco Coded this line, confimed working
+#Clean all the Customer_Phone data remove (*) -- Chris Stock
 cdata['Customer_Phone'] = cdata['Customer_Phone'].str.slice(0,-1)
 
-# Date data clean/rearrange -- Marco asissted with coding
+# Date data clean/rearrange -- Chris Stock
 datenames = ['Order_Create_Date', 'Order_Pickup_Date', 'Order_Return_Date' ]
 for datename in datenames:
     cdata[datename] = cdata[datename].apply(convert_to_date)
 
-# remove any phone number pre fixes - Marco Assisted with the coding   
-
+# remove any phone number pre fixes - Chris Stock  
 phonenames = ['Pickup_Store_Phone','Return_Store_Phone','Customer_Phone']
 for phonename in phonenames:
     cdata[phonename] = cdata[phonename].apply(convert_to_number)
     
 sdata['Store_Phone'] = sdata['Store_Phone'].apply(convert_to_number)
 
-# Fixing Store names
+# Fixing Store names - Chris Stock
 storenames = ['Pickup_Store_Name', 'Return_Store_Name']
 for storename in storenames:
     cdata[storename] = cdata[storename].apply(update_store_name)
 sdata['Store_Name'] = sdata['Store_Name'].apply(update_store_name)
 
-# clean the customer addresses
+# clean the customer addresses - Chris Stock
 cdata['Customer_Address'] = cdata['Customer_Address'].apply(rmv_spc_char)
 
-# find null and remove null data
+# find null and remove null data - Marco Fiumara
 order_data = ['Pickup_Store_Name']
 
 car_data = ['Car_MakeName']
@@ -117,9 +117,9 @@ for orders in order_data:
     data=data_A+data_B+data_C
     cdata=cdata.drop(cdata.index[data])
 
-# Remove 0's from car seating
+# Remove 0's from car seating - Marco Fiumara
 cdata['Car_SeatingCapacity'] = cdata['Car_SeatingCapacity'].apply(update_car_seats)
 
-# Create the clean csv file to be put into the database
+# Create the clean csv file to be put into the database - Chris Stock
 cdata.to_csv('Clean_DB_Central.csv', index=False)
 stores.to_csv('Clean_DB_Store.csv', index=False)
