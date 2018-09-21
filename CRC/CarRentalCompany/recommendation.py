@@ -23,14 +23,14 @@ def handle_recommendation(purpose, seats, transmission, month):
     months_sql = ("MONTH(CarRentalCompany_order.order_create_date)=%s" % month)
     # set up SQL by joining all above SQL as where statements
     join1 = " "
-    sql1 = ["SELECT CarRentalCompany_car.id, CarRentalCompany_car.car_bodytype, CarRentalCompany_car.car_makename, CarRentalCompany_car.car_seating_capacity, CarRentalCompany_car.car_standard_transmission, CarRentalCompany_car.car_drive FROM CarRentalCompany_car INNER JOIN CarRentalCompany_order ON CarRentalCompany_order.car_id_id = CarRentalCompany_car.id WHERE", purpose_sql]
+    sql1 = ["SELECT * FROM CarRentalCompany_car INNER JOIN CarRentalCompany_order ON CarRentalCompany_order.car_id_id = CarRentalCompany_car.id WHERE", purpose_sql]
     join1 = join1.join(sql1)
     join2 = " AND "
     sql2 = [join1, seats_sql, transmission_sql, months_sql]
     join2 = join2.join(sql2)
     join3 = " "
-    sql3 = [join2, "LIMIT 3"]
+    sql3 = [join2, "ORDER BY CarRentalCompany_car.car_price_new DESC LIMIT 15"]
     join3 = join3.join(sql3)
     # run SQL
     recommended_cars = Car.objects.raw(join3)
-    return recommended_cars;
+    return recommended_cars

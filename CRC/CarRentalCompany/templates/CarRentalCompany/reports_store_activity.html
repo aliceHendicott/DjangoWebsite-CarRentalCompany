@@ -19,12 +19,16 @@ CRC Store Activity
             <table>
                 <tr class="table-heading">
                     <td>Store Location</td>
-                    <td>Rental Frequency</td>
+                    <td>Pickup Frequency</td>
+                    <td>Return Frequency</td>
+                    <td>Total Activity</td>
                 </tr>
                 {% for store in store_results %}
                     <tr>
                         <td>{{ store.store_city }}</td>
-                        <td>{{ store.number_of_orders }}</td>
+                        <td>{{ store.number_of_pickups }}</td>
+                        <td>{{ store.number_of_returns }}</td>
+                        <td>{{ store.total_activity }}</td>
                     </tr>
                 {% endfor %}
             </table>

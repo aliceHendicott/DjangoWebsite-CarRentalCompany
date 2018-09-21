@@ -12,7 +12,7 @@ def handle_filter_cars(fields):
             #check if field is filled out
             if value != "Null":
                 #create where statement
-                where_statement = "CarRentalCompany_car.car_" + field + "=" + value
+                where_statement = "CarRentalCompany_car.car_" + field + "='" + value + "'"
                 sql_where_statements.append(where_statement)
 
     # if all fields are null (no fields entered when 'Apply' clicked) return -1

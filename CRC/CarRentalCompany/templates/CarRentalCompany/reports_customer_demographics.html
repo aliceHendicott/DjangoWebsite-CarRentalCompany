@@ -15,14 +15,18 @@ CRC Customer Demographics
         <table>
             <tr class="table-heading">
                 <td>Age Range and Gender</td>
-                <td>Number of Users</td>
-                <td>Most Popular Body Type</td>
+                <td>Number of Customers</td>
+                <td>Most Popular Car Body Type</td>
+                <td>Most Popular Pickup Location</td>
+                <td>Most Popular Return Location</td>
             </tr>
             {% for age_group in results %}
                 <tr>
                     <td>{{ age_group.2 }}</td>
                     <td>{{ age_group.0 }}</td>
                     <td>{{ age_group.3 }}</td>
+                    <td>{{ age_group.4 }}</td>
+                    <td>{{ age_group.5 }}</td>
                 </tr>
             {% endfor %}
         </table>

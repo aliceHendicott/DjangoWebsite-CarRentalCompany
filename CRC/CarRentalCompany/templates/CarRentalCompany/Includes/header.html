@@ -1,7 +1,11 @@
 <div id="header">
+        <!-- recommend me a car button -->
         <a id="recommend-button" class="button" href="/cars/recommend_me">Recommend me a car</a>
+        <!-- login section of header -->
         <div id="header-right">
+            <!-- check if user is logged in-->
             {% if not request.user.is_authenticated %}
+                <!-- display login form if user is not logged in -->
                 <form action="/loginTest" method="POST" id="log-in" onsubmit="return false;">{% csrf_token %}
                     <input type="text" placeholder="Username" name="username" id="id_username">
                     <input type="password" placeholder="Password" name="password" id="id_password">
@@ -10,12 +14,14 @@
                 <!--<a id="register" class="button" href="#">Register</a>-->
             {% endif %}
             {% if request.user.is_authenticated %}
+                <!-- display username and logout button if user is logged in -->
                 <div id="user-logged-in">Welcome {{user.username}}</div>
                 <a id="logout" class="button" href="{% url 'logout' %}">Logout</a>
             {%  endif %}
         </div>
     </div>
     <div id="nav-bar">
+        <!--show links visible to all users -->
         <div id="nav-bar-left">
             <a href="/../" id="home"
             {% if "stores" not in request.path and "cars" not in request.path and "FAQ" not in request.path and "data" not in request.path and "reports" not in request.path %} class="current-page" {% endif %}
@@ -24,6 +30,7 @@
             <a href="/cars/" id="cars" {% if "cars" in request.path %} class="current-page" {% endif %}>View Cars</a>
             <a href="/FAQ/" id="faq" {% if "FAQ" in request.path %} class="current-page" {% endif %}>FAQ</a>
         </div>
+        <!-- display staff links depending on the staff login level-->
         {% if request.user.is_authenticated and not request.user.userprofile.is_customer %}
             <div id="nav-bar-right">
                 <a href="#" {% if "data" in request.path %} class="current-page" {% endif %}>Data</a>

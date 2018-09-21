@@ -4,8 +4,10 @@
 <head>
     <meta charset="utf-8">
     {% load static %}
-    <!-- Dynamicall include a title -->
+    <!-- Dynamically include a title -->
     <title>{% block title %}Default Title{% endblock %}</title>
+
+    <!-- link to stylesheets and JavaScript -->
     <link rel="shortcut icon" href="{% static 'CarRentalCompany/Images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{% static 'CarRentalCompany/stylesheet.css' %}">
     <script src="{% static 'CarRentalCompany/javascript.js' %}"></script>
