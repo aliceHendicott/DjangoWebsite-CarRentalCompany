@@ -33,7 +33,7 @@
         <!-- display staff links depending on the staff login level-->
         {% if request.user.is_authenticated and not request.user.userprofile.is_customer %}
             <div id="nav-bar-right">
-                <a href="#" {% if "data" in request.path %} class="current-page" {% endif %}>Data</a>
+                <a href="/staff/" {% if "data" in request.path %} class="current-page" {% endif %}>Data</a>
                 {% if not request.user.userprofile.is_customer and not request.user.userprofile.is_floor_staff %}
                     <a href="/reports/dashboard/" {% if "reports" in request.path %} class="current-page" {% endif %}>Report</a>
                 {% endif %}

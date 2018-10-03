@@ -23,18 +23,23 @@ pass
 ' SPRINT 2
 ' The following are sprint 2:
 '''
+def staff(request):
+    return render(request, 'CarRentalCompany/data.html', {})
+
 def orders(request):
     return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
+                  'CarRentalCompany/orders.html',
+                  {'orders_list': Order.objects.all()})
 def order(request, order_id):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})
+
 def customers(request):
     return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
+                  'CarRentalCompany/customers.html',
+                  {'customers_list': User.objects.all()})
+
 def customer(request, customer_id):
     return render(request,
                   'CarRentalCompany/xxx.html',
