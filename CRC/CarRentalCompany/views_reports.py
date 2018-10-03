@@ -17,48 +17,44 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 ## Supporting
 def cars_seasonal_graph():
     graphdata = [['WRX', 11],
-                 ['Toyota Prius', 12],
+                 ['Prius', 12],
                  ['Lancer', 13],
                  ['Viper', 14],
-                 ['Benz', 15],
-                 ['Forester', 16]]
-    drawGraph('bar', 'cars_seasonal', graphdata)
+                 ['Benz', 15]]
+    return drawGraph('bar', 'cars_seasonal', graphdata)
 
 def cars_inactive_graph():
-    graphdata = [['VW Golf', 11],
+    graphdata = [['VW Golf', 5],
                  ['Getz', 12],
                  ['Falcon', 13],
                  ['Vento', 14],
                  ['Lotus x', 15],
                  ['Tesla', 16]]
-    drawGraph('horizBar', 'cars_inactive', graphdata)
+    return drawGraph('horizBar', 'cars_inactive', graphdata)
 
 def store_parking_graph():
-    graphdata = [['Brisbane', 11],
-                 ['Warrnambool', 12],
-                 ['Sydney', 13],
-                 ['Gold Coast', 14],
-                 ['Perth', 15],
-                 ['Adelaide', 16]]
-    drawGraph('horizBar', 'store_parking', graphdata)
+    graphdata = [['Brisbane', 16],
+                 ['Warrnambool', 15],
+                 ['Sydney', 14],
+                 ['Gold Coast', 13],
+                 ['Adelaide', 5]]
+    return drawGraph('horizBar', 'store_parking', graphdata)
 
 def store_activity_graph():
-    graphdata = [['Brisbane', 11],
-                 ['Warrnambool', 12],
-                 ['Sydney', 13],
-                 ['Gold Coast', 14],
-                 ['Perth', 15],
+    graphdata = [['Brisbane', 100],
+                 ['Warrnambool', 190],
+                 ['Gold Coast', 155],
+                 ['Perth', 112],
                  ['Adelaide', 16]]
-    drawGraph('pie', 'store_activity', graphdata)
+    return drawGraph('pie', 'store_activity', graphdata)
 
 def customer_demographics_graph():
-    graphdata = [['Female 18 - 25', 1],
-                 ['Male 35 - 45', 3],
-                 ['Male 18 - 25', 6],
+    graphdata = [['Female 18-25', 1],
+                 ['Male 35-45', 3],
+                 ['Male 18-25', 6],
                  ['Female 65+', 2],
-                 ['Female 35-45', 9],
-                 ['Male +', 1]]
-    drawGraph('pie', 'customer_demographics', graphdata)
+                 ['Female 35-45', 9]]
+    return drawGraph('pie', 'customer_demographics', graphdata)
 
 
 '''
@@ -68,11 +64,6 @@ def customer_demographics_graph():
 
 def dashboard(request):
     if request.user.is_authenticated:
-        cars_seasonal_graph()
-        cars_inactive_graph()
-        store_parking_graph()
-        store_activity_graph()
-        customer_demographics_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -82,7 +73,12 @@ def dashboard(request):
             return render(request,
                           'CarRentalCompany/reports_dashboard.html',
                           {'seasonal_cars': seasonal_cars,
-                           'store_activity': store_activity})
+                           'store_activity': store_activity,
+                           'cars_seasonal_graph': cars_seasonal_graph(),
+                           'cars_inactive_graph': cars_inactive_graph(),
+                           'store_parking_graph': store_parking_graph(),
+                           'store_activity_graph': store_activity_graph(),
+                           'customer_demographics_graph': customer_demographics_graph()})
         else:
             return redirect('index')
     else:
@@ -90,7 +86,6 @@ def dashboard(request):
 
 def cars_seasonal(request):
     if request.user.is_authenticated:
-        cars_seasonal_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -99,7 +94,8 @@ def cars_seasonal(request):
             return render(request,
                           'CarRentalCompany/reports_cars_seasonal.html',
                           {'cars_list': Car.objects.all(),
-                           'seasonal_cars':  seasonal_cars_results})
+                           'seasonal_cars':  seasonal_cars_results,
+                           'cars_seasonal_graph': cars_seasonal_graph()})
         else:
             return redirect('index')
     else:
@@ -107,7 +103,6 @@ def cars_seasonal(request):
 
 def cars_inactive(request):
     if request.user.is_authenticated:
-        cars_inactive_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -116,7 +111,8 @@ def cars_inactive(request):
             return render(request,
                           'CarRentalCompany/reports_cars_inactive.html',
                           {'cars_list': Car.objects.all(),
-                           'inactive_cars': inactive_car_results})
+                           'inactive_cars': inactive_car_results,
+                           'cars_inactive_graph': cars_inactive_graph()})
         else:
             return redirect('index')
     else:
@@ -124,7 +120,6 @@ def cars_inactive(request):
 
 def store_activity(request):
     if request.user.is_authenticated:
-        store_activity_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -137,7 +132,8 @@ def store_activity(request):
                           'CarRentalCompany/reports_store_activity.html',
                           {'stores_list': Store.objects.all(),
                            'location_maps': locations,
-                           'store_results': store_results})
+                           'store_results': store_results,
+                           'store_activity_graph': store_activity_graph()})
         else:
             return redirect('index')
     else:
@@ -145,7 +141,6 @@ def store_activity(request):
 
 def store_parking(request):
     if request.user.is_authenticated:
-        store_parking_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -154,19 +149,15 @@ def store_parking(request):
             return render(request,
                           'CarRentalCompany/reports_store_parking.html',
                           {'queried_stores': results,
-                           'stores': Store.objects.all()})
+                           'stores': Store.objects.all(),
+                           'store_parking_graph': store_parking_graph()})
         else:
             return redirect('index')
     else:
         return redirect('index')
-    cars_seasonal_graph();
-    return render(request,
-                  'CarRentalCompany/reports_cars_seasonal.html',
-                  {'cars_list': Car.objects.all()})
 
 def customer_demographics(request):
     if request.user.is_authenticated:
-        customer_demographics_graph()
         user_profile = request.user.userprofile
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
@@ -175,7 +166,8 @@ def customer_demographics(request):
             return render(request,
                           'CarRentalCompany/reports_customer_demographics.html',
                           {'users_list': User.objects.all(),
-                           'results': results})
+                           'results': results,
+                           'customer_demographics_graph': customer_demographics_graph()})
         else:
             return redirect('index')
     else:

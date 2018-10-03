@@ -50,6 +50,10 @@ class Car(models.Model):
     car_bodytype = models.CharField(max_length = 128, default = "null")
     def __str__(self):
         return self.car_makename + ": " + self.car_model
+    def get_car_makename(self):
+        return self.car_makename
+    def set_car_makename(self, new_makename):
+        setattr(self, 'car_makename', new_makename)
     def top_cars(limit = 0):
         query = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
                 FROM CarRentalCompany_car
@@ -98,54 +102,54 @@ class Order(models.Model):
 
 
 '''
-c = Car(id = row['Car_ID'],
-    car_makename = row['Car_MakeName'],
-    car_model = row['Car_Model'],
-    car_series = row['Car_Series'],
-    car_series_year = row['Car_SeriesYear'],
-    car_price_new = row['Car_PriceNew'],
-    car_engine_size = row['Car_EngineSize'],
-    car_fuel_system = row['Car_FuelSystem'],
-    car_tank_capacity = row['Car_TankCapacity'],
-    car_power = row['Car_Power'],
-    car_seating_capacity = row['Car_SeatingCapacity'],
-    car_standard_transmission = row['Car_StandardTransmission'],
-    car_bodytype = row['Car_BodyType'],
-    car_drive = row['Car_Drive'],
-    car_wheelbase = row['Car_Wheelbase'])
+carObj = Car(id = row['Car_ID'],
+             car_makename = row['Car_MakeName'],
+             car_model = row['Car_Model'],
+             car_series = row['Car_Series'],
+             car_series_year = row['Car_SeriesYear'],
+             car_price_new = row['Car_PriceNew'],
+             car_engine_size = row['Car_EngineSize'],
+             car_fuel_system = row['Car_FuelSystem'],
+             car_tank_capacity = row['Car_TankCapacity'],
+             car_power = row['Car_Power'],
+             car_seating_capacity = row['Car_SeatingCapacity'],
+             car_standard_transmission = row['Car_StandardTransmission'],
+             car_bodytype = row['Car_BodyType'],
+             car_drive = row['Car_Drive'],
+             car_wheelbase = row['Car_Wheelbase'])
 
-s = Store(id = row['Store_ID'],
-    store_name = row['Store_Name'],
-	store_address = row['Store_Address'],
-	store_phone = int(row['Store_Phone'].replace("-", "").replace(" ", "")[-10:]),
-	store_city = row['Store_City'],
-	store_state = row['Store_State_Name'],
-    store_latitude = row['Store_Latitude'],
-    store_longitude = row['Store_Longitude'])
+storeObj = Store(id = row['Store_ID'],
+                 store_name = row['Store_Name'],
+                 store_address = row['Store_Address'],
+                 store_phone = int(row['Store_Phone'].replace("-", "").replace(" ", "")[-10:]),
+                 store_city = row['Store_City'],
+                 store_state = row['Store_State_Name'],
+                 store_latitude = row['Store_Latitude'],
+                 store_longitude = row['Store_Longitude'])
 
-u = User(id = row['Customer_ID'],
-    user_name = row['Customer_Name'],
-	user_phone = int(row['Customer_Phone'].replace("-", "")),
-	user_address = row['Customer_Address'],
-	user_birthday = date((int(row['Customer_Birthday'].split("-")[2]) + 1900),
-                      int(row['Customer_Birthday'].split("-")[1]),
-                      int(row['Customer_Birthday'].split("-")[0])),
-	user_occupation = row['Customer_Occupation'],
-	user_gender = row['Customer_Gender'],
-	user_password = row['Customer_Password'])
+userObj = User(id = row['Customer_ID'],
+               user_name = row['Customer_Name'],
+               user_phone = int(row['Customer_Phone'].replace("-", "")),
+               user_address = row['Customer_Address'],
+               user_birthday = date((int(row['Customer_Birthday'].split("-")[2]) + 1900),
+                                    int(row['Customer_Birthday'].split("-")[1]),
+                                    int(row['Customer_Birthday'].split("-")[0])),
+               user_occupation = row['Customer_Occupation'],
+               user_gender = row['Customer_Gender'],V
+               user_password = row['Customer_Password'])
     
-o = Order(id = row['Order_ID'],
-    car_id = Car.objects.get(pk = row['Car_ID']),
-    customer_id = User.objects.get(pk = row['Customer_ID']),
-    order_create_date = date((int(row['Order_Create_Date'].split("-")[2]) + 2000),
-                             int(row['Order_Create_Date'].split("-")[1]),
-                             int(row['Order_Create_Date'].split("-")[0])),
-    order_pickup_store_id = Store.objects.get(pk = row['Order_Pickup_Store']),
-    order_pickup_date = date((int(row['Order_Pickup_Date'].split("-")[2]) + 2000), 
-                             int(row['Order_Pickup_Date'].split("-")[1]),
-                             int(row['Order_Pickup_Date'].split("-")[0])),
-    order_return_store_id = Store.objects.get(pk = row['Order_Return_Store']),
-    order_return_date = date((int(row['Order_Return_Date'].split("-")[2]) + 2000), 
-                             int(row['Order_Return_Date'].split("-")[1]), 
-                             int(row['Order_Return_Date'].split("-")[0])))
+orderObj = Order(id = row['Order_ID'],
+                 car_id = Car.objects.get(pk = row['Car_ID']),
+                 customer_id = User.objects.get(pk = row['Customer_ID']),
+                 order_create_date = date((int(row['Order_Create_Date'].split("-")[2]) + 2000),
+                                          int(row['Order_Create_Date'].split("-")[1]),
+                                          int(row['Order_Create_Date'].split("-")[0])),
+                 order_pickup_store_id = Store.objects.get(pk = row['Order_Pickup_Store']),
+                 order_pickup_date = date((int(row['Order_Pickup_Date'].split("-")[2]) + 2000), 
+                                          int(row['Order_Pickup_Date'].split("-")[1]),
+                                          int(row['Order_Pickup_Date'].split("-")[0])),
+                 order_return_store_id = Store.objects.get(pk = row['Order_Return_Store']),
+                 order_return_date = date((int(row['Order_Return_Date'].split("-")[2]) + 2000), 
+                                          int(row['Order_Return_Date'].split("-")[1]), 
+                                          int(row['Order_Return_Date'].split("-")[0])))
 '''

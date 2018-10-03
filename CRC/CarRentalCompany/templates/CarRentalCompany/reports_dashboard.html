@@ -31,7 +31,7 @@ CRC Reports Dashboard
                         {% endfor %}
                     </table>
                 </div>
-                <div style="width: 250px;">{% include './Charts/cars_seasonal.svg' %}</div>
+                <div style="width: 300px;">{{ cars_seasonal_graph|safe }}</div>
             </div>
             <div class="report-page">
                 <a href="/reports/stores/activity/"><h3>Store Activity</h3></a>
@@ -49,21 +49,21 @@ CRC Reports Dashboard
                         {% endfor %}
                     </table>
                 </div>
-                <div style="width: 250px;">{% include './Charts/store_activity.svg' %}</div>
+                <div style="width: 300px;">{{ store_activity_graph|safe }}</div>
             </div>
         </div>
         <div class="grid listing" id="reports-row2">
             <div>
                 <a href="/reports/customers/demographics/"><h3>Customer Demographic</h3></a>
-                <div style="width: 300px;">{% include './Charts/customer_demographics.svg' %}</div>
+                <div style="width: 300px;">{{ customer_demographics_graph|safe }}</div>
             </div>
              <div>
                 <a href="/reports/stores/parking/"><h3>Available Car Parks</h3></a>
-                <div style="width: 300px;">{% include './Charts/store_parking.svg' %}</div>
+                <div style="width: 300px;">{{ store_parking_graph|safe }}</div>
             </div>
             <div>
                 <a href="/reports/cars/inactive/"><h3>Inactive Cars</h3></a>
-                <div style="width: 300px;">{% include './Charts/cars_inactive.svg' %}</div>
+                <div style="width: 300px;">{{ cars_inactive_graph|safe }}</div>
         </div>
     </div>
 

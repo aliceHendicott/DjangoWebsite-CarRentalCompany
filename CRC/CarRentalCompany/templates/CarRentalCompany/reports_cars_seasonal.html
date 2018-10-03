@@ -26,7 +26,7 @@ CRC Cars Seasonal
                 {% endfor %}
             </table>
         </div>
-        <div style="width: 500px; height: 500px;">{% include './Charts/cars_seasonal.svg' %}</div>
+        <div style="width: 500px; height: 500px;">{{ cars_seasonal_graph|safe }}</div>
     </div>
 {% endblock %}
 

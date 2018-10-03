@@ -28,7 +28,7 @@ CRC Cars Inactive
         {% endfor %}
     </table>
     </div>
-<div style="width: 500px; height: 500px;">{% include './Charts/cars_inactive.svg' %}</div>
+<div style="width: 500px; height: 500px;">{{ cars_inactive_graph|safe }}</div>
     </div>
 {% endblock %}
 

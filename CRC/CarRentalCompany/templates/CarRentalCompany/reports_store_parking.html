@@ -26,7 +26,7 @@ CRC Store Parking
             {% endfor %}
         </table>
     </div>
-    <div style="width: 500px; height: 500px;">{% include './Charts/store_parking.svg' %}</div>
+    <div style="width: 500px; height: 500px;">{{ store_parking_graph|safe }}</div>
     </div>
 {% endblock %}
 
