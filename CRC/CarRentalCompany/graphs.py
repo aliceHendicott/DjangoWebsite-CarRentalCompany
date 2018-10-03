@@ -15,7 +15,12 @@ def drawGraph(type, name, graphdata):
 custom_style = Style(
     background = 'transparent',
     label_font_size = 28,
-    legend_font_size = 32)
+    legend_font_size = 32,
+    opacity='.6',
+    opacity_hover='.9',
+    transition='350ms ease-out',
+    font_family='googlefont:Raleway',
+    tooltip_font_size = 32)
 
 # Draw a bar graph and save it as svg
 def bar(name, graphdata):
@@ -23,18 +28,23 @@ def bar(name, graphdata):
     chart = pygal.Bar(show_legend = False, style = custom_style,
                       x_label_rotation = 30, y_labels_major_every = 1000)
     #chart.title = name
+
     # Turn data into respective data and label array
     x_labels = []
     x_data = []
     for data in graphdata:
         x_labels.append(data[0])
-        x_data.append(data[1])
+        x_data.append({'value': data[1], 
+                       'xlink': '/cars/14806'})
+
     # Insert the data
+    chart.add('', x_data)
     chart.x_labels = x_labels
-    chart.add(name, x_data)
+
     # Export to an svg file
-    #chart.render_to_file('CarRentalCompany/templates/CarRentalCompany/Charts/' + name + '.svg')
+    #chart.render_to_file('CarRentalCompany/templates/CarRentalCompany/Charts/' + name + '.svg') 
     return chart.render(is_unicode=True)
+
 
 # Draw a horizontal bar graph and save it as svg
 def horizBar(name, graphdata):
@@ -42,18 +52,23 @@ def horizBar(name, graphdata):
     chart = pygal.HorizontalBar(show_legend = False, style = custom_style,
                                 x_label_rotation = 15, y_labels_major_every = 1000)
     #chart.title = name
+
     # Turn data into respective data and label array
     x_labels = []
     x_data = []
     for data in graphdata:
         x_labels.append(data[0])
-        x_data.append(data[1])
+        x_data.append({'value': data[1], 
+                       'xlink': '/cars/14806'})
+
     # Insert the data
+    chart.add('', x_data)
     chart.x_labels = x_labels
-    chart.add(name, x_data)
+
     # Export to an svg file
     #chart.render_to_file('CarRentalCompany/templates/CarRentalCompany/Charts/' + name + '.svg') 
     return chart.render(is_unicode=True)
+
 
 # Draw a pie graph and save it as svg
 def pie(name, graphdata):
@@ -63,7 +78,9 @@ def pie(name, graphdata):
     #chart.title = name
     # Add data by iterating over input
     for data in graphdata:
-        chart.add(data[0], data[1])
+        chart.add(data[0], [{
+        'value': data[1],
+        'xlink': '/stores/1'}])
     # Export to an svg file
     #chart.render_to_file('CarRentalCompany/templates/CarRentalCompany/Charts/' + name + '.svg') 
     return chart.render(is_unicode=True)
