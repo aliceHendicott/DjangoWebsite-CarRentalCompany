@@ -110,20 +110,20 @@ def customer_demographics_query():
             END AS Ages
             FROM CarRentalCompany_User
             GROUP BY 
-            CASE
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M' 
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
-                WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
-            END 
+                CASE
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M' 
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
+                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
+                END 
             ORDER BY Ages'''
     cursor = connection.cursor()
     cursor.execute(query_ages_by_range)

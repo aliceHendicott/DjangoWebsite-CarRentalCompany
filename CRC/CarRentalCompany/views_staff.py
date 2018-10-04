@@ -27,9 +27,39 @@ def staff(request):
     return render(request, 'CarRentalCompany/data.html', {})
 
 def orders(request):
+    orders = []
+    for order in Order.objects.all():
+        new_order = {}
+        car_info = Car.objects.get(pk=order.car_id_id)
+        car_make_model = car_info.car_model + " " + car_info.car_makename
+        car_id = car_info.id
+        pickup_store_info = Store.objects.get(id=order.order_pickup_store_id_id)
+        pickup_store = pickup_store_info.store_city
+        pickup_store_id = pickup_store_info.id
+        return_store_info = Store.objects.get(pk=order.order_return_store_id_id)
+        return_store = return_store_info.store_city
+        return_store_id = return_store_info.id
+        customer_info = User.objects.get(pk=order.customer_id_id)
+        customer_name = customer_info.user_name
+        customer_phone = customer_info.user_phone
+        customer_id = customer_info.id
+        new_order.update({'id': order.id,
+                          'pickup_date': order.order_pickup_date,
+                          'return_date': order.order_return_date,
+                          'car_make_model': car_make_model,
+                          'car_id': car_id,
+                          'return_store': return_store,
+                          'return_store_id': return_store_id,
+                          'pickup_store': pickup_store,
+                          'pickup_store_id': pickup_store_id,
+                          'customer_name': customer_name,
+                          'customer_phone': customer_phone,
+                          'customer_id': customer_id})
+        orders.append(new_order)
     return render(request,
                   'CarRentalCompany/orders.html',
-                  {'orders_list': Order.objects.all()})
+                  {'orders_list': orders,
+                   'cars': Car.objects.all()})
 def order(request, order_id):
     return render(request,
                   'CarRentalCompany/xxx.html',

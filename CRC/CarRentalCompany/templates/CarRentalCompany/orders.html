@@ -11,17 +11,15 @@ CRC Orders
 
 <!-- Content goes here -->
 {% block content %}
-    <div id="banner2"></div>
 <div id="content">
     <h1>Orders</h1>
     <div class="grid listing">
-        {% for order in orders_list.all %}
+        {% for order in orders_list %}
         <div>
-                <h3>{{ customer.user_name }}</h3>
-                <p><i class="fas fa-phone"></i> {{ customer.user_phone }}<br />
-                    <i class="fas fa-map-marker-alt"></i> {{ customer.user_address }}<br />
-                    <i class="fas fa-birthday-cake"></i> {{ customer.user_birthday }}<br />
-                    <i class="fas fa-user-md"></i> {{ customer.user_occupation }}</p>
+                <h3>{{ order.id }}: {{ order.customer_name }}</h3>
+                <p>Pickup from {{ order.pickup_store }} on {{ order.pickup_date }}<br />
+                    Return to {{ order.return_store }} on {{ order.return_date }}<br />
+                    Car: {{ order.car_make_model }}</p>
         </div>
         {% endfor %}
     </div>
