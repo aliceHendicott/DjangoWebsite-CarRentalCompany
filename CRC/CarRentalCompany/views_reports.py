@@ -15,6 +15,16 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 # ------- REPORTS ------ #
 
 ## Supporting
+def is_management(request):
+    if request.user.is_authenticated:
+        user_profile = request.user.userprofile
+        customer = user_profile.is_customer
+        floor_staff = user_profile.is_floorStaff
+        if not customer and not floor_staff:
+            return True
+    return False
+
+
 def cars_seasonal_graph(data):
     graphdata = []
     for car in data:
@@ -59,116 +69,85 @@ def customer_demographics_graph():
 '''
 
 def dashboard(request):
-    if request.user.is_authenticated:
-        user_profile = request.user.userprofile
-        customer = user_profile.is_customer
-        floor_staff = user_profile.is_floorStaff
-        if not customer and not floor_staff:
-            seasonal_cars = Car.top_cars(5)
-            store_activity = Store.store_activity(5)
-            car_parks = Car.inactive_cars()
-            return render(request,
-                          'CarRentalCompany/reports_dashboard.html',
-                          {'seasonal_cars': seasonal_cars,
-                           'store_activity': store_activity,
-                           'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars),
-                           'cars_inactive_graph': cars_inactive_graph(),
-                           'store_parking_graph': store_parking_graph(),
-                           'store_activity_graph': store_activity_graph(store_activity),
-                           'customer_demographics_graph': customer_demographics_graph()})
-        else:
-            return redirect('index')
+    if is_management(request):
+        seasonal_cars = Car.top_cars(5)
+        store_activity = Store.store_activity(5)
+        car_parks = Car.inactive_cars()
+        return render(request,
+                        'CarRentalCompany/reports_dashboard.html',
+                        {'seasonal_cars': seasonal_cars,
+                        'store_activity': store_activity,
+                        'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars),
+                        'cars_inactive_graph': cars_inactive_graph(),
+                        'store_parking_graph': store_parking_graph(),
+                        'store_activity_graph': store_activity_graph(store_activity),
+                        'customer_demographics_graph': customer_demographics_graph()})
     else:
         return redirect('index')
 
 def cars_seasonal(request):
-    if request.user.is_authenticated:
-        user_profile = request.user.userprofile
-        customer = user_profile.is_customer
-        floor_staff = user_profile.is_floorStaff
-        if not customer and not floor_staff:
-            seasonal_cars_results = seasonal_cars()
-            return render(request,
-                          'CarRentalCompany/reports_cars_seasonal.html',
-                          {'cars_list': Car.objects.all(),
-                           'seasonal_cars':  seasonal_cars_results,
-                           'cars_seasonal_graph': cars_seasonal_graph()})
-        else:
-            return redirect('index')
+    if is_management(request):
+        seasonal_cars_results = seasonal_cars()
+        return render(request,
+                        'CarRentalCompany/reports_cars_seasonal.html',
+                        {'cars_list': Car.objects.all(),
+                        'seasonal_cars':  seasonal_cars_results,
+                        'cars_seasonal_graph': cars_seasonal_graph()})
     else:
         return redirect('index')
 
 def cars_inactive(request):
-    if request.user.is_authenticated:
-        user_profile = request.user.userprofile
-        customer = user_profile.is_customer
-        floor_staff = user_profile.is_floorStaff
-        if not customer and not floor_staff:
-            inactive_car_results = inactive_cars()
-            return render(request,
-                          'CarRentalCompany/reports_cars_inactive.html',
-                          {'cars_list': Car.objects.all(),
-                           'inactive_cars': inactive_car_results,
-                           'cars_inactive_graph': cars_inactive_graph()})
-        else:
-            return redirect('index')
+    if is_management(request):
+        inactive_car_results = inactive_cars()
+        return render(request,
+                        'CarRentalCompany/reports_cars_inactive.html',
+                        {'cars_list': Car.objects.all(),
+                        'inactive_cars': inactive_car_results,
+                        'cars_inactive_graph': cars_inactive_graph()})
     else:
         return redirect('index')
 
 def store_activity(request):
-    if request.user.is_authenticated:
-        user_profile = request.user.userprofile
-        customer = user_profile.is_customer
-        floor_staff = user_profile.is_floorStaff
-        if not customer and not floor_staff:
-            locations = []
-            for store in Store.objects.all():
-                locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
-            store_results = store_activity_query()
-            return render(request,
-                          'CarRentalCompany/reports_store_activity.html',
-                          {'stores_list': Store.objects.all(),
-                           'location_maps': locations,
-                           'store_results': store_results,
-                           'store_activity_graph': store_activity_graph()})
-        else:
-            return redirect('index')
+    if is_management(request):
+        locations = []
+        for store in Store.objects.all():
+            locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
+        store_results = store_activity_query()
+        return render(request,
+                        'CarRentalCompany/reports_store_activity.html',
+                        {'stores_list': Store.objects.all(),
+                        'location_maps': locations,
+                        'store_results': store_results,
+                        'store_activity_graph': store_activity_graph()})
     else:
         return redirect('index')
 
 def store_parking(request):
-    if request.user.is_authenticated:
-        user_profile = request.user.userprofile
-        customer = user_profile.is_customer
-        floor_staff = user_profile.is_floorStaff
-        if not customer and not floor_staff:
-            results = store_parking_query()
-            return render(request,
-                          'CarRentalCompany/reports_store_parking.html',
-                          {'queried_stores': results,
-                           'stores': Store.objects.all(),
-                           'store_parking_graph': store_parking_graph()})
-        else:
-            return redirect('index')
+    if is_management(request):
+        results = store_parking_query()
+        return render(request,
+                        'CarRentalCompany/reports_store_parking.html',
+                        {'queried_stores': results,
+                        'stores': Store.objects.all(),
+                        'store_parking_graph': store_parking_graph()})
     else:
         return redirect('index')
 
 def customer_demographics(request):
-    if request.user.is_authenticated:
-        user_profile = request.user.userprofile
-        customer = user_profile.is_customer
-        floor_staff = user_profile.is_floorStaff
-        if not customer and not floor_staff:
-            results = customer_demographics_query()
-            return render(request,
-                          'CarRentalCompany/reports_customer_demographics.html',
-                          {'users_list': User.objects.all(),
-                           'results': results,
-                           'customer_demographics_graph': customer_demographics_graph()})
-        else:
-            return redirect('index')
+    if is_management(request):
+        results = customer_demographics_query()
+        return render(request,
+                        'CarRentalCompany/reports_customer_demographics.html',
+                        {'users_list': User.objects.all(),
+                        'results': results,
+                        'customer_demographics_graph': customer_demographics_graph()})
     else:
         return redirect('index')
+
+
+
+
+
 
 '''
 ' SPRINT 2
