@@ -79,12 +79,14 @@ class Car(models.Model):
         if (limit > 0):
             query += " LIMIT " + str(limit)
         return Car.objects.raw(query)
-    def inactive_cars():
+    def inactive_cars(limit = -1):
         query = '''SELECT CarRentalCompany_car.*,  MAX(CarRentalCompany_order.order_return_date) AS `Return_Date`
                    FROM CarRentalCompany_order
                    INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
                    GROUP BY CarRentalCompany_car.car_model
                    ORDER BY `Return_Date` ASC;'''
+        if (limit > 0):
+            query += " LIMIT " + str(limit)
         return Store.objects.raw(query)
 
 class Store(models.Model):
@@ -98,22 +100,20 @@ class Store(models.Model):
     def __str__(self):
         return self.store_name
     # Data Extraction
-    def store_activity_query(preview=False, limit=-1):
-        query = '''SELECT CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_pickups'''
-        if (not preview):
-            query += ''', count(CarRentalCompany_order.order_return_store_id_id) as number_of_returns,
-                        (count(CarRentalCompany_order.order_pickup_store_id_id) + count(CarRentalCompany_order.order_return_store_id_id)) as total_activity'''
-        query += '''FROM CarRentalCompany_store
+    def store_activity(limit=-1):
+        query = '''SELECT CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_pickups, count(CarRentalCompany_order.order_return_store_id_id) as number_of_returns,
+                   (count(CarRentalCompany_order.order_pickup_store_id_id) + count(CarRentalCompany_order.order_return_store_id_id)) as total_activity
+                   FROM CarRentalCompany_store
                    LEFT JOIN CarRentalCompany_order
                    ON (CarRentalCompany_order.order_pickup_store_id_id = CarRentalCompany_store.id)
-                   WHERE
-				       MONTH(CarRentalCompany_order.order_pickup_date)=2 AND YEAR(CarRentalCompany_order.order_pickup_date)=2007
                    GROUP BY
 	                   CarRentalCompany_store.id
-                   ORDER BY CarRentalCompany_store.id ASC'''
+                   ORDER BY total_activity DESC'''
+                   #WHERE
+				   #    MONTH(CarRentalCompany_order.order_pickup_date)=2 AND YEAR(CarRentalCompany_order.order_pickup_date)=2007
         if (limit > 0):
             query += " LIMIT " + str(limit)
-        return  Store.objects.raw(query)
+        return Store.objects.raw(query)
     def store_parking():
         query_pickup = 'SELECT *, COUNT(CarRentalCompany_order.id) as picked_up FROM CarRentalCompany_order LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id GROUP BY CarRentalCompany_order.order_pickup_store_id_id'
         results = Order.objects.raw(query_pickup)

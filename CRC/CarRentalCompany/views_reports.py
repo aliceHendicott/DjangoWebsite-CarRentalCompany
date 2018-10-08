@@ -38,12 +38,10 @@ def store_parking_graph():
                  ['Adelaide', 5]]
     return drawGraph('horizBar', 'store_parking', graphdata)
 
-def store_activity_graph():
-    graphdata = [['Brisbane', 100],
-                 ['Warrnambool', 190],
-                 ['Gold Coast', 155],
-                 ['Perth', 112],
-                 ['Adelaide', 16]]
+def store_activity_graph(data):
+    graphdata = []
+    for store in data:
+        graphdata.append([store.store_city, store.total_activity])
     return drawGraph('pie', 'store_activity', graphdata)
 
 def customer_demographics_graph():
@@ -67,7 +65,8 @@ def dashboard(request):
         floor_staff = user_profile.is_floorStaff
         if not customer and not floor_staff:
             seasonal_cars = Car.top_cars(5)
-            store_activity = store_activity_preview()
+            store_activity = Store.store_activity(5)
+            car_parks = Car.inactive_cars()
             return render(request,
                           'CarRentalCompany/reports_dashboard.html',
                           {'seasonal_cars': seasonal_cars,
@@ -75,7 +74,7 @@ def dashboard(request):
                            'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars),
                            'cars_inactive_graph': cars_inactive_graph(),
                            'store_parking_graph': store_parking_graph(),
-                           'store_activity_graph': store_activity_graph(),
+                           'store_activity_graph': store_activity_graph(store_activity),
                            'customer_demographics_graph': customer_demographics_graph()})
         else:
             return redirect('index')
