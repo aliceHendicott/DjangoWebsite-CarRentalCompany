@@ -1,8 +1,10 @@
-from django.urls import path, include
+from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
-from . import views, views_customer, views_reports, views_staff, views_store
+from . import views, views_cars, views_customer, views_reports, views_staff, views_store
+
+from django.conf.urls import url
 
 urlpatterns = [
     ## General
@@ -12,6 +14,8 @@ urlpatterns = [
     path('loginjs/', views.handle_login, name="loginjs"),
     path('logout/', views.logout_view, name="logout"),
     path('register/', views.register, name='register'),
+    re_path(r'^signup/$', views.SignUpView.as_view(), name='signup'),
+    re_path(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
     # FAQ
     path('FAQ/', views.FAQ, name='FAQ'),
     
@@ -29,10 +33,10 @@ urlpatterns = [
     path('staff/customers/<int:customer_id>', views_staff.customer, name='staff_customer'),
     
     ## Cars
-    path('cars/', views.cars, name='cars'),
-    path('cars/<int:car_id>/', views.car, name='car'),
-    path('cars/<int:car_id>/request/', views.car_request, name='car_request'),
-    path('cars/recommend_me/', views.car_recommend, name='car_recommend'),
+    path('cars/', views_cars.cars, name='cars'),
+    path('cars/<int:car_id>/', views_cars.car, name='car'),
+    path('cars/<int:car_id>/request/', views_cars.car_request, name='car_request'),
+    path('cars/recommend_me/', views_cars.car_recommend, name='car_recommend'),
 
     ## Stores
     path('stores/', views_store.stores, name='stores'),

@@ -15,12 +15,10 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 # ------- REPORTS ------ #
 
 ## Supporting
-def cars_seasonal_graph():
-    graphdata = [['WRX', 11],
-                 ['Prius', 12],
-                 ['Lancer', 13],
-                 ['Viper', 14],
-                 ['Benz', 15]]
+def cars_seasonal_graph(data):
+    graphdata = []
+    for car in data:
+        graphdata.append([car.car_makename, car.number_of_orders])
     return drawGraph('bar', 'cars_seasonal', graphdata)
 
 def cars_inactive_graph():
@@ -68,13 +66,13 @@ def dashboard(request):
         customer = user_profile.is_customer
         floor_staff = user_profile.is_floorStaff
         if not customer and not floor_staff:
-            seasonal_cars = seasonal_cars_preview()
+            seasonal_cars = Car.top_cars(5)
             store_activity = store_activity_preview()
             return render(request,
                           'CarRentalCompany/reports_dashboard.html',
                           {'seasonal_cars': seasonal_cars,
                            'store_activity': store_activity,
-                           'cars_seasonal_graph': cars_seasonal_graph(),
+                           'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars),
                            'cars_inactive_graph': cars_inactive_graph(),
                            'store_parking_graph': store_parking_graph(),
                            'store_activity_graph': store_activity_graph(),
