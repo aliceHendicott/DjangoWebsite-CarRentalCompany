@@ -1,0 +1,17 @@
+<div class="report-page">
+<div>
+    <table>
+        <tr class="table-heading">
+            <td>Store</td>
+            <td>Available Car Parks</td>
+        </tr>
+        {% for store in queried_stores %}
+            <tr>
+                <td>{{ store.store_city }}</td>
+                <td>{{ store.picked_up }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div style="width: 500px; height: 500px;">{{ store_parking_graph|safe }}</div>
+</div>

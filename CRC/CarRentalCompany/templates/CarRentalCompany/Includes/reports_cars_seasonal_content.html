@@ -1,0 +1,17 @@
+<div class="report-page">
+    <div>
+        <table>
+            <tr class="table-heading">
+                <td>Car Model</td>
+                <td>Rental Frequency</td>
+            </tr>
+            {% for car in seasonal_cars %}
+                <tr>
+                    <td>{{ car }}</td>
+                    <td>{{ car.number_of_orders }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="width: 500px; height: 500px;">{{ cars_seasonal_graph|safe }}</div>
+</div>
