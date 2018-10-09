@@ -1,17 +1,17 @@
-from django.shortcuts import HttpResponse, render, redirect, reverse
-from django.template import loader
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.db import connection
+from django.http import JsonResponse
+from django.template import loader
+from django.shortcuts import HttpResponse, render, redirect, reverse
+from django.contrib.auth import (authenticate, login, get_user_model, logout)
+from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
+from .forms import RecommendForm
 from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
-from .forms import RecommendForm
 from .custom_sql import *
 from .recommendation import handle_recommendation
-from django.contrib.auth import (authenticate, login, get_user_model, logout)
-from django.http import JsonResponse
-from django.template.loader import render_to_string
+
 
 
 # ------- REPORTS ------ #
@@ -114,10 +114,11 @@ def cars_seasonal(request):
 
 ##### Inactive Cars Report #####
 def cars_inactive_context(dates=(1,2), limit = 5):
-    inactive_car_results = inactive_cars()
+    car_inactive = Car.inactive_cars()
+    inactive_car_results = Car.inactive_cars()
     context =  {'cars_list': Car.objects.all(),
-                'inactive_cars': inactive_car_results,
-                'cars_inactive_graph': cars_inactive_graph()}
+                'inactive_cars': car_inactive,
+                'cars_inactive_graph': cars_inactive_graph(car_inactive)}
     return context
 def json_cars_inactive_context(request):
     dates = (request.GET.get('start_date', None), request.GET.get('end_date', None))
@@ -129,18 +130,17 @@ def cars_inactive(request):
     if is_management(request):
         return render(request,
                       'CarRentalCompany/reports_cars_inactive.html',
-                      cars_seasonal_context())
+                      cars_inactive_context())
     return redirect('index')
 
 
 
 ##### Store Activity Report #####
 def store_activity_context(dates=(1,2), limit = 5):
-    inactive_car_results = inactive_cars()
     locations = []
     for store in Store.objects.all():
         locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
-    store_results = store_activity_query()
+    store_results = Store.store_activity()
     context =  {'stores_list': Store.objects.all(),
                 'location_maps': locations,
                 'store_results': store_results,
@@ -163,10 +163,10 @@ def store_activity(request):
 
 ##### Store Parking Report #####
 def store_parking_context(dates=(1,2), limit = 5):
-    results = store_parking_query()
+    results = Store.store_parking()
     context =  {'queried_stores': results,
                 'stores': Store.objects.all(),
-                'store_parking_graph': store_parking_graph()}
+                'store_parking_graph': store_parking_graph(results)}
     return context
 def json_store_parking_context(request):
     dates = (request.GET.get('start_date', None), request.GET.get('end_date', None))
@@ -186,10 +186,10 @@ def store_parking(request):
 
 ##### Customer Demographics Report #####
 def customer_demographics_context(dates=(1,2), limit = 5):
-    results = customer_demographics_query()
+    results = User.user_demographics()
     context =  {'users_list': User.objects.all(),
                 'results': results,
-                'customer_demographics_graph': customer_demographics_graph()}
+                'customer_demographics_graph': customer_demographics_graph(results)}
     return context
 def json_customer_demographics_context(request):
     dates = (request.GET.get('start_date', None), request.GET.get('end_date', None))
@@ -204,9 +204,6 @@ def customer_demographics(request):
                       'CarRentalCompany/reports_customer_demographics.html',
                       customer_demographics_context())
     return redirect('index')
-
-
-
 
 
 
