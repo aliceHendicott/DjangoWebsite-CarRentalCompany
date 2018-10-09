@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import *
 from django.contrib.auth.models import User
+from django.db import connection
 
 # Create your models here.
 '''SETUP USER GROUPS'''
@@ -80,11 +81,11 @@ class Car(models.Model):
             query += " LIMIT " + str(limit)
         return Car.objects.raw(query)
     def inactive_cars(limit = -1):
-        query = '''SELECT CarRentalCompany_car.*,  MAX(CarRentalCompany_order.order_return_date) AS `Return_Date`
+        query = '''SELECT CarRentalCompany_car.*,  MAX(CarRentalCompany_order.order_return_date) AS Return_Date
                    FROM CarRentalCompany_order
                    INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
                    GROUP BY CarRentalCompany_car.car_model
-                   ORDER BY `Return_Date` ASC;'''
+                   ORDER BY Return_Date ASC'''
         if (limit > 0):
             query += " LIMIT " + str(limit)
         return Store.objects.raw(query)
@@ -114,13 +115,23 @@ class Store(models.Model):
         if (limit > 0):
             query += " LIMIT " + str(limit)
         return Store.objects.raw(query)
-    def store_parking():
-        query_pickup = 'SELECT *, COUNT(CarRentalCompany_order.id) as picked_up FROM CarRentalCompany_order LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id GROUP BY CarRentalCompany_order.order_pickup_store_id_id'
+    def store_parking(limit = -1):
+        query_pickup = '''SELECT *, COUNT(CarRentalCompany_order.id) as picked_up FROM CarRentalCompany_order 
+                          LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id 
+                          GROUP BY 
+                          CarRentalCompany_order.order_pickup_store_id_id
+                          '''
         results = Order.objects.raw(query_pickup)
-        query_return = 'SELECT *, COUNT(CarRentalCompany_order.id) as returned FROM CarRentalCompany_order GROUP BY CarRentalCompany_order.order_return_store_id_id'
+        query_return = '''SELECT *, COUNT(CarRentalCompany_order.id) as returned FROM CarRentalCompany_order 
+                          LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_return_store_id_id
+                          GROUP BY 
+                          CarRentalCompany_order.order_return_store_id_id
+                          '''
         return_count = Order.objects.raw(query_return)
         for index in range(len(results)):
             results[index].picked_up = abs(results[index].picked_up - return_count[index].returned)
+        if (limit > 0):
+            results = results[0:limit]
         return results
 
 class User(models.Model):
@@ -134,7 +145,7 @@ class User(models.Model):
     def __str__(self):
         return self.user_name
     # Data Extraction
-    def user_demographics():
+    def user_demographics(limit = -1):
         query_ages_by_range = '''SELECT COUNT(*) AS 'number_of_users', user_gender,
                 CASE
                     WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
@@ -254,7 +265,9 @@ class User(models.Model):
                 if results[row][column] > most_popular_return_store_index:
                     most_popular_return_store_index = row
             ages_by_range[column - 1].append(results[most_popular_return_store_index][0])
-
+        ages_by_range.sort(key=lambda x: x[0])
+        if (limit > 0):
+            ages_by_range = ages_by_range[0:limit]
         return ages_by_range
 
 class Order(models.Model):

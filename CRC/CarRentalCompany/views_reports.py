@@ -34,32 +34,25 @@ def cars_seasonal_graph(data):
     for car in data:
         graphdata.append([car.car_makename, car.number_of_orders])
     return drawGraph('bar', 'cars_seasonal', graphdata)
-def cars_inactive_graph():
-    graphdata = [['VW Golf', 5],
-                 ['Getz', 12],
-                 ['Falcon', 13],
-                 ['Vento', 14],
-                 ['Lotus x', 15],
-                 ['Tesla', 16]]
+def cars_inactive_graph(data = 0):
+    graphdata = []
+    for car in data:
+        graphdata.append([car.car_makename, (date.today() - car.Return_Date).days])
     return drawGraph('horizBar', 'cars_inactive', graphdata)
-def store_parking_graph():
-    graphdata = [['Brisbane', 16],
-                 ['Warrnambool', 15],
-                 ['Sydney', 14],
-                 ['Gold Coast', 13],
-                 ['Adelaide', 5]]
+def store_parking_graph(data = 0):
+    graphdata = []
+    for store in data:
+        graphdata.append([store.store_city.replace(" ", ""), store.picked_up])
     return drawGraph('horizBar', 'store_parking', graphdata)
 def store_activity_graph(data):
     graphdata = []
     for store in data:
         graphdata.append([store.store_city, store.total_activity])
     return drawGraph('pie', 'store_activity', graphdata)
-def customer_demographics_graph():
-    graphdata = [['Female 18-25', 1],
-                 ['Male 35-45', 3],
-                 ['Male 18-25', 6],
-                 ['Female 65+', 2],
-                 ['Female 35-45', 9]]
+def customer_demographics_graph(data=0):
+    graphdata = []
+    for demographic in data:
+        graphdata.append([demographic[2], demographic[0]])
     return drawGraph('pie', 'customer_demographics', graphdata)
 
 
@@ -70,15 +63,17 @@ def customer_demographics_graph():
 ##### Reports Dashboard #####
 def dashboard_context(dates = 1, limit = 5):
     seasonal_cars = Car.top_cars(limit)
+    car_inactive = Car.inactive_cars(limit)
     store_activity = Store.store_activity(limit)
-    car_parks = Car.inactive_cars()
+    store_parks = Store.store_parking(limit)
+    customer_demographics = User.user_demographics(limit)
     context =  {'seasonal_cars': seasonal_cars,
                 'store_activity': store_activity,
                 'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars),
-                'cars_inactive_graph': cars_inactive_graph(),
-                'store_parking_graph': store_parking_graph(),
+                'cars_inactive_graph': cars_inactive_graph(car_inactive),
+                'store_parking_graph': store_parking_graph(store_parks),
                 'store_activity_graph': store_activity_graph(store_activity),
-                'customer_demographics_graph': customer_demographics_graph()}
+                'customer_demographics_graph': customer_demographics_graph(customer_demographics)}
     return context
 def json_dashboard_context(request):
     dates = (request.GET.get('start_date', None), request.GET.get('end_date', None))
