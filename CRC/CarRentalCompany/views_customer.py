@@ -26,3 +26,4 @@ def my_account(request):
     return render(request,
                   'CarRentalCompany/xxx.html',
                   {})
+

@@ -9,26 +9,35 @@ CRC Customer Demographics
 {% block stylesheet %}
 {% endblock %}
 
-<!-- Content goes here -->
-{% block content %}
-    <div id="content" class="report-page">
-        <table>
-            <tr class="table-heading">
-                <td>Age Range and Gender</td>
-                <td>Number of Users</td>
-                <td>Most Popular Body Type</td>
-            </tr>
-            {% for age_group in results %}
-                <tr>
-                    <td>{{ age_group.2 }}</td>
-                    <td>{{ age_group.0 }}</td>
-                    <td>{{ age_group.3 }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-{% endblock %}
-
 <!-- Extra javascript goes here -->
 {% block javascript %}
+<script>
+    $(document).on('click', '.press_me', function (e) {
+        var start_date = 1
+        var end_date = 2
+        $.ajax({
+            url: '{% url "json_customer_demographics_context" %}',
+            dataType: 'json',
+            data: {
+                'username': start_date,
+                'end_date': end_date
+            },
+            success: function (data) {
+                document.getElementById("report_content").innerHTML = data.html_response
+            }
+        });
+    })
+</script>
 {% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+    <div id="content">
+    <h1>Reports</h1>
+    <button type="button" name="press_me" class="press_me">Click Me!</button>
+    <div id="report_content">
+        {% include './Includes/reports_customer_demographics_content.html' %}
+    </div>
+</div>
+{% endblock %}
+

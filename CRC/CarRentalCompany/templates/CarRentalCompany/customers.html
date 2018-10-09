@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+
+<!-- Title goes here -->
+{% block title %}
+CRC Customers
+{% endblock %}
+
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+<div id="content">
+    <h1>Customers</h1>
+    <div class="grid listing">
+        {% for customer in customers_list.all %}
+        <div>
+                <h3>{{ customer.user_name }}</h3>
+                <p><i class="fas fa-phone"></i> {{ customer.user_phone }}<br />
+                    <i class="fas fa-map-marker-alt"></i> {{ customer.user_address }}<br />
+                    <i class="fas fa-birthday-cake"></i> {{ customer.user_birthday }}<br />
+                    <i class="fas fa-user-md"></i> {{ customer.user_occupation }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+
+{% block javascript %}
+{% endblock %}

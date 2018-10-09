@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+
+<!-- Title goes here -->
+{% block title %}
+CRC Orders
+{% endblock %}
+
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+<div id="content">
+    <h1>Orders</h1>
+    <div class="grid listing">
+        {% for order in orders_list %}
+        <div>
+                <h3>{{ order.id }}: {{ order.customer_name }}</h3>
+                <p>Pickup from {{ order.pickup_store }} on {{ order.pickup_date }}<br />
+                    Return to {{ order.return_store }} on {{ order.return_date }}<br />
+                    Car: {{ order.car_make_model }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+
+{% block javascript %}
+{% endblock %}

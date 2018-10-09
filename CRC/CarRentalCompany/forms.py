@@ -69,25 +69,25 @@ class CarFilterForm(forms.Form):
     year_options = [["Null", "Please Select"]]
     for year in seriesYearOptions:
         year_options.append([year, year])
-    minimum_series_year = forms.ChoiceField(choices=year_options)
+    series_year = forms.ChoiceField(choices=year_options)
 
     # set body type up as list of list and set up field
     bodyType_options = [["Null", "Please Select"]]
     for type in bodyTypeOptions:
         bodyType_options.append([type, type])
-    body_type = forms.ChoiceField(choices=bodyType_options)
+    bodytype = forms.ChoiceField(choices=bodyType_options, label='Body Type')
 
     # set seating capacity up as list of list and set up field
     seating_options = [["Null", "Please Select"]]
     for seats in seatingCapacityOptions:
         seating_options.append([seats, seats])
-    minimum_seating_capacity = forms.ChoiceField(choices=seating_options)
+    seating_capacity = forms.ChoiceField(choices=seating_options)
 
     # set make name up as list of list and set up field
     make_options = [["Null", "Please Select"]]
     for make in makeOptions:
         make_options.append([make, make])
-    make_name = forms.ChoiceField(choices=make_options)
+    makename = forms.ChoiceField(choices=make_options, label='Make Name')
 
     # set engine size up as list of list and set up field
     engine_options = [["Null", "Please Select"]]

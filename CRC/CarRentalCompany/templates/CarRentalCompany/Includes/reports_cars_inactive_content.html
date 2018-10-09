@@ -1,0 +1,19 @@
+<div class="report-page">
+<div>
+<table>
+    <tr class="table-heading">
+        <td>Car Make</td>
+        <td>Car Model</td>
+        <td>Last Rented</td>
+    </tr>
+    {% for car in inactive_cars %}
+        <tr>
+            <td>{{ car.car_makename }}</td>
+            <td>{{ car.car_model }}</td>
+            <td>{{ car.Return_Date }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+<div style="width: 500px; height: 500px;">{{ cars_inactive_graph|safe }}</div>
+</div>

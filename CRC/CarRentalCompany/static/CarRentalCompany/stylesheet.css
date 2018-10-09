@@ -1,9 +1,9 @@
+/* set up variables to represent the three main colours used across website */
 :root {
     --primary-color:#5474F6; 
     --secondary-color:#ED6762;
     --tertiary-color:#282828;
 }
-
 body{
 	font-family:Raleway, sans-serif;
 	color:var(--tertiary-color);
@@ -22,6 +22,7 @@ h3{
 	font-size:16px;
 	margin-top:0px;
 }
+/* set up header container div styling */
 #header{
 	padding:10px;
 	background-color:var(--tertiary-color);
@@ -41,6 +42,7 @@ h3{
 	grid-template-columns: auto 32%;
 	grid-column-gap: 20px;
 }
+/* set up a generic button style */
 .button{
 	padding:10px;
 	color:#ffffff;
@@ -50,37 +52,44 @@ h3{
 	text-transform:uppercase;
 	text-decoration:none;
 }
+/* styling for recommend me a car button on header */
 #recommend-button{
 	float:left;
 }
+/* styling to set the right section on the header to the right */
 #header-right{
 	float:right;
 	text-align:right;
 	display:inline-block;
 	color:#ffffff;
 }
+/* set up styling to ensure all div sections on the header are inline elements */
 #header-right > div{
 	display:inline-block;
 	margin-right:10px;
 	margin-top:10px;
 }
+/* styling for the input fields on the login form on the menu bar */
 #log-in input{
 	padding-right:10px;
 	font-size:16px;
 	font-family:Raleway, sans-serif;
 }
+/* generic styling for input and password fields */
 [type='text'], [type="password"]{
 	padding:10px;
 	border:1px solid #ffffff;
 	border-radius:5px;
 	font-style:italic;
 }
+/* ensure login form and register button appears inline on the header */
 #log-in{
 	display:inline-block;
 }
 #register{
 	display:inline-block;
 }
+/* set up styling for nav bar below header */
 #nav-bar{
 	background-color:var(--primary-color);
 	text-transform:uppercase;
@@ -89,6 +98,7 @@ h3{
 	padding-right:25px;
 	height:60px;
 }
+/* set up left section and right section to appear in the correct positions */
 #nav-bar-left{
 	float:left;
 }
@@ -96,6 +106,7 @@ h3{
 	float:right;
 	padding-right:25px;
 }
+/* set up style for menu items on the nav bar */
 #nav-bar a{
 	display:inline-block;
 	line-height:30px;
@@ -106,6 +117,7 @@ h3{
 #nav-bar a:hover{
 	background-color:#2D3F85;
 }
+/* set up style for nav links when you are on that page */
 .current-page{
 	background-color:#2D3F85;
 }
@@ -188,6 +200,7 @@ h3{
 .listing > div > p:last-of-type{
 	margin-bottom:0px;
 }
+/* set up styling for footer and ensure it is fixed at the base of the screen */
 #footer{
 	background-color:var(--tertiary-color);
 	text-align:right;

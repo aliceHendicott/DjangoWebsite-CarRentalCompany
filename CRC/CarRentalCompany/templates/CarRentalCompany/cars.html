@@ -20,6 +20,7 @@ CRC Cars
             <div id="main-section">
                 <div id="title">
                     <div id="title-left"><h1>Cars</h1></div>
+                    <!-- set up sort section -->
                     <div id="title-right">
                         Sort by:
                         <select name="sort" id="cars-sort" onchange="sortCarsList(this)">
@@ -34,6 +35,7 @@ CRC Cars
                     <p><b>Current Filters:</b> {% for filter in filters %} <span class="filter">{{ filter }}</span> | {% endfor %}</p>
                 {% endif %}
                 <div class="grid listing" id="columns2">
+                    <!-- dispalay filtered cars if necessary -->
                     {% if filtered_cars != -1 and filtered_cars != -2 and filtered_cars != ""%}
                         {% for car in filtered_cars %}
                             <div>
@@ -45,6 +47,7 @@ CRC Cars
                             </div>
                         {% endfor %}
                     {% else %}
+                        <!-- otherwise display all cars -->
                         {% for car in cars_list.all %}
                             <div>
                                 <a href="./{{ car.id }}/"><h3>{{ car }}</h3></a>
@@ -57,8 +60,10 @@ CRC Cars
                     {% endif %}
                 </div>
             </div>
+            <!-- filter cars form on sidebar -->
             <div id="sidebar">
                 <h1>Filter Cars</h1>
+                <!-- display any necessary errors -->
                 <div class="filtered-cars-error">
                     {% if filtered_cars == -1 %}
                     <span>Your filter returned no results, please try again</span>
@@ -67,6 +72,7 @@ CRC Cars
                     <span>Please enter a filter and try again</span>
                 {% endif %}
                 </div>
+                <!-- set up form-->
                 <form id="cars-filter-form" method="POST" action="/cars/">{% csrf_token %}
                     {{ form.non_field_errors }}
                     {% for hidden_field in form.hidden_fields %}
