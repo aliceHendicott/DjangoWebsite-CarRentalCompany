@@ -1414,7 +1414,113 @@
   }, {
     "id": "282eddd0-5d0c-4bd7-98dc-d82464d75e7a",
     "name": "Cars By Season Test",
-    "commands": []
+    "commands": [{
+      "id": "c81642d3-3aaf-4462-9ea4-18b467f2e7f2",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "57047245-c1d0-443d-add4-98c612ede960",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "958x1050",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "35715159-3851-41a6-ac7f-c01dd681024e",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "092e4d41-feea-4021-a40e-5bd7071becc0",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "tango"
+    }, {
+      "id": "56a3eef8-723f-4a4d-b854-c8e01dab7876",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "potter99"
+    }, {
+      "id": "d772734d-ead8-4ecd-8151-f40079b6584e",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "01495c8e-d222-46f1-8eba-ac4a3d92b3f2",
+      "comment": "",
+      "command": "click",
+      "target": "css=#nav-bar-right > a:nth-child(2)",
+      "targets": [
+        ["css=#nav-bar-right > a:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Report')]", "xpath:link"],
+        ["xpath=//div[@id='nav-bar-right']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/reports/dashboard/')]", "xpath:href"],
+        ["xpath=//div[2]/a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd0083c6-c5b8-4eac-893b-61efc6658ab3",
+      "comment": "",
+      "command": "click",
+      "target": "css=h3",
+      "targets": [
+        ["css=h3", "css"],
+        ["css=.report-page:nth-child(1) h3", "css:finder"],
+        ["xpath=//div[@id='columns2']/div/a/h3", "xpath:idRelative"],
+        ["xpath=//h3", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "845549c4-7acd-4a1c-b227-84dc9e27d737",
+      "comment": "",
+      "command": "close",
+      "target": "win_ser_local",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "f818e20d-d96b-47f1-ad2f-7ea8f86ce188",
