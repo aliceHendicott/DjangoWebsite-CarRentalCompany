@@ -15,7 +15,7 @@
             {% endif %}
             {% if request.user.is_authenticated %}
                 <!-- display username and logout button if user is logged in -->
-                <div id="user-logged-in">Welcome {{user.username}}</div>
+                <div id="user-logged-in">Welcome <a href="/my_account">{{user.username}}</a></div>
                 <a id="logout" class="button" href="{% url 'logout' %}">Logout</a>
             {%  endif %}
         </div>

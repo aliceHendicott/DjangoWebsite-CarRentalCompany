@@ -1,6 +1,11 @@
 from django import forms
 from .models import Car
 
+class CustomerSearchForm(forms.Form):
+    searchOptions = (("1", "By Customer Name"), ("2", "By Customer ID"))
+    search_options = forms.ChoiceField(choices=searchOptions, label='Search by')
+    search_input = forms.CharField(label="Search")
+
 class RecommendForm(forms.Form):
     purposeOptions = (("1", "Four wheel Driving"), ("2", "Family trip"), ("3", "Road Trip"))
     purpose = forms.ChoiceField(choices=purposeOptions)

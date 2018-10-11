@@ -16,7 +16,7 @@ CRC Orders
     <div class="grid listing">
         {% for order in orders_list %}
         <div>
-                <h3>{{ order.id }}: {{ order.customer_name }}</h3>
+                <h3>Order {{ order.id }}: {{ order.customer_name }}</h3>
                 <p>Pickup from {{ order.pickup_store }} on {{ order.pickup_date }}<br />
                     Return to {{ order.return_store }} on {{ order.return_date }}<br />
                     Car: {{ order.car_make_model }}</p>
