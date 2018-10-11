@@ -23,7 +23,15 @@ pass
 ' The following are sprint 2:
 '''
 def my_account(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
-
+    if request.user.is_authenticated and request.user.userprofile.is_customer:
+        user = request.user
+        orders = Order.objects.all()
+        orders = orders.filter(customer_id=user.userprofile.customer_number)
+        user_details = User.objects.get(id=user.userprofile.customer_number)
+        return render(request,
+                      'CarRentalCompany/customer_account.html',
+                      {'user': user,
+                       'orders': orders,
+                       'user_details': user_details})
+    else:
+        return redirect('index.html')

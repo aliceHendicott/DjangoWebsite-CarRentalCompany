@@ -52,6 +52,9 @@ h3{
 	text-transform:uppercase;
 	text-decoration:none;
 }
+.button:hover{
+	background-color:#eb5650;
+}
 /* styling for recommend me a car button on header */
 #recommend-button{
 	float:left;
@@ -113,6 +116,15 @@ h3{
 	text-decoration:none;
 	color:#ffffff;
 	padding:15px;
+}
+#account-link {
+	text-decoration: none;
+	color: inherit;
+	padding: 15px;
+	border-radius:5px;
+}
+#account-link:hover{
+	background-color:#3d3d3d;
 }
 #nav-bar a:hover{
 	background-color:#2D3F85;

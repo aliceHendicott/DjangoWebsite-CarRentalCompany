@@ -2,7 +2,7 @@
 
 <!-- Title goes here -->
 {% block title %}
-{{ user.user_name }} account
+Account Page
 {% endblock %}
 
 <!-- Extra styling goes here -->
@@ -11,9 +11,36 @@
 
 <!-- Content goes here -->
 {% block content %}
-<div id="content">
-    <h1>{{ user.username }} Account Page</h1>
-</div>
+    <div id="content">
+        <h1>Welcome {{ user.username }}</h1>
+        <p>On this page you will find information about your account.</p>
+        <hr/>
+        <h2>Upcoming Orders</h2>
+        <p>You have no upcoming orders.</p>
+        <hr />
+        <h2>Past bookings</h2>
+        <div class="grid listing">
+            {% for order in orders %}
+                <div>
+                    <h3>{{ order.order_pickup_date }} - {{ order.order_return_date }}</h3>
+                    <p><b>Pick up location: </b>{{ order.order_pickup_store_id.store_city }}<br/>
+                        <b>Return location: </b>{{ order.order_return_store_id.store_city }}<br/>
+                        <b>Car: </b>{{ order.car_id.car_makename }}, {{ order.car_id.car_model }}<br />
+                        <b>Checked: </b>{{ order.order_checked }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <hr/>
+        <h2>My Details</h2>
+        <p><b>Name</b>: {{ user_details.user_name }}<br />
+        <b>Address</b>: {{ user_details.user_address }}<br />
+        <b>Birthday</b>: {{ user_details.user_birthday }}<br />
+        <b>Gender</b>: {{ user_details.user_gender }}<br />
+        <b>Occupation</b>: {{ user_details.user_occupation }}<br />
+        <b>Phone Number</b>: {{ user_details.user_phone }}</p>
+        &nbsp;<br />
+        <a href="#" class="button">Update Details</a>
+    </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

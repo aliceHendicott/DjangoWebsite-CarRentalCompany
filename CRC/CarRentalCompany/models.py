@@ -13,6 +13,7 @@ class UserProfile(models.Model):
     is_floorStaff = models.BooleanField(default=False)
     is_generalManager = models.BooleanField(default=False)
     is_boardMember = models.BooleanField(default=False)
+    customer_number = models.IntegerField(default=-1)
 
 '''
 PROCESS ---
@@ -278,6 +279,7 @@ class Order(models.Model):
     order_pickup_date = models.DateField('order pickup date', default=datetime.today, blank=True)
     order_return_store_id = models.ForeignKey(Store, related_name = 'return_store_order_set', on_delete = models.CASCADE)
     order_return_date = models.DateField('order return date', default=datetime.today, blank=True)
+    order_checked = models.BooleanField('checked', default=True)
     def __str__(self):
         return self.order_pickup_store_id.store_name + ": " + self.order_pickup_date.strftime("%d-%b-%y")
 
