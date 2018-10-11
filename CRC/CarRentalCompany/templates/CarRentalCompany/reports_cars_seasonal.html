@@ -9,28 +9,34 @@ CRC Cars Seasonal
 {% block stylesheet %}
 {% endblock %}
 
-<!-- Content goes here -->
-{% block content %}
-
-    <div id="content" class="report-page">
-        <div>
-            <table>
-                <tr class="table-heading">
-                    <td>Car Model</td>
-                    <td>Rental Frequency</td>
-                </tr>
-                {% for car in seasonal_cars %}
-                    <tr>
-                        <td>{{ car }}</td>
-                        <td>{{ car.number_of_orders }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div style="width: 500px; height: 500px;">{{ cars_seasonal_graph|safe }}</div>
-    </div>
-{% endblock %}
-
 <!-- Extra javascript goes here -->
 {% block javascript %}
+<script>
+    $(document).on('click', '.press_me', function (e) {
+        var start_date = 1
+        var end_date = 2
+        $.ajax({
+            url: '{% url "json_cars_seasonal_context" %}',
+            dataType: 'json',
+            data: {
+                'username': start_date,
+                'end_date': end_date
+            },
+            success: function (data) {
+                document.getElementById("report_content").innerHTML = data.html_response
+            }
+        });
+    })
+</script>
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+    <div id="content">
+        <h1>Reports</h1>
+        <button type="button" name="press_me" class="press_me">Click Me!</button>
+        <div id="report_content">
+            {% include './Includes/reports_cars_seasonal_content.html' %}
+        </div>
+    </div>
 {% endblock %}

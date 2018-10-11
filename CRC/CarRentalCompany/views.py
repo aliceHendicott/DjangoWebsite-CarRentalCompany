@@ -91,71 +91,21 @@ def register(request):
                   {})
 
 
-# -------- CARS -------- #
-'''
-' SPRINT 1
-' The following are sprint 1:
-'''
-def cars(request):
-    form = CarFilterForm()
-    filtered_cars = ""
-    filters = ""
-    # check if the car filter form has been submitted
-    if request.method == "POST":
-        # pull the values posted into a python dictionary
-        fields = request.POST
-        # pull list of cars based on these filters
-        filtered_cars = handle_filter_cars(fields)
-        # pull list of filters used if the filters returned values
-        if filtered_cars != -1:
-            filters = get_current_filter(fields)
-    if filtered_cars == "" or filtered_cars == -1 or filtered_cars == -2:
-        cars_json = serializers.serialize("json", Car.objects.all())
-    else:
-        cars_json = serializers.serialize("json", filtered_cars)
-    #render cars.html passing all relevant variables
-    return render(request,
-                  'CarRentalCompany/cars.html',
-                  {'cars_list': Car.objects.all(),
-                   'form': form,
-                   'filtered_cars': filtered_cars,
-                   'filters': filters,
-                   'cars_json': cars_json})
+# Tutorial on AJAX
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView
 
-def car_recommend(request):
-    form = RecommendForm()
-    recommended_cars = []
-    no_results = False
-    form_actioned = False
-    if request.method == "POST":
-        # pull data from form if filled out
-        purpose = request.POST['purpose']
-        seats = request.POST['seats']
-        transmission = request.POST['transmission']
-        month = request.POST['month']
-        recommended_cars = handle_recommendation(purpose, seats, transmission, month)
-        num_results = len(list(recommended_cars))
-        if num_results == 0:
-            no_results = True
-        form_actioned = True
-    return render(request,
-                  'CarRentalCompany/car_recommend.html',
-                  {'form': form,
-                   'recommended_cars': recommended_cars,
-                   'no_results': no_results,
-                   'form_actioned': form_actioned})
+class SignUpView(CreateView):
+    template_name = 'CarRentalCompany/signup.html'
+    form_class = UserCreationForm
 
-'''
-' SPRINT 2
-' The following are sprint 2:
-'''
-def car(request, car_id):
-    car = Car.objects.get(pk = car_id)
-    return render(request,
-                  'CarRentalCompany/car.html',
-                  {'car': car})
-def car_request(request, car_id):
-    car = Car.objects.get(pk = car_id)
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
+from django.http import JsonResponse
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': Car.objects.filter(car_makename__iexact=username).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'A user with this username already exists.'
+    return JsonResponse(data)
