@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+
+<!-- Title goes here -->
+{% block title %}
+Register
+{% endblock %}
+
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+    <div id="content">
+        <h2>Sign up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign up</button>
+        </form>
+    </div>
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+
+{% block javascript %}
+{% endblock %}

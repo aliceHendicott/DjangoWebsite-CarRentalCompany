@@ -6,7 +6,7 @@ from django.db import connection
 
 from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
-from .forms import RecommendForm,CarFilterForm
+from .forms import *
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
 from .filter_cars import *
@@ -81,15 +81,38 @@ def handle_login(request):
 ' SPRINT 2
 ' The following are sprint 2:
 '''
+
+
 def FAQ(request):
     return render(request,
                   'CarRentalCompany/faq.html',
                   {'store_list': Store.objects.all()})
-def register(request):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
 
+
+def register(request):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = CustomerRegisterForm(request.POST)
+            if form.is_valid():
+                user_new = form.save()
+                user_new.refresh_from_db()  # load the profile instance created by the signal
+                user_new.userprofile.customer_number = form.cleaned_data.get('customer_number')
+                user_new.save()
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=user_new.username, password=raw_password)
+                login(request, user)
+                return redirect('index')
+            else:
+                return render(request,
+                              'CarRentalCompany/register.html',
+                              {'form': form})
+        else:
+            form = CustomerRegisterForm()
+            return render(request,
+                          'CarRentalCompany/register.html',
+                          {'form': form})
+    else:
+        return redirect('index')
 
 # Tutorial on AJAX
 from django.contrib.auth.forms import UserCreationForm

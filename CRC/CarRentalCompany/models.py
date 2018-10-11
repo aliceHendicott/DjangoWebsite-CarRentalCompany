@@ -1,19 +1,28 @@
 from django.db import models
 from django.utils import timezone
 from datetime import *
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as auth_User
 from django.db import connection
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 '''SETUP USER GROUPS'''
 
+
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
-    is_customer = models.BooleanField(default=False)
+    user = models.OneToOneField(auth_User, unique=True, on_delete=models.CASCADE)
+    is_customer = models.BooleanField(default=True)
     is_floorStaff = models.BooleanField(default=False)
     is_generalManager = models.BooleanField(default=False)
     is_boardMember = models.BooleanField(default=False)
     customer_number = models.IntegerField(default=-1)
+
+    @receiver(post_save, sender=auth_User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+        instance.userprofile.save()
 
 '''
 PROCESS ---

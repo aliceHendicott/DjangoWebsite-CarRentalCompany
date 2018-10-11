@@ -1,10 +1,24 @@
 from django import forms
 from .models import Car
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
+
+AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
+class CustomerRegisterForm(UserCreationForm):
+    customer_number = forms.IntegerField(help_text='If you are a returning customer, please input customer number')
+
+    class Meta:
+        model = User
+        fields = ('username', 'customer_number', 'password1', 'password2')
+
 
 class CustomerSearchForm(forms.Form):
     searchOptions = (("1", "By Customer Name"), ("2", "By Customer ID"))
     search_options = forms.ChoiceField(choices=searchOptions, label='Search by')
     search_input = forms.CharField(label="Search")
+
 
 class RecommendForm(forms.Form):
     purposeOptions = (("1", "Four wheel Driving"), ("2", "Family trip"), ("3", "Road Trip"))
@@ -17,6 +31,7 @@ class RecommendForm(forms.Form):
                     ("6", "June"), ("7", "July"), ("8", "August"), ("9", "September"), ("10", "October"),
                     ("11", "November"), ("12", "December"))
     month = forms.ChoiceField(choices=monthOptions)
+
     def clean(self):
         purpose = forms.cleaned_data['purpose']
         seats = forms.cleaned_data['seats']
@@ -24,6 +39,7 @@ class RecommendForm(forms.Form):
         month = forms.cleaned_data['month']
         if purpose or seats or transmission or month:
             return super(RecommendForm, self).clean()
+
 
 class CarFilterForm(forms.Form):
     # declare list variables
