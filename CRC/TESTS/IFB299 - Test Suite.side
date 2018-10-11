@@ -1,0 +1,302 @@
+{
+  "id": "ee798a77-f5ec-4a37-9986-4a5e4fd732a0",
+  "version": "1.1",
+  "name": "IFB299 - Test Suite",
+  "url": "http://127.0.0.1:8000",
+  "tests": [{
+    "id": "9825b2b4-6fb3-4416-be80-564f308f844b",
+    "name": "Homepage Test",
+    "commands": [{
+      "id": "6e0c1455-0120-4cd2-8804-888e190fc2e7",
+      "comment": "Homepage Test, confirm homepage appears, and all links work.",
+      "command": "",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7d06777e-cbee-4b17-8a21-46c2fcfdfa0f",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "445b76b8-1b1f-4cae-9eb9-8fa5e2644214",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1066",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b8beca81-d821-48a1-a540-4af7e907312e",
+      "comment": "",
+      "command": "click",
+      "target": "id=home",
+      "targets": [
+        ["id=home", "id"],
+        ["css=#home", "css"],
+        ["css=#home", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[@id='home']", "xpath:attributes"],
+        ["xpath=//div[@id='nav-bar-left']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/../')]", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d453a2cd-e905-4775-a0bc-1145c32cdbe0",
+      "comment": "",
+      "command": "click",
+      "target": "id=stores",
+      "targets": [
+        ["id=stores", "id"],
+        ["css=#stores", "css"],
+        ["css=#stores", "css:finder"],
+        ["xpath=//a[contains(text(),'View Stores')]", "xpath:link"],
+        ["xpath=//a[@id='stores']", "xpath:attributes"],
+        ["xpath=//div[@id='nav-bar-left']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/stores/')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ac030a0-8d25-47b1-9c6d-bb9eb60643ea",
+      "comment": "",
+      "command": "click",
+      "target": "id=cars",
+      "targets": [
+        ["id=cars", "id"],
+        ["css=#cars", "css"],
+        ["css=#cars", "css:finder"],
+        ["xpath=//a[contains(text(),'View Cars')]", "xpath:link"],
+        ["xpath=//a[@id='cars']", "xpath:attributes"],
+        ["xpath=//div[@id='nav-bar-left']/a[3]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/cars/')])[2]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f293dbd6-dae3-42b8-b0d3-d9972717dbe5",
+      "comment": "",
+      "command": "click",
+      "target": "id=faq",
+      "targets": [
+        ["id=faq", "id"],
+        ["linkText=FAQ", "linkText"],
+        ["css=#faq", "css"],
+        ["css=#faq", "css:finder"],
+        ["xpath=//a[contains(text(),'FAQ')]", "xpath:link"],
+        ["xpath=//a[@id='faq']", "xpath:attributes"],
+        ["xpath=//div[@id='nav-bar-left']/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/FAQ/')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "80a1f9a4-aabf-4f36-9642-48d55e4d3949",
+      "comment": "",
+      "command": "click",
+      "target": "id=home",
+      "targets": [
+        ["id=home", "id"],
+        ["css=#home", "css"],
+        ["css=#home", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[@id='home']", "xpath:attributes"],
+        ["xpath=//div[@id='nav-bar-left']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/../')]", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9dd3d1af-6650-46a1-9b3d-06bf10717f5b",
+      "comment": "",
+      "command": "close",
+      "target": "win_ser_local",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "08820875-31be-409b-b4b8-76fd9282f44c",
+    "name": "FAQ Page Test",
+    "commands": [{
+      "id": "2306b263-47b8-4912-b32f-a58f731a80db",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "164fdda7-d606-478e-9be3-301febef4fe7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1066",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d771b085-4375-472a-8cd4-731d8336fe4f",
+      "comment": "",
+      "command": "click",
+      "target": "id=faq",
+      "targets": [
+        ["id=faq", "id"],
+        ["linkText=FAQ", "linkText"],
+        ["css=#faq", "css"],
+        ["css=#faq", "css:finder"],
+        ["xpath=//a[contains(text(),'FAQ')]", "xpath:link"],
+        ["xpath=//a[@id='faq']", "xpath:attributes"],
+        ["xpath=//div[@id='nav-bar-left']/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/FAQ/')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c45a2d9-457e-469a-a8fe-3a4ff991aafb",
+      "comment": "",
+      "command": "click",
+      "target": "name=question",
+      "targets": [
+        ["name=question", "name"],
+        ["css=input[name=\"question\"]", "css"],
+        ["css=#faq-question > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='question']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input", "xpath:idRelative"],
+        ["xpath=//main/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d2cc025-ef6d-4fc7-a8d5-79bfa6f3d388",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input[name=\"email\"]", "css"],
+        ["css=#faq-question > input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "726a1b95-a21a-4e58-a743-4c997270a026",
+      "comment": "",
+      "command": "click",
+      "target": "name=question",
+      "targets": [
+        ["name=question", "name"],
+        ["css=input[name=\"question\"]", "css"],
+        ["css=#faq-question > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='question']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input", "xpath:idRelative"],
+        ["xpath=//main/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "334d4a3f-c045-4fdf-830b-7bec96c23977",
+      "comment": "",
+      "command": "click",
+      "target": "css=div.question",
+      "targets": [
+        ["css=div.question", "css"],
+        ["css=.question", "css:finder"],
+        ["xpath=//div[@onclick=\"LoadAnswer('a1')\"]", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div", "xpath:idRelative"],
+        ["xpath=//main/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9cabaaf6-92fc-45f8-bde3-fd6600f3f143",
+      "comment": "",
+      "command": "click",
+      "target": "css=div.question",
+      "targets": [
+        ["css=div.question", "css"],
+        ["css=.question", "css:finder"],
+        ["xpath=//div[@onclick=\"LoadAnswer('a1')\"]", "xpath:attributes"],
+        ["xpath=//div[@id='content']/div", "xpath:idRelative"],
+        ["xpath=//main/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cac0897f-1ad4-4748-9d40-34bd9bc944dc",
+      "comment": "",
+      "command": "click",
+      "target": "name=question",
+      "targets": [
+        ["name=question", "name"],
+        ["css=input[name=\"question\"]", "css"],
+        ["css=#faq-question > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='question']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input", "xpath:idRelative"],
+        ["xpath=//main/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4aa22684-7839-427a-b12d-5fb735e7c3e9",
+      "comment": "",
+      "command": "type",
+      "target": "name=question",
+      "targets": [
+        ["name=question", "name"],
+        ["css=input[name=\"question\"]", "css"],
+        ["css=#faq-question > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='question']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input", "xpath:idRelative"],
+        ["xpath=//main/div/form/input", "xpath:position"]
+      ],
+      "value": "Test Question"
+    }, {
+      "id": "3f185239-d8ec-40f7-b9c2-a9118ac90890",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input[name=\"email\"]", "css"],
+        ["css=#faq-question > input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e67b3f17-9fec-425b-9400-2a21fb4b9d69",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input[name=\"email\"]", "css"],
+        ["css=#faq-question > input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "Test@email.com"
+    }, {
+      "id": "7e012e07-e919-412d-8a3d-6cd29b7b8ac4",
+      "comment": "",
+      "command": "click",
+      "target": "css=#faq-question > input.button",
+      "targets": [
+        ["css=#faq-question > input.button", "css"],
+        ["css=.button:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Submit']", "xpath:attributes"],
+        ["xpath=//form[@id='faq-question']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/form/input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "f818e20d-d96b-47f1-ad2f-7ea8f86ce188",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://127.0.0.1:8000/"],
+  "plugins": []
+}
