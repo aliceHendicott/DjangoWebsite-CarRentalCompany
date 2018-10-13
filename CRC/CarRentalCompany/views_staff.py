@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 from .graphs import *
-from .models import Car, Store, Order, User, UserProfile
-from .forms import RecommendForm
+from .models import Car, Store, Order, User as modelUser
+from .forms import *
+from .customer_search import *
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
@@ -66,9 +67,17 @@ def order(request, order_id):
                   {})
 
 def customers(request):
+    form = CustomerSearchForm
+    customers_list = modelUser.objects.all()
+    customers_list_searched = ""
+    if request.method == "POST":
+        fields = request.POST
+        customers_list_searched = handle_customer_search(fields)
     return render(request,
                   'CarRentalCompany/customers.html',
-                  {'customers_list': User.objects.all()})
+                  {'form': form,
+                   'customers_list': customers_list,
+                   'customers_list_searched': customers_list_searched})
 
 def customer(request, customer_id):
     return render(request,

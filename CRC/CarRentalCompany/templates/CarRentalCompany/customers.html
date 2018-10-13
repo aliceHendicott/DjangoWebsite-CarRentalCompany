@@ -11,20 +11,60 @@ CRC Customers
 
 <!-- Content goes here -->
 {% block content %}
-<div id="content">
-    <h1>Customers</h1>
-    <div class="grid listing">
-        {% for customer in customers_list.all %}
-        <div>
-                <h3>{{ customer.user_name }}</h3>
-                <p><i class="fas fa-phone"></i> {{ customer.user_phone }}<br />
-                    <i class="fas fa-map-marker-alt"></i> {{ customer.user_address }}<br />
-                    <i class="fas fa-birthday-cake"></i> {{ customer.user_birthday }}<br />
-                    <i class="fas fa-user-md"></i> {{ customer.user_occupation }}</p>
+    <div id="content">
+        <h1>Customers</h1>
+        <form id="customer-search-form" method="POST" action="/staff/customers/">{% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field.errors }}
+                {{ hidden_field }}
+            {% endfor %}
+            <div id="customer-search">
+                {% for field in form.visible_fields %}
+                    <div>
+                        <p>{{ field.label_tag }}<br />
+                        {{ field.errors }}
+                        {{ field }}
+                        {{ field.help_text }}</p>
+                    </div>
+                {% endfor %}
+                <div>
+                    <button type="submit" class="button">Search</button>
+                </div>
+            </div>
+        </form>
+        {% if customers_list_searched == -1 %}
+            <div class="error">
+                <span>Your search returned no results.</span>
+            </div>
+        {% endif %}
+        <div class="grid listing">
+            {% if customers_list_searched == "" or customers_list_searched == -1 %}
+                {% for customer in customers_list %}
+                    <div>
+                        <h3>{{ customer.user_name }}</h3>
+                        <p><i class="fas fa-phone"></i> {{ customer.user_phone }}<br/>
+                            <i class="fas fa-map-marker-alt"></i> {{ customer.user_address }}<br/>
+                            <i class="fas fa-birthday-cake"></i> {{ customer.user_birthday }}<br/>
+                            <i class="fas fa-user-md"></i> {{ customer.user_occupation }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for customer in customers_list_searched %}
+                    <div>
+                        <h3>{{ customer.user_name }}</h3>
+                        <p><i class="fas fa-phone"></i> {{ customer.user_phone }}<br/>
+                            <i class="fas fa-map-marker-alt"></i> {{ customer.user_address }}<br/>
+                            <i class="fas fa-birthday-cake"></i> {{ customer.user_birthday }}<br/>
+                            <i class="fas fa-user-md"></i> {{ customer.user_occupation }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-        {% endfor %}
+        {% if customers_list_searched != -1 and customers_list_searched != "" %}
+            <a href="/staff/customers" class="button">See Full List</a>
+        {% endif %}
     </div>
-</div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->

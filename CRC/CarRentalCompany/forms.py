@@ -15,9 +15,9 @@ class CustomerRegisterForm(UserCreationForm):
 
 
 class CustomerSearchForm(forms.Form):
-    searchOptions = (("1", "By Customer Name"), ("2", "By Customer ID"))
+    searchOptions = (("user_name", "By Customer Name"), ("id", "By Customer ID"), ("user_phone", "By Phone Number"))
     search_options = forms.ChoiceField(choices=searchOptions, label='Search by')
-    search_input = forms.CharField(label="Search")
+    search_input = forms.CharField(label="Search input")
 
 
 class RecommendationFeedbackForm(forms.Form):

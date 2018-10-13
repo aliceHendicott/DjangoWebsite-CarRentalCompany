@@ -178,6 +178,33 @@ h3{
 #reports-row2{
 	margin-top:-30px;
 }
+#customer-search{
+	display:grid;
+	grid-template-columns: 200px auto 200px;
+	grid-column-gap: 20px;
+}
+#customer-search input, #customer-search select, #customer-search button{
+	width:95%;
+	margin-top:5px;
+}
+#customer-search p {
+	margin-top: 0px;
+}
+#customer-search button{
+	height: 40px;
+	margin-top:25px;
+ }
+#customer-search input{
+	height:20px;
+}
+#customer-search select{
+	height:40px;
+	border:0px;
+	background-color:#ffffff;
+}
+#customer-search-form{
+	margin-bottom:20px;
+}
 .grid{
 	display:grid;
 	grid-template-columns: 32% 32% 32%;
@@ -315,10 +342,10 @@ table td:last-of-type{
 #cars-filter-form button{
 	width:100%;
 }
-.filtered-cars-error{
+.error{
     margin-bottom:15px;
 }
-.filtered-cars-error span{
+.error span{
     color:red;
     font-size:13px;
 }

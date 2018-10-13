@@ -13,17 +13,7 @@ CRC Stores
 {% block content %}
 <div id="banner2"></div>
 <div id="content">
-    <div id="title">
-        <div id="title-left"><h1>Locations</h1></div>
-        <div id="title-right">
-            Sort by:
-            <select name="sort">
-                <option name="sort" value="option 1">Option 1</option>
-                <option name="sort" value="option 2">Option 2</option>
-                <option name="sort" value="option 3">Option 3</option>
-            </select>
-        </div>
-    </div>
+    <h1>Locations</h1>
     <div class="grid listing" id="sort-div-stores">
         {% for store in stores_list.all %}
         <div>
