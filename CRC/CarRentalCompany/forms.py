@@ -86,6 +86,12 @@ class CarFilterForm(forms.Form):
     tankCapacity.sort()
     powerOptions.sort()
 
+    sort_options = [["car_makename", "Make (A-Z)"],
+                    ["popularity", "Popularity"],
+                    ["car_price_new", "Price (Low to High)"],
+                    ["car_bodytype", "Body type (A-Z)"]]
+    sort_by = forms.ChoiceField(choices=sort_options)
+
     # set years up as list of list and set up field
     year_options = [["Null", "Please Select"]]
     for year in seriesYearOptions:

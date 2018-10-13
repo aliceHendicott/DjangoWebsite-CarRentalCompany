@@ -21,28 +21,23 @@ from django.core import serializers
 def cars(request):
     form = CarFilterForm()
     filtered_cars = ""
-    filters = ""
+    filters = ["Sort by: Make (A-Z)"]
     # check if the car filter form has been submitted
-    if request.method == "POST":
+    if request.method == "GET":
         # pull the values posted into a python dictionary
-        fields = request.POST
+        fields = request.GET
         # pull list of cars based on these filters
         filtered_cars = handle_filter_cars(fields)
         # pull list of filters used if the filters returned values
-        if filtered_cars != -1:
+        if filtered_cars != -1 and filtered_cars != -2:
             filters = get_current_filter(fields)
-    if filtered_cars == "" or filtered_cars == -1 or filtered_cars == -2:
-        cars_json = serializers.serialize("json", Car.objects.all())
-    else:
-        cars_json = serializers.serialize("json", filtered_cars)
     #render cars.html passing all relevant variables
     return render(request,
                   'CarRentalCompany/cars.html',
-                  {'cars_list': Car.objects.all(),
+                  {'cars_list': Car.objects.order_by('car_makename'),
                    'form': form,
                    'filtered_cars': filtered_cars,
-                   'filters': filters,
-                   'cars_json': cars_json})
+                   'filters': filters})
 
 def car_recommend(request):
     form = RecommendForm()
