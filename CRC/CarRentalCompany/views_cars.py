@@ -6,7 +6,7 @@ from django.db import connection
 
 from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
-from .forms import RecommendForm,CarFilterForm
+from .forms import *
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
 from .filter_cars import *
@@ -40,11 +40,13 @@ def cars(request):
                    'filters': filters})
 
 def car_recommend(request):
-    form = RecommendForm()
+    recommendation_form = RecommendForm()
+    feedback_form = RecommendationFeedbackForm()
     recommended_cars = []
     no_results = False
     form_actioned = False
-    if request.method == "POST":
+    feedback_given = False
+    if request.method == "POST" and 'purpose' in request.POST:
         # pull data from form if filled out
         purpose = request.POST['purpose']
         seats = request.POST['seats']
@@ -55,12 +57,18 @@ def car_recommend(request):
         if num_results == 0:
             no_results = True
         form_actioned = True
+    if request.method == "POST" and 'helpful' in request.POST:
+        helpful = request.POST['helpful']
+        comment = request.POST['comment']
+        feedback_given = True
     return render(request,
                   'CarRentalCompany/car_recommend.html',
-                  {'form': form,
+                  {'recommendation_form': recommendation_form,
                    'recommended_cars': recommended_cars,
                    'no_results': no_results,
-                   'form_actioned': form_actioned})
+                   'form_actioned': form_actioned,
+                   'feedback_form': feedback_form,
+                   'feedback_given': feedback_given})
 
 '''
 ' SPRINT 2

@@ -157,7 +157,7 @@ h3{
 #recommend label{
 	font-weight:600;
 }
-#recommend div select, #recommend [type="date"]{
+#recommend div select, #recommend [type="date"], #feedback div select, #feedback div textarea{
 	width:100%;
 	height:40px;
 	margin-top:5px;

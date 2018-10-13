@@ -20,6 +20,12 @@ class CustomerSearchForm(forms.Form):
     search_input = forms.CharField(label="Search")
 
 
+class RecommendationFeedbackForm(forms.Form):
+    helpful_options = [["yes", "Yes"], ["no", "No"]]
+    helpful = forms.ChoiceField(choices=helpful_options, label='Was this recommendation helpful?')
+    comment = forms.CharField(widget=forms.Textarea(attrs={'width': "100%", 'rows': "3", }))
+
+
 class RecommendForm(forms.Form):
     purposeOptions = (("1", "Four wheel Driving"), ("2", "Family trip"), ("3", "Road Trip"))
     purpose = forms.ChoiceField(choices=purposeOptions)
