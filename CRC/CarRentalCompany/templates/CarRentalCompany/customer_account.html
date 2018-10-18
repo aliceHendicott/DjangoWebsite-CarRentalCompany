@@ -42,7 +42,7 @@ Account Page
             &nbsp;<br/>
             <a href="/my_account/?update=yes" class="button">Update Details</a>
         {% else %}
-            <form id="feedback" method="POST" action="/my_account">{% csrf_token %}
+            <form id="feedback" method="POST" action="/my_account/">{% csrf_token %}
                 {{ form.non_field_errors }}
                 {% for hidden_field in form.hidden_fields %}
                     {{ hidden_field.errors }}

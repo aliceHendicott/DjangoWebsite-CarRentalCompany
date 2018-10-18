@@ -29,9 +29,17 @@ def my_account(request):
         orders = orders.filter(customer_id=user.userprofile.customer_number)
         user_details = dbUser.objects.get(id=user.userprofile.customer_number)
         updating_details = False
-        form = UpdateCustomerDetailsForm
+        form = UpdateCustomerDetailsForm(request.POST or None, instance=user_details,
+                                         initial={'user_address': user_details.user_address,
+                                                  'user_birthday': user_details.user_birthday,
+                                                  'user_gender': user_details.user_gender,
+                                                  'user_name': user_details.user_name,
+                                                  'user_occupation': user_details.user_occupation,
+                                                  'user_phone': user_details.user_phone})
         if request.method == "GET" and 'update' in request.GET:
             updating_details = True
+        if form.is_valid():
+            form.save()
         return render(request,
                       'CarRentalCompany/customer_account.html',
                       {'user': user,
