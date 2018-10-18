@@ -32,14 +32,35 @@ Account Page
         </div>
         <hr/>
         <h2>My Details</h2>
-        <p><b>Name</b>: {{ user_details.user_name }}<br />
-        <b>Address</b>: {{ user_details.user_address }}<br />
-        <b>Birthday</b>: {{ user_details.user_birthday }}<br />
-        <b>Gender</b>: {{ user_details.user_gender }}<br />
-        <b>Occupation</b>: {{ user_details.user_occupation }}<br />
-        <b>Phone Number</b>: {{ user_details.user_phone }}</p>
-        &nbsp;<br />
-        <a href="#" class="button">Update Details</a>
+        {% if not updating_details %}
+            <p><b>Name</b>: {{ user_details.user_name }}<br/>
+                <b>Address</b>: {{ user_details.user_address }}<br/>
+                <b>Birthday</b>: {{ user_details.user_birthday }}<br/>
+                <b>Gender</b>: {{ user_details.user_gender }}<br/>
+                <b>Occupation</b>: {{ user_details.user_occupation }}<br/>
+                <b>Phone Number</b>: {{ user_details.user_phone }}</p>
+            &nbsp;<br/>
+            <a href="/my_account/?update=yes" class="button">Update Details</a>
+        {% else %}
+            <form id="feedback" method="POST" action="/my_account">{% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    <div>
+                        <p>{{ field.label_tag }}<br/>
+                            {{ field.errors }}
+                            {{ field }}
+                            {{ field.help_text }}</p>
+                    </div>
+                {% endfor %}
+                <div>
+                    <button type="submit" class="button">Update details</button>
+                </div>
+            </form>
+        {% endif %}
     </div>
 {% endblock %}
 

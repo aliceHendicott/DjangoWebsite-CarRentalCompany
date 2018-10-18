@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 from .graphs import *
-from .models import Car, Store, Order, User, UserProfile
-from .forms import RecommendForm
+from .models import Car, Store, Order, User as dbUser, UserProfile
+from .forms import *
 from .custom_sql import top3cars, seasonal_cars_preview, store_activity_preview
 from .recommendation import handle_recommendation
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
@@ -27,11 +27,17 @@ def my_account(request):
         user = request.user
         orders = Order.objects.all()
         orders = orders.filter(customer_id=user.userprofile.customer_number)
-        user_details = User.objects.get(id=user.userprofile.customer_number)
+        user_details = dbUser.objects.get(id=user.userprofile.customer_number)
+        updating_details = False
+        form = UpdateCustomerDetailsForm
+        if request.method == "GET" and 'update' in request.GET:
+            updating_details = True
         return render(request,
                       'CarRentalCompany/customer_account.html',
                       {'user': user,
                        'orders': orders,
-                       'user_details': user_details})
+                       'user_details': user_details,
+                       'form': form,
+                       'updating_details': updating_details})
     else:
         return redirect('index.html')

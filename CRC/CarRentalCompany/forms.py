@@ -1,10 +1,16 @@
 from django import forms
-from .models import Car
+from .models import Car, User as dbUser
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
 from django.conf import settings
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
+class UpdateCustomerDetailsForm(ModelForm):
+    class Meta:
+        model = dbUser
+        fields = ['user_address', 'user_birthday', 'user_gender', 'user_name', 'user_occupation', 'user_phone']
 
 class CustomerRegisterForm(UserCreationForm):
     customer_number = forms.IntegerField(help_text='If you are a returning customer, please input customer number')

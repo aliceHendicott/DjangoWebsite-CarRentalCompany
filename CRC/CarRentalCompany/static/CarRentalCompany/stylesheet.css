@@ -358,3 +358,8 @@ table td:last-of-type{
     margin-right:20px;
     vertical-align:top;
 }
+.stat{
+	color: var(--secondary-color);
+	font-size:23px;
+	font-weight:bold;
+}

@@ -12,6 +12,7 @@ from .recommendation import handle_recommendation
 from .filter_cars import *
 from django.contrib.auth import (authenticate, login, get_user_model, logout)
 from django.core import serializers
+from .car_stats import *
 
 # -------- CARS -------- #
 '''
@@ -76,9 +77,19 @@ def car_recommend(request):
 '''
 def car(request, car_id):
     car = Car.objects.get(pk = car_id)
+    popularity_place_num = popularity_place(car_id)
+    popular_age_lower = popular_age_group(car_id)
+    popular_age_upper = popular_age_group(car_id) + 9
+    suited_for = best_suited_for(car_id)
     return render(request,
                   'CarRentalCompany/car.html',
-                  {'car': car})
+                  {'car': car,
+                   'popularity_place_num': popularity_place_num,
+                   'popular_age_lower': popular_age_lower,
+                   'popular_age_upper': popular_age_upper,
+                   'suited_for': suited_for})
+
+
 def car_request(request, car_id):
     car = Car.objects.get(pk = car_id)
     return render(request,

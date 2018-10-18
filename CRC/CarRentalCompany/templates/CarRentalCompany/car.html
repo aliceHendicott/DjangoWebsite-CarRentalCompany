@@ -11,19 +11,39 @@ CRC {{ car.car_name }}
 
 <!-- Content goes here -->
 {% block content %}
-<div id="content">
-    {{ car  }}
-    <ul>
-        <li>{{ car.car_bodytype }}</li>
-    </ul>
-
-    Orders:
-    <ul>
-        {% for order in car.order_set.all %}
-        <li>{{ order }}</li>
-        {% endfor %}
-    </ul>
-</div>
+    <div id="content">
+        <h1>Car Details</h1>
+        <p><b>Make name:</b> {{ car.car_makename }}<br/>
+            <b>Model:</b> {{ car.car_model }}<br/>
+            <b>Body type:</b> {{ car.car_bodytype }}<br/>
+            <b>Drive:</b> {{ car.car_drive }}<br/>
+            <b>Seating Capacity:</b> {{ car.car_seating_capacity }}<br/>
+            <b>Engine size:</b> {{ car.car_engine_size }}<br/>
+            <b>Fuel system:</b> {{ car.car_fuel_system }}<br/>
+            <b>Power:</b> {{ car.car_power }}<br/>
+            <b>Price as new car:</b> ${{ car.car_price_new }}<br/>
+            <b>Series:</b> {{ car.car_series }}<br/>
+            <b>Series year:</b> {{ car.car_series_year }}<br/>
+            <b>Standard transmission:</b> {{ car.car_standard_transmission }}<br/>
+            <b>Tank capacity:</b> {{ car.car_tank_capacity }}<br/>
+            <b>Wheel base:</b> {{ car.car_wheelbase }}</p>
+        <hr/>
+        <h1>Statistics</h1>
+        <!--This is the #th most popular car, accompanied by quartile.-->
+        <p>This is the <span class="stat">{{ popularity_place_num }}
+            {% if popularity_place_num == 1 %}st
+            {% elif popularity_place_num == 2 %}nd
+            {% elif popularity_place == 3 %}rd
+            {% else %}th{% endif %}</span>
+            most popular car</p>
+        <!--This is popular among age bracket / gender-->
+        <p>This car is most popular among customers between <span class="stat">{{ popular_age_lower }} to {{ popular_age_upper }}</span> years of age</p>
+        <!--Best suited to long distance driving(tank_capacity > 70)/ family trips / 4WD / general driving.-->
+        <p>Best suited to <span class="stat">{{ suited_for }}</span></p>
+        <hr />
+        <h1>Like this car?</h1>
+        <p><a href="#" class="button">BOOK NOW</a></p>
+    </div>
 {% endblock %}
 
 <!-- Extra javascript goes here -->
