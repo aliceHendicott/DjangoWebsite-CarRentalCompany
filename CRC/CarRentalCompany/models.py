@@ -5,6 +5,8 @@ from django.contrib.auth.models import User as auth_User
 from django.db import connection
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import *
+
 
 # Create your models here.
 '''SETUP USER GROUPS'''
@@ -66,34 +68,45 @@ class Car(models.Model):
     def set_car_makename(self, new_makename):
         setattr(self, 'car_makename', new_makename)
     # Data Extraction
-    def top_cars(limit = -1):
+    def top_cars(limit = -1, 
+                 from_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                 to_date = datetime.today().strftime("%Y-%m-%d")):
         query = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
                    FROM CarRentalCompany_car
                    LEFT JOIN CarRentalCompany_order
                    ON (CarRentalCompany_order.car_id_id = CarRentalCompany_car.id)
+                   WHERE
+                       order_pickup_date BETWEEN "''' + from_date + '''" AND "''' + to_date + '''"
                    GROUP BY
 	                   CarRentalCompany_car.id
                    ORDER BY number_of_orders DESC'''
         if (limit > 0):
             query += " LIMIT " + str(limit)
         return Car.objects.raw(query)
-    def seasonal_cars(limit = -1):
+    def seasonal_cars(limit = -1, 
+                 from_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                 to_date = datetime.today().strftime("%Y-%m-%d")):
         query = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
                     FROM CarRentalCompany_car
                     LEFT JOIN CarRentalCompany_order
                     ON (CarRentalCompany_order.car_id_id = CarRentalCompany_car.id)
                     WHERE
-					    MONTH(CarRentalCompany_order.order_pickup_date)=2 AND YEAR(CarRentalCompany_order.order_pickup_date)=2007
+                       order_pickup_date BETWEEN "''' + from_date + '''" AND "''' + to_date + '''"
                     GROUP BY
 	                    CarRentalCompany_car.id
                     ORDER BY number_of_orders DESC'''
         if (limit > 0):
             query += " LIMIT " + str(limit)
         return Car.objects.raw(query)
-    def inactive_cars(limit = -1):
+    def inactive_cars(limit = -1, 
+                 from_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                 to_date = datetime.today().strftime("%Y-%m-%d")):
         query = '''SELECT CarRentalCompany_car.*,  MAX(CarRentalCompany_order.order_return_date) AS Return_Date
                    FROM CarRentalCompany_order
-                   INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
+                   INNER JOIN CarRentalCompany_car 
+                   ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
+                   WHERE
+                       order_pickup_date BETWEEN "''' + from_date + '''" AND "''' + to_date + '''"
                    GROUP BY CarRentalCompany_car.car_model
                    ORDER BY Return_Date ASC'''
         if (limit > 0):

@@ -13,11 +13,9 @@ from .custom_sql import *
 from .recommendation import handle_recommendation
 
 
-
 # ------- REPORTS ------ #
 
 ## Supporting
-
 # Authentication
 def is_management(request):
     if request.user.is_authenticated:
@@ -89,7 +87,6 @@ def dashboard(request):
     return redirect('index')
 
 
-
 ##### Seasonal Cars Report #####
 def cars_seasonal_context(dates=(1,2), limit = 5):
     seasonal_cars_results = seasonal_cars()
@@ -109,7 +106,6 @@ def cars_seasonal(request):
                       'CarRentalCompany/reports_cars_seasonal.html',
                       cars_seasonal_context())
     return redirect('index')
-
 
 
 ##### Inactive Cars Report #####
@@ -132,7 +128,6 @@ def cars_inactive(request):
                       'CarRentalCompany/reports_cars_inactive.html',
                       cars_inactive_context())
     return redirect('index')
-
 
 
 ##### Store Activity Report #####
@@ -160,7 +155,6 @@ def store_activity(request):
     return redirect('index')
 
 
-
 ##### Store Parking Report #####
 def store_parking_context(dates=(1,2), limit = 5):
     results = Store.store_parking()
@@ -180,8 +174,6 @@ def store_parking(request):
                       'CarRentalCompany/reports_store_parking.html',
                       store_parking_context())
     return redirect('index')
-
-
 
 
 ##### Customer Demographics Report #####
