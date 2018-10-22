@@ -13,20 +13,38 @@ CRC Cars Inactive
 {% block javascript %}
 <script>
     $(document).on('click', '.press_me', function (e) {
-        var start_date = 1
-        var end_date = 2
+        var forwards = (this.innerHTML == '&gt;')
+        var no_change = (this.innerHTML == 'YEAR' || this.innerHTML == 'MONTH' || this.innerHTML == 'DAY')
+        console.log(no_change)
+        var skip = document.getElementById("timeframe_press").innerHTML.toLowerCase();
+        var start_date = document.getElementById("start_date").innerHTML
+        var end_date = document.getElementById("end_date").innerHTML
         $.ajax({
             url: '{% url "json_cars_inactive_context" %}',
             dataType: 'json',
             data: {
-                'username': start_date,
-                'end_date': end_date
+                'forwards': forwards,
+                'skip': skip,
+                'end_date': end_date,
+                'no_change': no_change
             },
             success: function (data) {
                 document.getElementById("report_content").innerHTML = data.html_response
             }
         });
     })
+
+    function changeTimeframe() {
+        current = document.getElementById("timeframe_press").innerHTML.toLowerCase()
+        if (current == 'month') {
+            next = 'year'
+        } else if (current == 'year') {
+            next = 'day'
+        } else {
+            next = 'month'
+        }
+        document.getElementById("timeframe_press").innerHTML = next.toUpperCase()
+    }
 </script>
 {% endblock %}
 

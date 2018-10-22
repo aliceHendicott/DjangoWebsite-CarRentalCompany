@@ -124,12 +124,16 @@ class Store(models.Model):
     def __str__(self):
         return self.store_name
     # Data Extraction
-    def store_activity(limit=-1):
+    def store_activity(limit=-1, 
+                       start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                       end_date = datetime.today().strftime("%Y-%m-%d")):
         query = '''SELECT CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_pickups, count(CarRentalCompany_order.order_return_store_id_id) as number_of_returns,
                    (count(CarRentalCompany_order.order_pickup_store_id_id) + count(CarRentalCompany_order.order_return_store_id_id)) as total_activity
                    FROM CarRentalCompany_store
                    LEFT JOIN CarRentalCompany_order
                    ON (CarRentalCompany_order.order_pickup_store_id_id = CarRentalCompany_store.id)
+                   WHERE
+                       order_pickup_date BETWEEN "''' + start_date + '''" AND "''' + end_date + '''"
                    GROUP BY
 	                   CarRentalCompany_store.id
                    ORDER BY total_activity DESC'''
@@ -138,15 +142,21 @@ class Store(models.Model):
         if (limit > 0):
             query += " LIMIT " + str(limit)
         return Store.objects.raw(query)
-    def store_parking(limit = -1):
+    def store_parking(limit = -1, 
+                      start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                      end_date = datetime.today().strftime("%Y-%m-%d")):
         query_pickup = '''SELECT *, COUNT(CarRentalCompany_order.id) as picked_up FROM CarRentalCompany_order 
                           LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id 
+                          WHERE
+                              order_pickup_date < "''' + end_date + '''"
                           GROUP BY 
                           CarRentalCompany_order.order_pickup_store_id_id
                           '''
         results = Order.objects.raw(query_pickup)
         query_return = '''SELECT *, COUNT(CarRentalCompany_order.id) as returned FROM CarRentalCompany_order 
                           LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_return_store_id_id
+                          WHERE
+                              order_pickup_date < "''' + end_date + '''"
                           GROUP BY 
                           CarRentalCompany_order.order_return_store_id_id
                           '''
@@ -168,7 +178,9 @@ class User(models.Model):
     def __str__(self):
         return self.user_name
     # Data Extraction
-    def user_demographics(limit = -1):
+    def user_demographics(limit = -1, 
+                          start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                          end_date = datetime.today().strftime("%Y-%m-%d")):
         query_ages_by_range = '''SELECT COUNT(*) AS 'number_of_users', user_gender,
                 CASE
                     WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
