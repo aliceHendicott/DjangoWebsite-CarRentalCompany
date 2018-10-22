@@ -13,6 +13,7 @@ CRC Customers
 {% block content %}
     <div id="content">
         <h1>Customers</h1>
+        <!-- Load form created for searching the custoners -->
         <form id="customer-search-form" method="POST" action="/staff/customers/">{% csrf_token %}
             {{ form.non_field_errors }}
             {% for hidden_field in form.hidden_fields %}
@@ -33,23 +34,29 @@ CRC Customers
                 </div>
             </div>
         </form>
+        <!-- if there is an error in the search, display this -->
         {% if customers_list_searched == -1 %}
             <div class="error">
                 <span>Your search returned no results.</span>
             </div>
         {% endif %}
         <div class="grid listing">
+            <!-- if there is currently no search actioned, display full list of customers -->
             {% if customers_list_searched == "" or customers_list_searched == -1 %}
                 {% for customer in customers_list %}
                     <div>
+                        <!-- display user details -->
                         <h3>{{ customer.user_name }}</h3>
                         <p><i class="fas fa-phone"></i> {{ customer.user_phone }}<br/>
                             <i class="fas fa-map-marker-alt"></i> {{ customer.user_address }}<br/>
                             <i class="fas fa-birthday-cake"></i> {{ customer.user_birthday }}<br/>
                             <i class="fas fa-user-md"></i> {{ customer.user_occupation }}</p>
+                        <!-- link to page to update custoemr-->
+                        <a href="./{{ customer.id }}" class="button customer-button">Update details</a>
                     </div>
                 {% endfor %}
             {% else %}
+                <!-- if there is a search actioned, display the results -->
                 {% for customer in customers_list_searched %}
                     <div>
                         <h3>{{ customer.user_name }}</h3>
@@ -61,6 +68,7 @@ CRC Customers
                 {% endfor %}
             {% endif %}
         </div>
+        <!-- if search actioned, display a button which will redisplay the full list of customers -->
         {% if customers_list_searched != -1 and customers_list_searched != "" %}
             <a href="/staff/customers" class="button">See Full List</a>
         {% endif %}

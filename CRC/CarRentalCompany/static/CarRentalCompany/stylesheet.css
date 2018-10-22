@@ -363,3 +363,9 @@ table td:last-of-type{
 	font-size:23px;
 	font-weight:bold;
 }
+.customer-button{
+	font-size:11px;
+	padding:5px;
+	display:block;
+	margin-top:10px;
+}

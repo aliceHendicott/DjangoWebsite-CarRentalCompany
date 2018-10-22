@@ -40,7 +40,7 @@ def orders(request):
         return_store_info = Store.objects.get(pk=order.order_return_store_id_id)
         return_store = return_store_info.store_city
         return_store_id = return_store_info.id
-        customer_info = User.objects.get(pk=order.customer_id_id)
+        customer_info = modelUser.objects.get(pk=order.customer_id_id)
         customer_name = customer_info.user_name
         customer_phone = customer_info.user_phone
         customer_id = customer_info.id
@@ -80,6 +80,20 @@ def customers(request):
                    'customers_list_searched': customers_list_searched})
 
 def customer(request, customer_id):
-    return render(request,
-                  'CarRentalCompany/xxx.html',
-                  {})
+    customer = modelUser.objects.get(pk=customer_id)
+    form = UpdateCustomerDetailsForm(request.POST or None, instance=customer,
+                                     initial={'user_address': customer.user_address,
+                                              'user_birthday': customer.user_birthday,
+                                              'user_gender': customer.user_gender,
+                                              'user_name': customer.user_name,
+                                              'user_occupation': customer.user_occupation,
+                                              'user_phone': customer.user_phone})
+    if form.is_valid():
+        form.save()
+        return redirect('/staff/customers/')
+    else:
+        return render(request,
+                      'CarRentalCompany/customer_update.html',
+                      {'customer': customer,
+                       'form': form,
+                       'customer_id': customer_id})
