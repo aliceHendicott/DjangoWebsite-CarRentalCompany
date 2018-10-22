@@ -69,14 +69,14 @@ class Car(models.Model):
         setattr(self, 'car_makename', new_makename)
     # Data Extraction
     def top_cars(limit = -1, 
-                 from_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
-                 to_date = datetime.today().strftime("%Y-%m-%d")):
+                 start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                 end_date = datetime.today().strftime("%Y-%m-%d")):
         query = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
                    FROM CarRentalCompany_car
                    LEFT JOIN CarRentalCompany_order
                    ON (CarRentalCompany_order.car_id_id = CarRentalCompany_car.id)
                    WHERE
-                       order_pickup_date BETWEEN "''' + from_date + '''" AND "''' + to_date + '''"
+                       order_pickup_date BETWEEN "''' + start_date + '''" AND "''' + end_date + '''"
                    GROUP BY
 	                   CarRentalCompany_car.id
                    ORDER BY number_of_orders DESC'''
@@ -84,14 +84,14 @@ class Car(models.Model):
             query += " LIMIT " + str(limit)
         return Car.objects.raw(query)
     def seasonal_cars(limit = -1, 
-                 from_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
-                 to_date = datetime.today().strftime("%Y-%m-%d")):
+                 start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                 end_date = datetime.today().strftime("%Y-%m-%d")):
         query = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders
                     FROM CarRentalCompany_car
                     LEFT JOIN CarRentalCompany_order
                     ON (CarRentalCompany_order.car_id_id = CarRentalCompany_car.id)
                     WHERE
-                       order_pickup_date BETWEEN "''' + from_date + '''" AND "''' + to_date + '''"
+                       order_pickup_date BETWEEN "''' + start_date + '''" AND "''' + end_date + '''"
                     GROUP BY
 	                    CarRentalCompany_car.id
                     ORDER BY number_of_orders DESC'''

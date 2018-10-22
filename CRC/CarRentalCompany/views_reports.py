@@ -11,7 +11,7 @@ from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
 from .custom_sql import *
 from .recommendation import handle_recommendation
-
+from datetime import *
 
 # ------- REPORTS ------ #
 
@@ -25,6 +25,10 @@ def is_management(request):
         if not customer and not floor_staff:
            return True
     return False
+# Add a certain amount of years, months and days to a date
+def new_date(current, years_inc, months_inc, days_inc):
+    edited_date = datetime.strptime(current, '%Y-%m-%d') + timedelta(days = (years_inc * 365 + months_inc * 30 + days_inc))
+    return edited_date.strftime("%Y-%m-%d")
 
 # Graphs
 def cars_seasonal_graph(data):
@@ -59,7 +63,7 @@ def customer_demographics_graph(data=0):
 ' The following are sprint 1:
 '''
 ##### Reports Dashboard #####
-def dashboard_context(dates = 1, limit = 5):
+def dashboard_context(limit = 5, dates = 1):
     seasonal_cars = Car.top_cars(limit)
     car_inactive = Car.inactive_cars(limit)
     store_activity = Store.store_activity(limit)
@@ -88,16 +92,23 @@ def dashboard(request):
 
 
 ##### Seasonal Cars Report #####
-def cars_seasonal_context(dates=(1,2), limit = 5):
-    seasonal_cars_results = seasonal_cars()
+def cars_seasonal_context(limit = 10, 
+                          start_date = datetime(2008, 1, 1).strftime("%Y-%m-%d"), 
+                          end_date = datetime(2008, 1, 30).strftime("%Y-%m-%d")):
+    seasonal_cars_results = Car.top_cars(limit, start_date, end_date)
     context =  {'cars_list': Car.objects.all(),
                 'seasonal_cars':  seasonal_cars_results,
-                'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars_results)}
+                'cars_seasonal_graph': cars_seasonal_graph(seasonal_cars_results),
+                'start_date': start_date,
+                'end_date': end_date}
     return context
 def json_cars_seasonal_context(request):
-    dates = (request.GET.get('start_date', None), request.GET.get('end_date', None))
+    edit_start = new_date(request.GET.get('start_date', None), 0, -1, 0)
+    edit_end = new_date(request.GET.get('end_date', None), 0, -1, 0)
     data_rendered = {
-        'html_response': render_to_string("CarRentalCompany/Includes/reports_cars_seasonal_content.html", cars_seasonal_context(dates))
+        'html_response': render_to_string("CarRentalCompany/Includes/reports_cars_seasonal_content.html", 
+                                          cars_seasonal_context(start_date = edit_start, 
+                                                                end_date = edit_end))
     }
     return JsonResponse(data_rendered)
 def cars_seasonal(request):
@@ -109,7 +120,7 @@ def cars_seasonal(request):
 
 
 ##### Inactive Cars Report #####
-def cars_inactive_context(dates=(1,2), limit = 5):
+def cars_inactive_context(limit = 5, dates=(1,2)):
     car_inactive = Car.inactive_cars()
     inactive_car_results = Car.inactive_cars()
     context =  {'cars_list': Car.objects.all(),
@@ -131,7 +142,7 @@ def cars_inactive(request):
 
 
 ##### Store Activity Report #####
-def store_activity_context(dates=(1,2), limit = 5):
+def store_activity_context(limit = 5, dates=(1,2)):
     locations = []
     for store in Store.objects.all():
         locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
@@ -156,7 +167,7 @@ def store_activity(request):
 
 
 ##### Store Parking Report #####
-def store_parking_context(dates=(1,2), limit = 5):
+def store_parking_context(limit = 5, dates=(1,2)):
     results = Store.store_parking()
     context =  {'queried_stores': results,
                 'stores': Store.objects.all(),
@@ -177,7 +188,7 @@ def store_parking(request):
 
 
 ##### Customer Demographics Report #####
-def customer_demographics_context(dates=(1,2), limit = 5):
+def customer_demographics_context(limit = 5, dates=(1,2)):
     results = User.user_demographics()
     context =  {'users_list': User.objects.all(),
                 'results': results,
