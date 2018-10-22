@@ -181,38 +181,40 @@ class User(models.Model):
     def user_demographics(limit = -1, 
                           start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
                           end_date = datetime.today().strftime("%Y-%m-%d")):
-        query_ages_by_range = '''SELECT COUNT(*) AS 'number_of_users', user_gender,
-                CASE
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M' 
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M'
-                    WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
-                END AS Ages
-                FROM CarRentalCompany_User
-                GROUP BY 
-                    CASE
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'M' THEN '30-39, M'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'M' THEN '40-49, M'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'M'  THEN '50-59, M'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'M' THEN '60-69, M'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'M' THEN '70-79, M'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'M' THEN '80-89, M' 
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 AND user_gender = 'F' THEN '30-39, F'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 AND user_gender = 'F' THEN '40-49, F'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 AND user_gender = 'F' THEN '50-59, F'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 AND user_gender = 'F' THEN '60-69, F'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 AND user_gender = 'F' THEN '70-79, F'
-                        WHEN (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 AND user_gender = 'F' THEN '80-89, F'
-                    END 
-                ORDER BY Ages'''
+        query_ages_by_range = '''SELECT COUNT(*) AS 'number_of_users', CarRentalCompany_user.user_gender,
+            CASE
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 30 AND 39 AND CarRentalCompany_user.user_gender = 'M' THEN '30-39, M' 
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 30 AND 39 AND CarRentalCompany_user.user_gender = 'F' THEN '30-39, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 40 AND 49 AND CarRentalCompany_user.user_gender = 'M' THEN '40-49, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 40 AND 49 AND CarRentalCompany_user.user_gender = 'F' THEN '40-49, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 50 AND 59 AND CarRentalCompany_user.user_gender = 'M'  THEN '50-59, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 50 AND 59 AND CarRentalCompany_user.user_gender = 'F' THEN '50-59, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 60 AND 69 AND CarRentalCompany_user.user_gender = 'M' THEN '60-69, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 60 AND 69 AND CarRentalCompany_user.user_gender = 'F' THEN '60-69, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 70 AND 79 AND CarRentalCompany_user.user_gender = 'M' THEN '70-79, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 70 AND 79 AND CarRentalCompany_user.user_gender = 'F' THEN '70-79, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 80 AND 89 AND CarRentalCompany_user.user_gender = 'M' THEN '80-89, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 80 AND 89 AND CarRentalCompany_user.user_gender = 'F' THEN '80-89, F'
+            END AS Ages
+            FROM CarRentalCompany_User
+            LEFT JOIN CarRentalCompany_order ON (CarRentalCompany_order.customer_id_id = CarRentalCompany_user.id)
+            WHERE CarRentalCompany_order.order_pickup_date BETWEEN "''' + start_date +'''" AND "'''+ end_date +'''"
+            GROUP BY 
+            CASE
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 30 AND 39 AND CarRentalCompany_user.user_gender = 'M' THEN '30-39, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 40 AND 49 AND CarRentalCompany_user.user_gender = 'M' THEN '40-49, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 50 AND 59 AND CarRentalCompany_user.user_gender = 'M' THEN '50-59, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 60 AND 69 AND CarRentalCompany_user.user_gender = 'M' THEN '60-69, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 70 AND 79 AND CarRentalCompany_user.user_gender = 'M' THEN '70-79, M'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 80 AND 89 AND CarRentalCompany_user.user_gender = 'M' THEN '80-89, M' 
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 30 AND 39 AND CarRentalCompany_user.user_gender = 'F' THEN '30-39, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 40 AND 49 AND CarRentalCompany_user.user_gender = 'F' THEN '40-49, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 50 AND 59 AND CarRentalCompany_user.user_gender = 'F' THEN '50-59, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 60 AND 69 AND CarRentalCompany_user.user_gender = 'F' THEN '60-69, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 70 AND 79 AND CarRentalCompany_user.user_gender = 'F' THEN '70-79, F'
+                WHEN (FLOOR(DATEDIFF(curdate(), CarRentalCompany_user.user_birthday) / 365.25)) BETWEEN 80 AND 89 AND CarRentalCompany_user.user_gender = 'F' THEN '80-89, F'
+            END 
+            ORDER BY Ages'''
         cursor = connection.cursor()
         cursor.execute(query_ages_by_range)
         results = cursor.fetchall()
@@ -224,22 +226,23 @@ class User(models.Model):
             ages_by_range.append(sublist)
 
         query_popular_body_type = '''SELECT CarRentalCompany_car.car_bodytype,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 then 1 end) as Male_30_39,
-	    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 then 1 end) as Male_39_49,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 then 1 end) as Male_50_59,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 then 1 end) as Male_60_69,
-	    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 then 1 end) as Male_70_79,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 then 1 end) as Male_80_89,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 then 1 end) as Female_30_39,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 then 1 end) as Female_40_49,
-	    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 then 1 end) as Female_50_59,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 then 1 end) as Female_60_69,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 then 1 end) as Female_70_79,
-        COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 then 1 end) as Female_80_79
-        FROM CarRentalCompany_user
-        INNER JOIN CarRentalCompany_order ON CarRentalCompany_user.id=CarRentalCompany_order.customer_id_id
-        INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
-        GROUP BY CarRentalCompany_car.car_bodytype'''
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 then 1 end) as Male_30_39,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 then 1 end) as Male_39_49,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 then 1 end) as Male_50_59,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 then 1 end) as Male_60_69,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 then 1 end) as Male_70_79,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='M' AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 then 1 end) as Male_80_89,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 30 AND 39 then 1 end) as Female_30_39,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 40 AND 49 then 1 end) as Female_40_49,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 50 AND 59 then 1 end) as Female_50_59,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 60 AND 69 then 1 end) as Female_60_69,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 70 AND 79 then 1 end) as Female_70_79,
+    COUNT(CASE WHEN CarRentalCompany_user.user_gender='F'  AND (FLOOR(DATEDIFF(curdate(), user_birthday) / 365.25)) BETWEEN 80 AND 89 then 1 end) as Female_80_79
+FROM CarRentalCompany_user
+INNER JOIN CarRentalCompany_order ON CarRentalCompany_user.id=CarRentalCompany_order.customer_id_id
+INNER JOIN CarRentalCompany_car ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
+WHERE CarRentalCompany_order.order_pickup_date BETWEEN "''' + start_date +'''" AND "'''+ end_date +'''"
+GROUP BY CarRentalCompany_car.car_bodytype'''
         cursor.execute(query_popular_body_type)
         results = cursor.fetchall()
         for column in range(1, 13):
@@ -265,6 +268,7 @@ class User(models.Model):
         FROM CarRentalCompany_user
         INNER JOIN CarRentalCompany_order ON CarRentalCompany_user.id=CarRentalCompany_order.customer_id_id
         INNER JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id
+        WHERE CarRentalCompany_order.order_pickup_date BETWEEN "''' + start_date +'''" AND "'''+ end_date +'''"
         GROUP BY CarRentalCompany_order.order_pickup_store_id_id'''
         cursor.execute(query_popular_pickup_store)
         results = cursor.fetchall()
@@ -291,6 +295,7 @@ class User(models.Model):
         FROM CarRentalCompany_user
         INNER JOIN CarRentalCompany_order ON CarRentalCompany_user.id=CarRentalCompany_order.customer_id_id
         INNER JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_return_store_id_id
+        WHERE CarRentalCompany_order.order_pickup_date BETWEEN "''' + start_date +'''" AND "'''+ end_date +'''"
         GROUP BY CarRentalCompany_order.order_return_store_id_id'''
         cursor.execute(query_popular_return_store)
         results = cursor.fetchall()
