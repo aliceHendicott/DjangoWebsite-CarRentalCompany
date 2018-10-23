@@ -1,4 +1,23 @@
-function LoadAnswer(answerID){
+function changeTimeframe() {
+    current = document.getElementById("timeframe_press").innerHTML.toLowerCase()
+    if (current == 'month') {
+        next = 'year'
+    } else if (current == 'year') {
+        next = 'day'
+    } else {
+        next = 'month'
+    }
+    document.getElementById("timeframe_press").innerHTML = next.toUpperCase();
+}
+
+function exportCSV() {
+    document.getElementById("hidden_start_date").value = document.getElementById("start_date").innerHTML;
+    document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
+    document.getElementById("formCSV").submit()
+}
+
+
+function LoadAnswer(answerID) {
     var answerDiv = document.getElementById(answerID);
     if(answerDiv.style.display == "block"){
         answerDiv.style.display = "none";
@@ -48,7 +67,6 @@ function sortStores() {
 }
 
 function getGeoLocation(callback) {
-
         // User isn't using chrome
         // Proceed with geolocation
         if (navigator.geolocation) {
@@ -63,11 +81,3 @@ function getGeoLocation(callback) {
             throw "Geolocation is not currently enabled.";
         }
 }
-//Calling geolocation
-// try {
-//     getGeoLocation(function(data) {
-//         console.log(data);
-//     });
-// } catch {
-//     console.log("geolocation not enabled");
-// }

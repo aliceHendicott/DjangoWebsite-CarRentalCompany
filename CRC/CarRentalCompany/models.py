@@ -99,15 +99,15 @@ class Car(models.Model):
             query += " LIMIT " + str(limit)
         return Car.objects.raw(query)
     def inactive_cars(limit = -1, 
-                 from_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
-                 to_date = datetime.today().strftime("%Y-%m-%d")):
-        query = '''SELECT CarRentalCompany_car.*,  MAX(CarRentalCompany_order.order_return_date) AS Return_Date
+                 start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
+                 end_date = datetime.today().strftime("%Y-%m-%d")):
+        query = '''SELECT CarRentalCompany_car.id, car_makename, car_model, car_series, car_series_year, MAX(order_pickup_date), MAX(order_return_date), GREATEST(MAX(order_return_date), MAX(order_pickup_date)) AS Return_Date
                    FROM CarRentalCompany_order
                    INNER JOIN CarRentalCompany_car 
                    ON CarRentalCompany_order.car_id_id=CarRentalCompany_car.id
                    WHERE
-                       order_pickup_date BETWEEN "''' + from_date + '''" AND "''' + to_date + '''"
-                   GROUP BY CarRentalCompany_car.car_model
+                       order_pickup_date < "''' + end_date + '''" AND order_return_date < "''' + end_date + '''"
+                   GROUP BY car_model, car_makename, car_series, car_series_year
                    ORDER BY Return_Date ASC'''
         if (limit > 0):
             query += " LIMIT " + str(limit)
@@ -145,27 +145,59 @@ class Store(models.Model):
     def store_parking(limit = -1, 
                       start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
                       end_date = datetime.today().strftime("%Y-%m-%d")):
-        query_pickup = '''SELECT *, COUNT(CarRentalCompany_order.id) as picked_up FROM CarRentalCompany_order 
-                          LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id 
+        # Stores
+        stores = Store.objects.raw("SELECT *, id as parking FROM CarRentalCompany_store")
+        # Pickups
+        query_pickup = '''SELECT carrentalcompany_order.id, store_name, carrentalcompany_store.id as store_id, COUNT(CarRentalCompany_order.id) as picked_up 
+                          FROM CarRentalCompany_order 
+                          INNER JOIN CarRentalCompany_store 
+                          ON CarRentalCompany_store.id = CarRentalCompany_order.order_pickup_store_id_id 
                           WHERE
                               order_pickup_date < "''' + end_date + '''"
-                          GROUP BY 
-                          CarRentalCompany_order.order_pickup_store_id_id
+                          GROUP BY CarRentalCompany_order.order_pickup_store_id_id
                           '''
-        results = Order.objects.raw(query_pickup)
-        query_return = '''SELECT *, COUNT(CarRentalCompany_order.id) as returned FROM CarRentalCompany_order 
-                          LEFT JOIN CarRentalCompany_store ON CarRentalCompany_store.id = CarRentalCompany_order.order_return_store_id_id
+        pickups = Order.objects.raw(query_pickup)
+        # Returns
+        query_return = '''SELECT carrentalcompany_order.id, store_name, carrentalcompany_store.id as store_id, COUNT(CarRentalCompany_order.id) as returned 
+                          FROM CarRentalCompany_order 
+                          INNER JOIN CarRentalCompany_store 
+                          ON CarRentalCompany_store.id = CarRentalCompany_order.order_return_store_id_id 
                           WHERE
-                              order_pickup_date < "''' + end_date + '''"
-                          GROUP BY 
-                          CarRentalCompany_order.order_return_store_id_id
+                              order_return_date < "''' + end_date + '''"
+                          GROUP BY CarRentalCompany_order.order_return_store_id_id
                           '''
-        return_count = Order.objects.raw(query_return)
-        for index in range(len(results)):
-            results[index].picked_up = abs(results[index].picked_up - return_count[index].returned)
+        returns = Order.objects.raw(query_return)
+        
+        # Add to lists
+        pickup_nums = [0] * len(stores)
+        for pickup in pickups:
+            pickup_nums[pickup.store_id-1] = pickup.picked_up
+        return_nums = [0] * len(stores)
+        for returner in returns:
+            return_nums[returner.store_id-1] = returner.returned
+        # Find the difference
+        for index in range(len(stores)):            
+            # Find the difference
+            stores[index].parking = pickup_nums[index] - return_nums[index] + 10
+        # Limit the results
         if (limit > 0):
-            results = results[0:limit]
-        return results
+            # Create a list of [store_id, store_parking] sorted by parking availability
+            maxes = [0] * len(stores)
+            for index in range(len(stores)):
+                maxes[index] = [stores[index].id, stores[index].parking]
+            maxes.sort(key=lambda x: x[1], reverse=True)
+            # Make this a list of maxes_id
+            maxes_id = [0]*limit
+            for index in range(limit):
+                maxes_id[index]  = maxes[index][0]
+            # Find the top out of this list
+            found = 0
+            for index in range(len(stores)-1, 0, -1):
+                if (stores[index].id in maxes_id):
+                    found += 1
+                found = min(found, limit)
+            #stores = stores[0:len(stores)-(found)]
+        return stores[maxes[0][0]:maxes[0][0]+1]
 
 class User(models.Model):
     user_name = models.CharField(max_length = 32, default = "null")
