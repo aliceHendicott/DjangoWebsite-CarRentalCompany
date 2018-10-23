@@ -27,7 +27,8 @@ urlpatterns = [
     #  Orders
     path('staff/', views_staff.staff, name='staff'),
     path('staff/orders/', views_staff.orders, name='staff_orders'),
-    path('staff/orders/<int:order_id>', views_staff.order, name='staff_order'),
+    path('staff/current_orders/', views_staff.current_orders, name='staff_current_orders'),
+    path('staff/current_orders/<int:order_id>', views_staff.order, name='staff_order'),
     #  Customers
     path('staff/customers/', views_staff.customers, name='staff_customers'),
     path('staff/customers/<int:customer_id>', views_staff.customer, name='staff_customer'),
@@ -58,6 +59,8 @@ urlpatterns = [
     #  Customer reports
     path('reports/customers/demographics/', views_reports.customer_demographics, name='reports_customer_demographics'),
     re_path(r'^ajax/json_customer_demographics_context/$', views_reports.json_customer_demographics_context, name='json_customer_demographics_context'),
+    #custom report
+    path('reports/custom_report/', views_reports.custom, name='custom_report'),
 
     ## TEST
     path('connection/', TemplateView.as_view(template_name ='CarRentalCompany/../templates/registration/login.html')),

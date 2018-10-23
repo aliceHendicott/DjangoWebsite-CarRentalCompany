@@ -39,7 +39,8 @@ def handle_filter_cars(fields):
             for index in range(1, len(sql_where_statements)):
                 base_sql = base_sql + " AND " + sql_where_statements[index]
             # run SQL statement
-            results = Car.objects.raw(base_sql).order_by(sort_type)
+            base_sql = base_sql + "ORDER BY " + sort_type + " ASC"
+            results = Car.objects.raw(base_sql)
     else:
         if sort_type == 'popularity':
             sql = '''SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number_of_orders

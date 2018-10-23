@@ -15,12 +15,22 @@ Account Page
         <h1>Welcome {{ user.username }}</h1>
         <p>On this page you will find information about your account.</p>
         <hr/>
-        <h2>Upcoming Orders</h2>
-        <p>You have no upcoming orders.</p>
+        <h2>Current and Upcoming Orders</h2>
+        <div class="grid listing">
+            {% for order in current_orders %}
+                <div>
+                    <h3>{{ order.order_pickup_date }} - {{ order.order_return_date }}</h3>
+                    <p><b>Pick up location: </b>{{ order.order_pickup_store_id.store_city }}<br/>
+                        <b>Return location: </b>{{ order.order_return_store_id.store_city }}<br/>
+                        <b>Car: </b>{{ order.car_id.car_makename }}, {{ order.car_id.car_model }}<br />
+                        <b>Checked: </b>{{ order.order_checked }}</p>
+                </div>
+            {% endfor %}
+        </div>
         <hr />
         <h2>Past bookings</h2>
         <div class="grid listing">
-            {% for order in orders %}
+            {% for order in past_orders %}
                 <div>
                     <h3>{{ order.order_pickup_date }} - {{ order.order_return_date }}</h3>
                     <p><b>Pick up location: </b>{{ order.order_pickup_store_id.store_city }}<br/>
