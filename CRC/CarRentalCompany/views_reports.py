@@ -213,7 +213,9 @@ def store_activity_context(limit = -1,
                           end_date = default_end.strftime("%Y-%m-%d")):
     locations = []
     for store in Store.objects.all():
-        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name])
+        print(type(store.store_name))
+        print(type(store.id))
+        locations.append([eval(store.store_latitude), eval(store.store_longitude), store.store_name, store.id])
     store_results = Store.store_activity(limit, start_date, end_date)
     context =  {'stores_list': Store.objects.all(),
                 'location_maps': locations,
