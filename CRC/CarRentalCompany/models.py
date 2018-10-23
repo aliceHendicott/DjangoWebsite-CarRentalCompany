@@ -179,25 +179,28 @@ class Store(models.Model):
         for index in range(len(stores)):            
             # Find the difference
             stores[index].parking = pickup_nums[index] - return_nums[index] + 10
+       
+        # Create a list of [store_id, store_parking] sorted by parking availability
+        maxes = [0] * len(stores)
+        for index in range(len(stores)):
+            maxes[index] = [stores[index].id, stores[index].parking]
+        maxes.sort(key=lambda x: x[1], reverse=True)
+        for index in range(len(stores)):
+            this_store = Store.objects.get(pk = maxes[index][0])
+            stores[index].id = maxes[index][0]
+            stores[index].store_name  = this_store.store_name
+            stores[index].store_city  = this_store.store_city
+            stores[index].store_address = this_store.store_address
+            stores[index].store_phone = this_store.store_phone
+            stores[index].store_state = this_store.store_state
+            stores[index].store_latitude = this_store.store_latitude
+            stores[index].store_longitude = this_store.store_longitude
+            stores[index].parking = maxes[index][1]
+            
         # Limit the results
         if (limit > 0):
-            # Create a list of [store_id, store_parking] sorted by parking availability
-            maxes = [0] * len(stores)
-            for index in range(len(stores)):
-                maxes[index] = [stores[index].id, stores[index].parking]
-            maxes.sort(key=lambda x: x[1], reverse=True)
-            # Make this a list of maxes_id
-            maxes_id = [0]*limit
-            for index in range(limit):
-                maxes_id[index]  = maxes[index][0]
-            # Find the top out of this list
-            found = 0
-            for index in range(len(stores)-1, 0, -1):
-                if (stores[index].id in maxes_id):
-                    found += 1
-                found = min(found, limit)
-            #stores = stores[0:len(stores)-(found)]
-        return stores[maxes[0][0]:maxes[0][0]+1]
+            stores = stores[0:limit]
+        return stores
 
 class User(models.Model):
     user_name = models.CharField(max_length = 32, default = "null")
