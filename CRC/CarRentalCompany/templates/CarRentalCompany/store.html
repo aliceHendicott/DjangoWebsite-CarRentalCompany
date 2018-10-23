@@ -36,7 +36,7 @@
         // Add markers
         for (var i = 0; i < coords_array.length; i++) {
             marker = new L.marker(coords_array[i])
-                .bindPopup("<a href='./" + coords_array[i][2][1] + "'>" + coords_array[i][2][0] + "</a>")
+                .bindPopup("<a>" + coords_array[i][2][0] + "</a>")
                 .addTo(mymap);
         }
 
@@ -114,26 +114,18 @@
 {% block content %}
 <div id="mapid" style="width: fill; height: 300px;"></div>
 <div id="content">
-    <div id="title">
-        <div id="title-left"><h1>Locations</h1></div>
-        <div id="title-right">
-            Sort by:
-            <select name="sort">
-                <option name="sort" value="option 1">Option 1</option>
-                <option name="sort" value="option 2">Option 2</option>
-                <option name="sort" value="option 3">Option 3</option>
-            </select>
-        </div>
-    </div>
     <div class="grid listing">
         <div>
             <div>
-                <h3>Alexandria Store</h3>
-                <p>3761 N. 14th St, Alexandria, NSW</p>
-                <p><i class="fas fa-phone"></i> 1 (11) 543 535-0162</p>
-                <p><i class="fas fa-envelope"></i> alexandria_store@crc.com</p>
+                <h3>{{ store.store_name }}</h3>
+                <p>{{ store.store_address }}, {{ store.store_state }}</p>
+                <p><i class="fas fa-phone"></i> {{ store.store_phone }}</p>
+                <!-- Django template tags -->
+                <p><i class="fas fa-envelope"></i> {{ store.store_name|lower }}@crc.com</p>
             </div>
+            <!--
             <div>0.6km away</div>
+            -->
         </div>
     </div>
 </div>

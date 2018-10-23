@@ -118,11 +118,11 @@ CRC Stores
     <div class="grid listing" id="sort-div-stores">
         {% for store in stores_list.all %}
         <div>
-                <h3>{{ store.store_name }}</h3>
-                <p>{{ store.store_address }}, {{ store.store_state }}</p>
-                <p><i class="fas fa-phone"></i> {{ store.store_phone }}</p>
-                <!-- Django template tags -->
-                <p><i class="fas fa-envelope"></i> {{ store.store_name|lower }}@crc.com</p>
+            <a style="color:red" href="./{{ store.id }}"><h3>{{ store.store_name }}</h3></a>
+            <p>{{ store.store_address }}, {{ store.store_state }}</p>
+            <p><i class="fas fa-phone"></i> {{ store.store_phone }}</p>
+            <!-- Django template tags -->
+            <p><i class="fas fa-envelope"></i> {{ store.store_name|lower }}@crc.com</p>
         </div>
         {% endfor %}
     </div>
