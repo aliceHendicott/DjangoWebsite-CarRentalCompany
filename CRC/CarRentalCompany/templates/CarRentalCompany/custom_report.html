@@ -1,0 +1,189 @@
+{% extends './base.html' %}
+
+<!-- Title goes here -->
+{% block title %}
+CRC Custom Report
+{% endblock %}
+
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+{% block javascript %}
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById("id_car_filters").onchange = function () {
+                var cols = document.getElementsByClassName('filter-field-car');
+                for(var i=0; i<cols.length; i++) {
+                    if (cols[i].style.display === "none"){
+                        cols[i].style.display = "block";
+                    } else{
+                        cols[i].style.display = "none";
+                    }
+
+                }
+            };
+            document.getElementById("id_orders_include").onchange = function () {
+                var cols = document.getElementsByClassName('filter-field-order');
+                for(var i=0; i<cols.length; i++) {
+                    if (cols[i].style.display === "none"){
+                        cols[i].style.display = "block";
+                    } else{
+                        cols[i].style.display = "none";
+                    }
+
+                }
+            };
+        };
+
+
+    </script>
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+    <div id="content">
+        {% if not type_selected and not report_actioned %}
+            <p>Select what your report is based on (this will appear as the rows in your report):</p>
+            <form id="customer-search-form" method="POST" action="/reports/custom_report/">{% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                <div id="customer-search">
+                    {% for field in form.visible_fields %}
+                        <div>
+                            <p>{{ field.label_tag }}<br/>
+                                {{ field.errors }}
+                                {{ field }}
+                                {{ field.help_text }}</p>
+                        </div>
+                    {% endfor %}
+                    <div>
+                        <button type="submit" class="button">Select Filters</button>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+        {% if cars_selected %}
+            <h1>Selected Report Type: CARS</h1>
+            <p>Select which filters you wish to include</p>
+            <!-- add form to update customer -->
+            <form id="cars-custom-report" method="POST" action="/reports/custom_report/">{% csrf_token %}
+                {{ form_cars.non_field_errors }}
+                {% for hidden_field in form_cars.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                <div class="filter-selection">
+                    {{ form_cars.car_filters.errors }}
+                    <p>{{ form_cars.car_filters.label_tag }}<br/>
+                        {{ form_cars.car_filters.errors }}
+                        {{ form_cars.car_filters }}
+                        {{ form_cars.car_filters.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.series_year.errors }}
+                    <p>{{ form_cars.series_year.label_tag }}<br/>
+                        {{ form_cars.series_year.errors }}
+                        {{ form_cars.series_year }}
+                        {{ form_cars.series_year.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.bodytype.errors }}
+                    <p>{{ form_cars.bodytype.label_tag }}<br/>
+                        {{ form_cars.bodytype.errors }}
+                        {{ form_cars.bodytype }}
+                        {{ form_cars.bodytype.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.seating_capacity.errors }}
+                    <p>{{ form_cars.seating_capacity.label_tag }}<br/>
+                        {{ form_cars.seating_capacity.errors }}
+                        {{ form_cars.seating_capacity }}
+                        {{ form_cars.seating_capacity.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.makename.errors }}
+                    <p>{{ form_cars.makename.label_tag }}<br/>
+                        {{ form_cars.makename.errors }}
+                        {{ form_cars.makename }}
+                        {{ form_cars.makename.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.engine_size.errors }}
+                    <p>{{ form_cars.engine_size.label_tag }}<br/>
+                        {{ form_cars.engine_size.errors }}
+                        {{ form_cars.engine_size }}
+                        {{ form_cars.engine_size.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.fuel_system.errors }}
+                    <p>{{ form_cars.fuel_system.label_tag }}<br/>
+                        {{ form_cars.fuel_system.errors }}
+                        {{ form_cars.fuel_system }}
+                        {{ form_cars.fuel_system.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.tank_capacity.errors }}
+                    <p>{{ form_cars.tank_capacity.label_tag }}<br/>
+                        {{ form_cars.tank_capacity.errors }}
+                        {{ form_cars.tank_capacity }}
+                        {{ form_cars.tank_capacity.help_text }}</p>
+                </div>
+                <div class="filter-field-car" style="display:none">
+                    {{ form_cars.power.errors }}
+                    <p>{{ form_cars.power.label_tag }}<br/>
+                        {{ form_cars.power.errors }}
+                        {{ form_cars.power }}
+                        {{ form_cars.power.help_text }}</p>
+                </div>
+                <div class="filter-selection">
+                    {{ form_cars.orders_include.errors }}
+                    <p>{{ form_cars.orders_include.label_tag }}<br/>
+                        {{ form_cars.orders_include.errors }}
+                        {{ form_cars.orders_include }}
+                        {{ form_cars.orders_include.help_text }}</p>
+                </div>
+                <div class="filter-field-order" style="display:none">
+                    {{ form_cars.more_than_orders.errors }}
+                    <p>{{ form_cars.more_than_orders.label_tag }}<br/>
+                        {{ form_cars.more_than_orders.errors }}
+                        {{ form_cars.more_than_orders }}
+                        {{ form_cars.more_than_orders.help_text }}</p>
+                </div>
+                <div class="filter-field-order" style="display:none">
+                    {{ form_cars.num_orders.errors }}
+                    <p>{{ form_cars.num_orders.label_tag }}<br/>
+                        {{ form_cars.num_orders.errors }}
+                        {{ form_cars.num_orders }}
+                        {{ form_cars.num_orders.help_text }}</p>
+                </div>
+                <div class="filter-field-order" style="display:none">
+                    {{ form_cars.ordered_between_start.errors }}
+                    <p>{{ form_cars.ordered_between_start.label_tag }}<br/>
+                        {{ form_cars.ordered_between_start.errors }}
+                        {{ form_cars.ordered_between_start }}
+                        {{ form_cars.ordered_between_start.help_text }}</p>
+                </div>
+                <div class="filter-field-order" style="display:none">
+                    {{ form_cars.ordered_between_end.errors }}
+                    <p>{{ form_cars.ordered_between_end.label_tag }}<br/>
+                        {{ form_cars.ordered_between_end.errors }}
+                        {{ form_cars.ordered_between_end }}
+                        {{ form_cars.ordered_between_end.help_text }}</p>
+                </div>
+                <div>
+                    <button type="submit" class="button">Create Report</button>
+                </div>
+            </form>
+        {% endif %}
+        {% if report_actioned %}
+            {% for field, value in fields %}
+                <p>{{ field }}: {{ value }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
