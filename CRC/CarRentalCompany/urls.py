@@ -28,7 +28,7 @@ urlpatterns = [
     path('staff/', views_staff.staff, name='staff'),
     path('staff/orders/', views_staff.orders, name='staff_orders'),
     path('staff/current_orders/', views_staff.current_orders, name='staff_current_orders'),
-    path('staff/orders/<int:order_id>', views_staff.order, name='staff_order'),
+    path('staff/current_orders/<int:order_id>', views_staff.order, name='staff_order'),
     #  Customers
     path('staff/customers/', views_staff.customers, name='staff_customers'),
     path('staff/customers/<int:customer_id>', views_staff.customer, name='staff_customer'),

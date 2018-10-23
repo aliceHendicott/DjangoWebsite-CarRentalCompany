@@ -2,7 +2,7 @@
 
 <!-- Title goes here -->
 {% block title %}
-CRC Orders
+CRC Current Orders
 {% endblock %}
 
 <!-- Extra styling goes here -->
@@ -12,14 +12,29 @@ CRC Orders
 <!-- Content goes here -->
 {% block content %}
 <div id="content">
-    <h1>Orders</h1>
+    <h1>Current Orders</h1>
     <div class="grid listing">
         {% for order in orders_list %}
         <div>
                 <h3>Order {{ order.id }}: {{ order.customer_name }}</h3>
                 <p>Pickup from {{ order.pickup_store }} on {{ order.pickup_date }}<br />
-                    Return to {{ order.return_store }} on {{ order.return_date }}<br />
+                    Expected return location: {{ order.return_store }}<br />
+                    Expected return date: {{ order.return_date }}
                     Car: {{ order.car_make_model }}</p>
+                <a href="./{{ order.id }}" class="button customer-button">Update details</a>
+        </div>
+        {% endfor %}
+    </div>
+    <h1>Orders waiting on check</h1>
+    <div class="grid listing">
+        {% for order in orders_to_check %}
+        <div>
+                <h3>Order {{ order.id }}: {{ order.customer_name }}</h3>
+                <p>Pickup from {{ order.pickup_store }} on {{ order.pickup_date }}<br />
+                    Returned {{ order.return_store }} on {{ order.return_date }}<br />
+                    Car: {{ order.car_make_model }}<br />
+                    Checked: {{ order.order_checked }}</p>
+                <a href="./{{ order.id }}" class="button customer-button">Update details</a>
         </div>
         {% endfor %}
     </div>

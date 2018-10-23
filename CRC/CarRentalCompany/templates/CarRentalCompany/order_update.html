@@ -1,0 +1,41 @@
+ {% extends './base.html' %}
+
+<!-- Title goes here -->
+{% block title %}
+CRC Orders
+{% endblock %}
+
+<!-- Extra styling goes here -->
+{% block stylesheet %}
+{% endblock %}
+
+<!-- Content goes here -->
+{% block content %}
+    <div id="content">
+        <p>Update the details required in the form below and select submit</p>
+        <!-- add form to update customer -->
+        <form id="feedback" method="POST" action="{{ order_id }}">{% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    <div>
+                        <p>{{ field.label_tag }}<br/>
+                            {{ field.errors }}
+                            {{ field }}
+                            {{ field.help_text }}</p>
+                    </div>
+                {% endfor %}
+                <div>
+                    <button type="submit" class="button">Update details</button>
+                </div>
+            </form>
+    </div>
+{% endblock %}
+
+<!-- Extra javascript goes here -->
+
+{% block javascript %}
+{% endblock %}

@@ -26,7 +26,8 @@ def my_account(request):
     if request.user.is_authenticated and request.user.userprofile.is_customer:
         user = request.user
         orders = Order.objects.all()
-        orders = orders.filter(customer_id=user.userprofile.customer_number)
+        past_orders = orders.filter(customer_id=user.userprofile.customer_number, order_checked=1)
+        current_orders = orders.filter(customer_id=user.userprofile.customer_number, order_checked=0)
         user_details = dbUser.objects.get(id=user.userprofile.customer_number)
         updating_details = False
         form = UpdateCustomerDetailsForm(request.POST or None, instance=user_details,
@@ -43,9 +44,10 @@ def my_account(request):
         return render(request,
                       'CarRentalCompany/customer_account.html',
                       {'user': user,
-                       'orders': orders,
+                       'past_orders': past_orders,
                        'user_details': user_details,
                        'form': form,
-                       'updating_details': updating_details})
+                       'updating_details': updating_details,
+                       'current_orders': current_orders})
     else:
         return redirect('index.html')

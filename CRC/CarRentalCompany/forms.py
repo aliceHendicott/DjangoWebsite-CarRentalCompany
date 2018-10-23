@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car, User as dbUser
+from .models import Car, User as dbUser, Order
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
@@ -11,6 +11,11 @@ class UpdateCustomerDetailsForm(ModelForm):
     class Meta:
         model = dbUser
         fields = ['user_name', 'user_address', 'user_birthday', 'user_gender', 'user_occupation', 'user_phone']
+
+class UpdateOrderDetailsForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['order_return_store_id', 'order_return_date', 'order_checked']
 
 class CustomerRegisterForm(UserCreationForm):
     customer_number = forms.IntegerField(help_text='If you are a returning customer, please input customer number')
