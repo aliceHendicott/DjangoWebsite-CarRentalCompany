@@ -62,6 +62,8 @@ urlpatterns = [
     #custom report
     path('reports/custom_report/', views_reports.custom, name='custom_report'),
 
+    re_path(r'^export/export_report/$', views_reports.export_report, name='export_report'),
+
     ## TEST
     path('connection/', TemplateView.as_view(template_name ='CarRentalCompany/../templates/registration/login.html')),
 ]
