@@ -15,7 +15,8 @@
 {% block javascript %}
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 <script>
-    var my_location = [];
+    var coords_array_initial = {{ location_maps|safe }};
+    var my_location = [1, 2];
 
     //item input only for front end! - to draw one vs all for pages
     function drawMap(coords_array) {
@@ -26,18 +27,29 @@
             id: 'mapbox.streets'
         }).addTo(mymap);
 
-        // Add current location marker
-        if (my_location.length > 0) {
-            marker = new L.marker([my_location[0], my_location[1]])
-                .bindPopup("<b>This is you</b><br />.")
-                .addTo(mymap);
-        }
+
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
 
         // Add markers
         for (var i = 0; i < coords_array.length; i++) {
             marker = new L.marker(coords_array[i])
-                .bindPopup("<a>" + coords_array[i][2][0] + "</a>")
+                .bindPopup("<b>" + coords_array[i][2][0] + "</b>")
                 .addTo(mymap);
+        }
+
+        // Add current location marker
+        if (my_location.length > 0) {
+            marker = new L.marker([my_location[0], my_location[1]], { icon: greenIcon })
+                .bindPopup("<b>This is you</b>.")
+                .addTo(mymap);
+            coords_array.push([my_location[0], my_location[1]]);
         }
 
         // Fit the map to all markers
@@ -72,22 +84,44 @@
 
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
+            navigator.geolocation.getCurrentPosition(myPosition, showError);
         }
         else {
+            drawMap(coords_array_initial);
             document.getElementById("status").innerHTML = "Geolocation is not supported by this browser.";
         }
     }
 
-    function showPosition(position) {
-        document.getElementById("status").innerHTML = "Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude;
-        //var latlon = position.coords.latitude + "," + position.coords.longitude;
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180)
+    }
+
+    // Get my position
+    function myPosition(position) {
         my_location[0] = position.coords.latitude;
         my_location[1] = position.coords.longitude;
+
+        // Halversine formula
+        var R = 6371; // kilometres
+        var phi1 = deg2rad(coords_array_initial[0][0]);
+        var phi2 = deg2rad(my_location[0]);
+        var delta_a = deg2rad(my_location[0] - coords_array_initial[0][0]);
+        var delta_b = deg2rad(my_location[1] - coords_array_initial[0][1]);
+
+        var a = Math.sin(delta_a / 2) * Math.sin(delta_a / 2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(delta_b / 2) * Math.sin(delta_b / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+
+        document.getElementById("distance-container").innerHTML = Math.round(d * 100) / 100 + "km away!";
+
+        drawMap(coords_array_initial);
     }
 
     // Error message for geolocation
     function showError(error) {
+        drawMap(coords_array_initial);
         var msg = "";
         switch (error.code) {
             case error.PERMISSION_DENIED:
@@ -106,8 +140,7 @@
         document.getElementById("status").innerHTML = msg;
     }
 
-    drawMap({{ location_maps|safe }});
-</script>
+    getLocation()</script>
 {% endblock %}
 
 <!-- Content goes here -->
@@ -123,9 +156,8 @@
                 <!-- Django template tags -->
                 <p><i class="fas fa-envelope"></i> {{ store.store_name|lower }}@crc.com</p>
             </div>
-            <!--
-            <div>0.6km away</div>
-            -->
+
+            <div id="distance-container"></div>
         </div>
     </div>
 </div>
