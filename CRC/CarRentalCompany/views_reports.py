@@ -6,7 +6,7 @@ from django.contrib.auth import (authenticate, login, get_user_model, logout)
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 
-from .forms import RecommendForm
+from .forms_custom_report import *
 from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
 from .custom_sql import *
@@ -288,8 +288,27 @@ def customer_demographics(request):
 '''
 def custom(request):
     if request.user.is_authenticated:
+        form = choose_report_type()
+        form_cars = custom_report_cars()
+        cars_selected = False
+        type_selected = False
+        report_actioned = False
+        fields = ""
+        if request.method == 'POST' and 'report_type' in request.POST:
+            report_type = request.POST['report_type']
+            type_selected = True
+            if report_type == 'Cars':
+                cars_selected = True
+        if request.method == 'POST' and 'car_filters' in request.POST:
+            fields = request.POST
+            report_actioned = True
         return render(request,
-                      'CarRentalCompany/xxx.html',
-                      {})
+                      'CarRentalCompany/custom_report.html',
+                      {'form': form,
+                       'form_cars': form_cars,
+                       'cars_selected': cars_selected,
+                       'type_selected': type_selected,
+                       'fields': fields.items(),
+                       'report_actioned': report_actioned})
     else:
         return redirect('index')

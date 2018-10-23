@@ -56,7 +56,7 @@ def best_suited_for(car_id):
     tank_capacity = int(car.car_tank_capacity.replace("L", ""))
     # if the tank capacity is greater than 70, the car is suited to long driving
     if tank_capacity > 70:
-        suited_for = "Long Distance Driving (tank capacity is %d)" % car.car_tank_capacity
+        suited_for = "Long Distance Driving (tank capacity is %d)" % tank_capacity
     # if the seating capacity is 5 or more, the car is suited for family trips
     elif car.car_seating_capacity > 4:
         suited_for = "Family trips (seating capacity is %d)" % car.car_seating_capacity
