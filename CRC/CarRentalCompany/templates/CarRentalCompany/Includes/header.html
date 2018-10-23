@@ -26,8 +26,8 @@
             <a href="/../" id="home"
             {% if "stores" not in request.path and "cars" not in request.path and "FAQ" not in request.path and "data" not in request.path and "reports" not in request.path %} class="current-page" {% endif %}
             >Home</a>
-            <a href="/stores/" id="stores" {% if "stores" in request.path %} class="current-page" {% endif %}>View Stores</a>
-            <a href="/cars/" id="cars" {% if "cars" in request.path %} class="current-page" {% endif %}>View Cars</a>
+            <a href="/stores/" id="stores" {% if "stores" in request.path and "reports" not in request.path %} class="current-page" {% endif %}>View Stores</a>
+            <a href="/cars/" id="cars" {% if "cars" in request.path and "reports" not in request.path %} class="current-page" {% endif %}>View Cars</a>
             <a href="/FAQ/" id="faq" {% if "FAQ" in request.path %} class="current-page" {% endif %}>FAQ</a>
         </div>
         <!-- display staff links depending on the staff login level-->
