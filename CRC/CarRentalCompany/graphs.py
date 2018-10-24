@@ -50,7 +50,7 @@ def bar(name, graphdata):
 def horizBar(name, graphdata):
     # Create horizontal bar chart object and set title
     chart = pygal.HorizontalBar(show_legend = False, style = custom_style,
-                                x_label_rotation = 15, y_labels_major_every = 1000)
+                                x_label_rotation = 30, y_labels_major_every = 1000)
     #chart.title = name
 
     # Turn data into respective data and label array

@@ -140,22 +140,15 @@ def dashboard_context(limit = 5,
                 'end_date': end_date}
     return context
 def json_dashboard_context(request):
-    # Get update variables
-    skip = request.GET.get('skip', None)
-    forwards = request.GET.get('forwards', None) 
-    no_change = request.GET.get('no_change', None)
     # Get dates
-    to_date = request.GET.get('end_date', None)
-    from_date = new_date(to_date, skip, 'false')
-    # If the dates are being shifted
-    if (no_change == 'false'): # == 'true' is necessary
-        from_date = new_date(from_date, skip, forwards)
-        to_date = new_date(to_date, skip, forwards)
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+
     # send it
     data_rendered = {
         'html_response': render_to_string("CarRentalCompany/Includes/reports_dashboard_content.html", 
-                                          dashboard_context(start_date = from_date, 
-                                                            end_date = to_date))
+                                          dashboard_context(start_date = start_date, 
+                                                            end_date = end_date))
     }
     return JsonResponse(data_rendered)
 def dashboard(request):
@@ -177,23 +170,16 @@ def cars_seasonal_context(limit = -1,
                 'end_date': end_date}
     return context
 def json_cars_seasonal_context(request):
-    # Get update variables
-    skip = request.GET.get('skip', None)
-    forwards = request.GET.get('forwards', None) 
-    no_change = request.GET.get('no_change', None)
     # Get dates
-    to_date = request.GET.get('end_date', None)
-    from_date = new_date(to_date, skip, 'false')
-    # If the dates are being shifted
-    if (no_change == 'false'): # == 'true' is necessary
-        from_date = new_date(from_date, skip, forwards)
-        to_date = new_date(to_date, skip, forwards)
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+
     # send it
     data_rendered = {
         'html_response': render_to_string("CarRentalCompany/Includes/reports_cars_seasonal_content.html", 
                                           cars_seasonal_context(limit = 50,
-                                                                start_date = from_date, 
-                                                                end_date = to_date))
+                                                                start_date = start_date, 
+                                                                end_date = end_date))
     }
     return JsonResponse(data_rendered)
 def cars_seasonal(request):
@@ -215,18 +201,11 @@ def cars_inactive_context(limit = -1,
     return context
 def json_cars_inactive_context(request):
     # Get update variables
-    skip = request.GET.get('skip', None)
-    forwards = request.GET.get('forwards', None) 
-    no_change = request.GET.get('no_change', None)
-    # Get dates
-    to_date = request.GET.get('end_date', None)
-    # If the dates are being shifted
-    if (no_change == 'false'): # == 'true' is necessary
-        to_date = new_date(to_date, skip, forwards)
+    end_date = request.GET.get('end_date', None)
     # send it
     data_rendered = {
         'html_response': render_to_string("CarRentalCompany/Includes/reports_cars_inactive_content.html", 
-                                          cars_inactive_context(end_date = to_date))
+                                          cars_inactive_context(end_date = end_date))
     }
     return JsonResponse(data_rendered)
 def cars_inactive(request):
@@ -255,22 +234,15 @@ def store_activity_context(limit = -1,
                 'end_date': end_date}
     return context
 def json_store_activity_context(request):
-    # Get update variables
-    skip = request.GET.get('skip', None)
-    forwards = request.GET.get('forwards', None) 
-    no_change = request.GET.get('no_change', None)
-    # Get dates
-    to_date = request.GET.get('end_date', None)
-    from_date = new_date(to_date, skip, 'false')
-    # If the dates are being shifted
-    if (no_change == 'false'): # == 'true' is necessary
-        from_date = new_date(from_date, skip, forwards)
-        to_date = new_date(to_date, skip, forwards)
+   # Get dates
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+
     # send it
     data_rendered = {
         'html_response': render_to_string("CarRentalCompany/Includes/reports_store_activity_content.html", 
-                                          store_activity_context(start_date = from_date,
-                                                                 end_date = to_date))
+                                          store_activity_context(start_date = start_date,
+                                                                 end_date = end_date))
     }
     return JsonResponse(data_rendered)
 def store_activity(request):
@@ -292,18 +264,11 @@ def store_parking_context(limit = 15,
     return context
 def json_store_parking_context(request):
     # Get update variables
-    skip = request.GET.get('skip', None)
-    forwards = request.GET.get('forwards', None) 
-    no_change = request.GET.get('no_change', None)
-    # Get dates
-    to_date = request.GET.get('end_date', None)
-    # If the dates are being shifted
-    if (no_change == 'false'): # == 'true' is necessary
-        to_date = new_date(to_date, skip, forwards)
+    end_date = request.GET.get('end_date', None)
     # send it
     data_rendered = {
         'html_response': render_to_string("CarRentalCompany/Includes/reports_store_parking_content.html", 
-                                          store_parking_context(end_date = to_date))
+                                          store_parking_context(end_date = end_date))
     }
     return JsonResponse(data_rendered)
 def store_parking(request):
@@ -330,22 +295,15 @@ def customer_demographics_context(limit = 5,
                 'end_date': end_date}
     return context
 def json_customer_demographics_context(request):
-    # Get update variables
-    skip = request.GET.get('skip', None)
-    forwards = request.GET.get('forwards', None) 
-    no_change = request.GET.get('no_change', None)
-    # Get dates
-    to_date = request.GET.get('end_date', None)
-    from_date = new_date(to_date, skip, 'false')
-    # If the dates are being shifted
-    if (no_change == 'false'): # == 'true' is necessary
-        from_date = new_date(from_date, skip, forwards)
-        to_date = new_date(to_date, skip, forwards)
+   # Get dates
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+
     # send it
     data_rendered = {
         'html_response': render_to_string("CarRentalCompany/Includes/reports_customer_demographics_content.html", 
-                                          customer_demographics_context(start_date = from_date,
-                                                                        end_date = to_date))
+                                          customer_demographics_context(start_date = start_date,
+                                                                        end_date = end_date))
     }
     return JsonResponse(data_rendered)
 def customer_demographics(request):
