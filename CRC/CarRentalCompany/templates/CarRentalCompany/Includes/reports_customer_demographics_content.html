@@ -6,19 +6,19 @@
 <div class="report-page">
     <table>
         <tr class="table-heading">
-            <td>Age Range and Gender</td>
-            <td>Number of Customers</td>
-            <td>Most Popular Car Body Type</td>
-            <td>Most Popular Pickup Location</td>
-            <td>Most Popular Return Location</td>
+            <td>Age and Gender</td>
+            <td>No. Customers</td>
+            <td>Rental Freq.</td>
+            <td>Favorite Bodytype</td>
+            <td>Favorite Store</td>
         </tr>
         {% for age_group in results %}
             <tr>
-                <td>{{ age_group.2 }}</td>
-                <td>{{ age_group.0 }}</td>
-                <td>{{ age_group.3 }}</td>
-                <td>{{ age_group.4 }}</td>
-                <td>{{ age_group.5 }}</td>
+                <td>{{ age_group.UserCategory }}</td>
+                <td>{{ age_group.NumberUsers }}</td>
+                <td>{{ age_group.NumberOrders }}</td>
+                <td>{{ age_group.FavoriteBodytype }}</td>
+                <td>{{ age_group.FavoritePickup }}</td>
             </tr>
         {% endfor %}
     </table>

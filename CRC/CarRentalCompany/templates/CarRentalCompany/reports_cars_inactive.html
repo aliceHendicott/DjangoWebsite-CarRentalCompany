@@ -15,10 +15,9 @@ CRC Cars Inactive
     $(document).on('click', '.press_me', function (e) {
         var forwards = (this.innerHTML == '&gt;')
         var no_change = (this.innerHTML == 'YEAR' || this.innerHTML == 'MONTH' || this.innerHTML == 'DAY')
-        console.log(no_change)
         var skip = document.getElementById("timeframe_press").innerHTML.toLowerCase();
-        var start_date = document.getElementById("start_date").innerHTML
         var end_date = document.getElementById("end_date").innerHTML
+        console.log(end_date)
         $.ajax({
             url: '{% url "json_cars_inactive_context" %}',
             dataType: 'json',
@@ -45,17 +44,39 @@ CRC Cars Inactive
         }
         document.getElementById("timeframe_press").innerHTML = next.toUpperCase()
     }
+
+    function exportCSV() {
+        document.getElementById("hidden_start_date").value = document.getElementById("start_date").innerHTML;
+        document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
+        document.getElementById("formCSV").submit()
+    }
+
 </script>
 {% endblock %}
 
 <!-- Content goes here -->
 {% block content %}
     <div id="content">
-        <h1>Reports</h1>
-        <button type="button" name="press_me" class="press_me">Click Me!</button>
-        <div id="report_content">
-            {% include './Includes/reports_cars_inactive_content.html' %}
+        <h1>Cars Inactive Report</h1>
+        <button type="button" name="press_me" class="press_me"><</button>
+        <button type="button" id="timeframe_press" name="timeframe_press" class="press_me" onclick="changeTimeframe()">MONTH</button>
+        <button type="button" name="press_me" class="press_me">></button>
+
+        <div style="background-color:white; padding:10px; margin-top:10px; margin-bottom:10px">
+            <div id="report_content">
+                {% include './Includes/reports_cars_inactive_content.html' %}
+            </div>
         </div>
+
+        <form action="{% url 'export_report' %}" method="post" target="_blank" id="formCSV">
+            {% csrf_token %}
+            <input type="hidden" name="export_type" id="hidden_export_type" value="cars_inactive" />
+            <input type="hidden" name="start_date" id="hidden_start_date" value="{{ start_date }}">
+            <input type="hidden" name="end_date" id="hidden_end_date" value="{{ end_date }}">
+            <input type="button" value="EXPORT" onclick="exportCSV()" />
+        </form>
     </div>
+
+
 {% endblock %}
 

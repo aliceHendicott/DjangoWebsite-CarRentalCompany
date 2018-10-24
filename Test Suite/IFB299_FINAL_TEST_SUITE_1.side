@@ -245,7 +245,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "7490377c-66f0-470d-b4e8-a08d92dc5f7f",
       "comment": "",
@@ -260,7 +260,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "67666fa2-febb-4fb7-a0ae-0c65c69a9e0b",
       "comment": "",
@@ -369,7 +369,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "458bb7cd-2bbf-4d35-974e-d47cf7ead245",
       "comment": "",
@@ -384,7 +384,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "68892724-788e-448a-9967-39ffd85601cc",
       "comment": "",
@@ -492,7 +492,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "72026aa2-d8a7-4c2c-abbc-ce59865d164d",
       "comment": "",
@@ -507,7 +507,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "b0f6e478-732b-497a-96c3-d6759b02aa0a",
       "comment": "",
@@ -627,7 +627,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "edfb925d-f7d6-4d65-97b4-9c4d53b5dc84",
       "comment": "",
@@ -642,7 +642,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "9575dfdd-890f-4e97-ad7d-c3cf730a5b97",
       "comment": "",
@@ -750,7 +750,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "b023fcb0-be16-4348-970a-c8d0e220e9ed",
       "comment": "",
@@ -765,7 +765,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "7dd0b3eb-d193-43ff-bc2e-f3621d72d172",
       "comment": "",
@@ -884,7 +884,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "bdda5988-00e1-4a94-bf4f-b6c141f3d72c",
       "comment": "",
@@ -899,7 +899,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "dd8e259e-f9a9-40f7-9ea6-67969be7ab62",
       "comment": "",
@@ -1443,7 +1443,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "Admin"
     }, {
       "id": "1bdba877-e93c-49d8-bd50-c511a342fa30",
       "comment": "",
@@ -1458,7 +1458,7 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "potter99"
+      "value": "superuser"
     }, {
       "id": "2d392919-9240-409e-90f3-ada26a052643",
       "comment": "",
@@ -1530,7 +1530,7 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "tango"
+      "value": "test"
     }, {
       "id": "78f5d958-f054-4ed3-8317-91505f997e85",
       "comment": "",
@@ -1571,21 +1571,21 @@
     "id": "33ed9a57-2643-4a79-8c33-473c4b8ee4ac",
     "name": "S21_Customer_Login_tst",
     "commands": [{
-      "id": "9032c170-d3d4-4c5e-b026-e69819908222",
+      "id": "7b9957f3-1343-4eae-a3ec-f866cdfb6388",
       "comment": "",
       "command": "open",
       "target": "/",
       "targets": [],
       "value": ""
     }, {
-      "id": "3b53b3dd-3085-4e26-a752-4b7a41a4997c",
+      "id": "2fe7f1af-ecf4-42ab-b7ce-f905af056365",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1054x992",
+      "target": "1619x993",
       "targets": [],
       "value": ""
     }, {
-      "id": "dad14cbb-ef55-479a-b367-094f35c5cc7e",
+      "id": "2d3c1442-1e10-4ba7-8fe4-f63406d7e442",
       "comment": "",
       "command": "click",
       "target": "id=id_username",
@@ -1600,7 +1600,7 @@
       ],
       "value": ""
     }, {
-      "id": "4ca3fcba-37d3-4b95-8ed1-441abbe262de",
+      "id": "2f05035c-7a31-4e29-bab9-1ec7465bae7d",
       "comment": "",
       "command": "type",
       "target": "id=id_username",
@@ -1613,9 +1613,9 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "user"
+      "value": "customer"
     }, {
-      "id": "2a6ac5fc-a26f-4aa8-84f6-38069a2d55d4",
+      "id": "c8c2f917-d41c-4d67-9ffc-6f862d97a004",
       "comment": "",
       "command": "type",
       "target": "id=id_password",
@@ -1628,9 +1628,9 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "userpass"
+      "value": "noaccess"
     }, {
-      "id": "86502b59-550f-484d-9432-d13588f4da64",
+      "id": "bcddb9f2-596d-4c03-b4db-b542c204d989",
       "comment": "",
       "command": "click",
       "target": "css=input.button",
@@ -1643,7 +1643,7 @@
       ],
       "value": ""
     }, {
-      "id": "ec56f605-135e-4b25-a6c3-8e5284d83c42",
+      "id": "50ba4578-5e4d-4630-8efc-f5073021594f",
       "comment": "",
       "command": "click",
       "target": "id=logout",
@@ -1659,7 +1659,7 @@
       ],
       "value": ""
     }, {
-      "id": "e049b4cd-1328-4d0f-b234-1949768908f1",
+      "id": "bada2d56-3b2d-4a31-9db9-c814e4876f85",
       "comment": "",
       "command": "click",
       "target": "id=id_username",
@@ -1674,7 +1674,7 @@
       ],
       "value": ""
     }, {
-      "id": "90f5f2f7-22e0-4b94-92ed-939905defc47",
+      "id": "ca65f8c4-2d67-4e46-b3fa-5a1df9ac308a",
       "comment": "",
       "command": "type",
       "target": "id=id_username",
@@ -1687,9 +1687,9 @@
         ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
         ["xpath=//input[2]", "xpath:position"]
       ],
-      "value": "user"
+      "value": "customer"
     }, {
-      "id": "e31e4c66-238e-45ef-931c-8590a57b1f03",
+      "id": "34205b73-b259-48cd-867e-53be3252d8e3",
       "comment": "",
       "command": "type",
       "target": "id=id_password",
@@ -1702,24 +1702,22 @@
         ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
         ["xpath=//input[3]", "xpath:position"]
       ],
-      "value": "invalidpassword"
+      "value": "invalid"
     }, {
-      "id": "15a54496-621f-406a-b905-8613e6c3d478",
+      "id": "4e87c1fa-c1c3-432f-834f-fffcb37b5fb2",
       "comment": "",
-      "command": "sendKeys",
-      "target": "id=id_password",
+      "command": "click",
+      "target": "css=input.button",
       "targets": [
-        ["id=id_password", "id"],
-        ["name=password", "name"],
-        ["css=#id_password", "css"],
-        ["css=#id_password", "css:finder"],
-        ["xpath=//input[@id='id_password']", "xpath:attributes"],
-        ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
-        ["xpath=//input[3]", "xpath:position"]
+        ["css=input.button", "css"],
+        ["css=.button:nth-child(4)", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
       ],
-      "value": "${KEY_ENTER}"
+      "value": ""
     }, {
-      "id": "1bb51ae8-17a4-4ff4-abe4-fc94f9f3e8c9",
+      "id": "c12b01ec-5202-4f38-ab72-1e192b9506ed",
       "comment": "",
       "command": "close",
       "target": "win_ser_local",

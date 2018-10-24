@@ -45,6 +45,12 @@ CRC Reports Dashboard
         }
         document.getElementById("timeframe_press").innerHTML = next.toUpperCase()
     }
+
+    function exportCSV() {
+        document.getElementById("hidden_start_date").value = document.getElementById("start_date").innerHTML;
+        document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
+        document.getElementById("formCSV").submit()
+    }
 </script>
 {% endblock %}
 
@@ -55,8 +61,16 @@ CRC Reports Dashboard
         <button type="button" name="press_me" class="press_me"><</button>
         <button type="button" id="timeframe_press" name="timeframe_press" class="press_me" onclick="changeTimeframe()">MONTH</button>
         <button type="button" name="press_me" class="press_me">></button>
+
         <div id="report_content">
             {% include './Includes/reports_dashboard_content.html' %}
         </div>
+
+        <form action="{% url 'export_report' %}" method="post" target="_blank" id="formCSV">
+            {% csrf_token %}
+            <input type="hidden" name="export_type" id="hidden_export_type" value="dashboard" />
+            <input type="hidden" name="start_date" id="hidden_start_date" value="{{ start_date }}">
+            <input type="hidden" name="end_date" id="hidden_end_date" value="{{ end_date }}">
+        </form>
     </div>
 {% endblock %}

@@ -2,16 +2,24 @@
     <b><span id="start_date">{{ start_date }}</span></b> AND 
     <b><span id="end_date">{{ end_date }}</span></b>
 </p>
+
+
 <div class="report-page">
 <div>
     <table>
         <tr class="table-heading">
-            <td>Car Model</td>
+            <td>Makename</td>
+            <td>Model</td>
+            <td>Series</td>
+            <td>Series Year</td>
             <td>Rental Frequency</td>
         </tr>
         {% for car in seasonal_cars %}
             <tr>
-                <td>{{ car }}</td>
+                <td>{{ car.car_makename }}</td>
+                <td>{{ car.car_model }}</td>
+                <td>{{ car.car_series }}</td>
+                <td>{{ car.car_series_year }}</td>
                 <td>{{ car.number_of_orders }}</td>
             </tr>
         {% endfor %}
