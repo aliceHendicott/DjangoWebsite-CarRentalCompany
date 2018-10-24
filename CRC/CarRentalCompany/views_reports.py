@@ -17,7 +17,6 @@ from .recommendation import handle_recommendation
 from datetime import *
 from calendar import monthrange, isleap
 
-
 import csv
 from .export import export_csv
 
@@ -84,12 +83,12 @@ def cars_seasonal_graph(data):
         my_name = shorten_string(car)
         graphdata.append([my_name, car.number_of_orders])
     return drawGraph('bar', 'cars_seasonal', graphdata)
-def cars_inactive_graph(data = 0, end_date = date.today()):
+def cars_inactive_graph(data, end_date = date.today()):
     graphdata = []
     for car in data:
         graphdata.insert(0, [shorten_string(car), (end_date - car.Return_Date).days])
     return drawGraph('horizBar', 'cars_inactive', graphdata)
-def store_parking_graph(data = 0):
+def store_parking_graph(data):
     graphdata = []
     for store in data:
         graphdata.insert(0, [store.store_city.replace(" ", ""), store.parking])
@@ -99,10 +98,21 @@ def store_activity_graph(data):
     for store in data:
         graphdata.append([store.store_city, store.total_activity])
     return drawGraph('pie', 'store_activity', graphdata)
-def customer_demographics_graph(data=0):
+def customer_demographics_graph(data):
     graphdata = []
     for demographic in data:
         graphdata.append([demographic.UserCategory, demographic.NumberUsers])
+    return drawGraph('pie', 'customer_demographics', graphdata)
+def customer_genders_graph(data):
+    graphdata = [['Males', data[0].NumMales],
+                 ['Females', data[0].NumFemales]]
+    return drawGraph('pie', 'customer_demographics', graphdata)
+def customer_occupation_graph(data):
+    graphdata = [['Labourers', data[0].NumLabour],
+                 ['Retirees', data[0].NumRetiree],
+                 ['Researchers', data[0].NumResearcher],
+                 ['Managers', data[0].NumManager],
+                 ['Nurses', data[0].NumNurse]]
     return drawGraph('pie', 'customer_demographics', graphdata)
 
 
@@ -309,9 +319,13 @@ def customer_demographics_context(limit = 5,
                                   start_date = default_start.strftime("%Y-%m-%d"), 
                                   end_date = default_end.strftime("%Y-%m-%d")):
     results = User.user_demographics(end_date = end_date, start_date = start_date)
+    genders = User.male_female(end_date)
+    occupations = User.occupations(end_date)
     context =  {'users_list': User.objects.all(),
                 'results': results,
                 'customer_demographics_graph': customer_demographics_graph(results),
+                'customer_gender_graph': customer_genders_graph(genders),
+                'customer_occupations_graph': customer_occupation_graph(occupations),
                 'start_date': start_date,
                 'end_date': end_date}
     return context
