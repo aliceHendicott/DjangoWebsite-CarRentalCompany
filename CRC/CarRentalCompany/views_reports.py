@@ -22,7 +22,7 @@ from .export import export_csv
 
 # ------- REPORTS ------ #
 
-default_start = datetime(2007, 1, 1)
+default_start = datetime(2006, 12, 30)
 default_end = datetime(2007, 1, 30)
 
 ## Supporting
@@ -47,7 +47,7 @@ def new_date(current, skip, forwards):
         year_days = 364
     # duration to skip
     increment = 1
-    if not (forwards == 'true'): # This has to have = 'true'
+    if not (forwards == 'true'): # This has to have == 'true'
         increment = -1
     # calculate increment 
     if (skip == 'year'):
@@ -68,7 +68,7 @@ def shorten_string(replace_string):
     new_string = new_string.replace("Mercedes-Benz", "MB")
     new_string = new_string.replace("Mitsubishi", "Mitsub.")
     new_string = new_string.replace("Land Rover", "Land Rov")
-    new_string = new_string.replace("Volskswagen", "VW")
+    new_string = new_string.replace("Volkswagen", "VW")
     
     # Car Models
     new_string = new_string.replace("Allroad Quattro", "All Quattro")
@@ -427,7 +427,10 @@ def custom(request):
 def export_report(request):
     # POST Variables
     type = request.POST.get("export_type", "")
-    start_date = request.POST.get("start_date", "")
+    try:
+        start_date = request.POST.get("start_date", "")
+    except:
+        start_date = "0001-01-01"
     end_date = request.POST.get("end_date", "")
 
     # Create the HttpResponse object with the appropriate CSV header.
@@ -438,30 +441,43 @@ def export_report(request):
     exp_results = []
     # 1. Cars Seasonal
     if (type == 'cars_seasonal'):
-        exp_results.append(['Car Makename', 'No. Orders'])
+        exp_results.append(['Car Makename', 'Car Model', 'Car Series', 'Car Series Year', 'No. Orders'])
         for car in Car.top_cars(start_date = start_date, end_date = end_date):
-            exp_results.append([car.car_makename, car.number_of_orders])
+            exp_results.append([car.car_makename, 
+                                car.car_model,
+                                car.car_series,
+                                car.car_series_year,
+                                car.number_of_orders])
     # 2. Store activity
     elif (type == 'store_activity'):
-        exp_results.append(['Store Name', 'Total Activity'])
+        exp_results.append(['Store Name', 'Num Pickups', 'Num Returns', 'Total Activity'])
         for store in Store.store_activity(start_date = start_date, end_date = end_date):
-            exp_results.append([store.store_name, store.total_activity])
+            exp_results.append([store.store_city, 
+                                store.number_of_pickups, 
+                                store.number_of_returns, 
+                                store.total_activity])
     # 3. Customer demographics
     elif (type == 'customer_demographics'):
-        exp_results.append(['Demographic', 'Total'])
+        exp_results.append(['Demographic', 'Num Users', 'Num Orders', 'Favorite Bodytype', 'Favorite Pickup'])
         for demographic in User.user_demographics(start_date = start_date, end_date = end_date):
-            exp_results.append([demographic[2], demographic[0]])
+            exp_results.append([demographic.UserCategory, 
+                                demographic.NumberUsers,
+                                demographic.NumberOrders,
+                                demographic.FavoriteBodytype,
+                                demographic.FavoritePickup,])
     # 4. Available Parks
     elif (type == 'store_parking'):
-        exp_results.append(['Store Name', 'Available Park'])
-        for store in Store.store_parking(start_date = start_date, end_date = end_date):
-            exp_results.append([store.store_city.replace(" ", ""), store.picked_up])
+        exp_results.append(['Store Name', 'Available Parks'])
+        for store in Store.store_parking(end_date = end_date):
+            exp_results.append([store.store_city.replace(" ", ""), 
+                                store.parking])
     # 5. Inactive cars
     elif (type == 'cars_inactive'):
         exp_results.append(['Car Makename', 'Days Inactive'])
-        for car in Car.inactive_cars(start_date = start_date, end_date = end_date):
+        for car in Car.inactive_cars(end_date = end_date):
             finish_date = datetime.strptime(end_date, '%Y-%m-%d').date()
-            exp_results.append([car.car_makename, (finish_date - car.Return_Date).days])
+            exp_results.append([car.car_makename, 
+                                (finish_date - car.Return_Date).days])
     else:
         exp_results.append('Something went wrong!')
 

@@ -46,7 +46,6 @@ CRC Cars Inactive
     }
 
     function exportCSV() {
-        document.getElementById("hidden_start_date").value = document.getElementById("start_date").innerHTML;
         document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
         document.getElementById("formCSV").submit()
     }
@@ -71,7 +70,6 @@ CRC Cars Inactive
         <form action="{% url 'export_report' %}" method="post" target="_blank" id="formCSV">
             {% csrf_token %}
             <input type="hidden" name="export_type" id="hidden_export_type" value="cars_inactive" />
-            <input type="hidden" name="start_date" id="hidden_start_date" value="{{ start_date }}">
             <input type="hidden" name="end_date" id="hidden_end_date" value="{{ end_date }}">
             <input type="button" value="EXPORT" onclick="exportCSV()" />
         </form>

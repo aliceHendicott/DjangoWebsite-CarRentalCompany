@@ -14,8 +14,7 @@ CRC Reports Dashboard
 <script>
     $(document).on('click', '.press_me', function (e) {
         var forwards = (this.innerHTML == '&gt;')
-        var no_change = (this.innerHTML == 'YEAR' || this.innerHTML == 'MONTH' || this.innerHTML == 'DAY')
-        console.log(no_change)
+        var no_change = (this.innerHTML != '&gt;' && this.innerHTML != '&lt;')
         var skip = document.getElementById("timeframe_press").innerHTML.toLowerCase();
         var start_date = document.getElementById("start_date").innerHTML
         var end_date = document.getElementById("end_date").innerHTML
@@ -51,13 +50,17 @@ CRC Reports Dashboard
         document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
         document.getElementById("formCSV").submit()
     }
+
+    function update_end() {
+        $(".press_me").trigger("click");
+    }
 </script>
 {% endblock %}
 
 <!-- Content goes here -->
 {% block content %}
     <div id="content">
-        <h1>Reports</h1>
+        <h1>Reports Dashboard</h1>
         <button type="button" name="press_me" class="press_me"><</button>
         <button type="button" id="timeframe_press" name="timeframe_press" class="press_me" onclick="changeTimeframe()">MONTH</button>
         <button type="button" name="press_me" class="press_me">></button>
