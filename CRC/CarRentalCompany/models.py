@@ -194,6 +194,57 @@ class User(models.Model):
     def __str__(self):
         return self.user_name
     # Data Extraction
+    def occupations(end_date = datetime.today().strftime("%Y-%m-%d")):
+        customer_occupations_query = """SELECT id,
+                                        SUM(CASE WHEN user_occupation = 'Labour' THEN 0 END) AS NumLabour,
+                                        SUM(CASE WHEN user_occupation = 'Retiree' THEN 0 END) AS NumRetiree,
+                                        SUM(CASE WHEN user_occupation = 'Researcher' THEN 0 END) AS NumResearcher,
+                                        SUM(CASE WHEN user_occupation = 'Manager' THEN 0 END) AS NumManager,
+                                        SUM(CASE WHEN user_occupation = 'Nurse' THEN 0 END) AS NumNurse
+                                        FROM carrentalcompany_user"""
+        customer_occupations_query_is = """SELECT DISTINCT carrentalcompany_user.id,
+                                           CASE WHEN user_occupation = 'Labour' THEN 1 ELSE 0 END AS isLabour,
+                                           CASE WHEN user_occupation = 'Retiree' THEN 1 ELSE 0 END AS isRetiree,
+                                           CASE WHEN user_occupation = 'Researcher' THEN 1 ELSE 0 END AS isResearcher,
+                                           CASE WHEN user_occupation = 'Manager' THEN 1 ELSE 0 END AS isManager,
+                                           CASE WHEN user_occupation = 'Nurse' THEN 1 ELSE 0 END AS isNurse
+                                           FROM carrentalcompany_user
+                                           INNER JOIN carrentalcompany_order
+                                           ON carrentalcompany_user.id = carrentalcompany_order.customer_id_id
+                                           WHERE carrentalcompany_order.order_pickup_date < '{0}'""".format(end_date)
+        # Inialise
+        customer_occupations = User.objects.raw(customer_occupations_query)
+
+        #Replace count
+        for person in User.objects.raw(customer_occupations_query_is):
+            customer_occupations[0].NumLabour += person.isLabour
+            customer_occupations[0].NumRetiree += person.isRetiree
+            customer_occupations[0].NumResearcher += person.isResearcher
+            customer_occupations[0].NumManager += person.isManager
+            customer_occupations[0].NumNurse += person.isNurse
+        return customer_occupations
+
+    def male_female(end_date = datetime.today().strftime("%Y-%m-%d")):
+        query_gender = """SELECT id,
+                          SUM(CASE WHEN user_gender = 'F' THEN 0 END) AS NumFemales,
+                          SUM(CASE WHEN user_gender = 'M' THEN 0 END) AS NumMales
+                          FROM carrentalcompany_user"""
+        query_genders_is = """SELECT DISTINCT carrentalcompany_user.id,
+                              CASE WHEN user_gender = 'F' THEN 1 ELSE 0 END AS isFemale,
+                              CASE WHEN user_gender = 'M' THEN 1 ELSE 0 END AS isMale
+                              FROM carrentalcompany_user
+                              INNER JOIN carrentalcompany_order
+                              ON carrentalcompany_user.id = carrentalcompany_order.customer_id_id
+                              WHERE carrentalcompany_order.order_pickup_date < '{0}'""".format(end_date)
+        # Inialise
+        genders = User.objects.raw(query_gender)
+
+        #Replace count
+        for person in User.objects.raw(query_genders_is):
+            genders[0].NumFemales += person.isFemale
+            genders[0].NumMales += person.isMale
+        return genders
+
     def user_demographics(limit = -1, 
                           start_date = datetime(1, 1, 1).strftime("%Y-%m-%d"), 
                           end_date = datetime.today().strftime("%Y-%m-%d")):
@@ -316,7 +367,6 @@ class User(models.Model):
             key += customer.user_gender.replace(" ", "")
             standard[category_dict[key]].NumberUsers += 1
 
-
         # Replace Orders
         total_orders = User.objects.raw(query_total_order)
         for total_order in total_orders:
@@ -343,7 +393,6 @@ class User(models.Model):
                 sub.append(popular_pickup_store[store][category])
             if(max(sub) > 0):
                 standard[category-1].FavoritePickup = popular_pickup_store[sub.index(max(sub))][0]
-
         return standard
 
 class Order(models.Model):
