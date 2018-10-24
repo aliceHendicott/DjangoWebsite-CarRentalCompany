@@ -369,3 +369,12 @@ table td:last-of-type{
 	display:block;
 	margin-top:10px;
 }
+.filter-selection label{
+	font-size:18px;
+	color: var(--secondary-color);
+	font-weight:bold;
+}
+.filter-field-grid{
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}

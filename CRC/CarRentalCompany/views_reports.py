@@ -10,6 +10,7 @@ from .forms_custom_report import *
 from .graphs import *
 from .models import Car, Store, Order, User, UserProfile
 from .custom_sql import *
+from .custom_report_sql import *
 from .recommendation import handle_recommendation
 
 from datetime import *
@@ -290,25 +291,59 @@ def custom(request):
     if request.user.is_authenticated:
         form = choose_report_type()
         form_cars = custom_report_cars()
+        form_customers = custom_report_customers()
+        form_orders = custom_report_orders()
+        form_locations = custom_report_locations()
         cars_selected = False
+        customers_selected = False
         type_selected = False
         report_actioned = False
-        fields = ""
+        orders_selected = False
+        locations_selected = False
+        results = ""
+        query_field_names = ""
         if request.method == 'POST' and 'report_type' in request.POST:
             report_type = request.POST['report_type']
             type_selected = True
             if report_type == 'Cars':
                 cars_selected = True
-        if request.method == 'POST' and 'car_filters' in request.POST:
+            if report_type == 'Customers':
+                customers_selected = True
+            if report_type == 'Orders':
+                orders_selected = True
+            if report_type == 'Locations':
+                locations_selected = True
+        if request.method == 'POST' and 'bodytype' in request.POST:
+            fields = request.POST
+            results = handle_cars_custom_report(fields)
+            report_actioned = True
+            query_field_names = results.columns
+            cars_selected = True
+        if request.method == 'POST' and 'occupation' in request.POST:
             fields = request.POST
             report_actioned = True
+            customers_selected = True
+            results = handle_customer_custom_report(fields)
+            query_field_names = results.columns
+        if request.method == 'POST' and 'pickup_location' in request.POST:
+            fields = request.POST
+            report_actioned = True
+            orders_selected = True
+            results = handle_order_custom_report(fields)
+            query_field_names = results.columns
+        if request.method == 'POST' and 'state' in request.POST:
+            fields = request.POST
+            report_actioned = True
+            locations_selected = True
+            results = handle_location_custom_report(fields)
+            query_field_names = results.columns
         return render(request,
                       'CarRentalCompany/custom_report.html',
-                      {'form': form,
-                       'form_cars': form_cars,
-                       'cars_selected': cars_selected,
+                      {'form': form, 'form_cars': form_cars, 'form_customers': form_customers, 'form_orders': form_orders, 'form_locations': form_locations,
+                       'cars_selected': cars_selected, 'customers_selected': customers_selected, 'orders_selected': orders_selected, 'locations_selected': locations_selected,
                        'type_selected': type_selected,
-                       'fields': fields.items(),
-                       'report_actioned': report_actioned})
+                       'report_actioned': report_actioned,
+                       'results': results,
+                       'query_field_names': query_field_names})
     else:
         return redirect('index')

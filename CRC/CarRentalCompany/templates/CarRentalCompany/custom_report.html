@@ -2,7 +2,7 @@
 
 <!-- Title goes here -->
 {% block title %}
-CRC Custom Report
+    CRC Custom Report
 {% endblock %}
 
 <!-- Extra styling goes here -->
@@ -13,28 +13,89 @@ CRC Custom Report
 {% block javascript %}
     <script type="text/javascript">
         window.onload = function () {
-            document.getElementById("id_car_filters").onchange = function () {
-                var cols = document.getElementsByClassName('filter-field-car');
-                for(var i=0; i<cols.length; i++) {
-                    if (cols[i].style.display === "none"){
-                        cols[i].style.display = "block";
-                    } else{
-                        cols[i].style.display = "none";
-                    }
+            {% if cars_selected and not report_actioned %}
+                document.getElementById("id_car_filters").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-car');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
 
-                }
-            };
-            document.getElementById("id_orders_include").onchange = function () {
-                var cols = document.getElementsByClassName('filter-field-order');
-                for(var i=0; i<cols.length; i++) {
-                    if (cols[i].style.display === "none"){
-                        cols[i].style.display = "block";
-                    } else{
-                        cols[i].style.display = "none";
                     }
+                };
+                document.getElementById("id_orders_include").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-order');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
 
-                }
-            };
+                    }
+                };
+            {% endif %}
+            {% if customers_selected and not report_actioned %}
+                document.getElementById("id_customer_filters").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-customer');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
+
+                    }
+                };
+                document.getElementById("id_orders_include_customer").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-order-customer');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
+
+                    }
+                };
+            {% endif %}
+            {% if orders_selected and not report_actioned %}
+                document.getElementById("id_order_filters_order").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-order');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
+
+                    }
+                };
+                document.getElementById("id_customers_include_order").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-order-customer');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
+
+                    }
+                };
+                document.getElementById("id_cars_include_order").onchange = function () {
+                    var cols = document.getElementsByClassName('filter-field-car');
+                    for (var i = 0; i < cols.length; i++) {
+                        if (cols[i].style.display === "none") {
+                            cols[i].style.display = "block";
+                        } else {
+                            cols[i].style.display = "none";
+                        }
+
+                    }
+                };
+            {% endif %}
         };
 
 
@@ -67,7 +128,7 @@ CRC Custom Report
                 </div>
             </form>
         {% endif %}
-        {% if cars_selected %}
+        {% if cars_selected and not report_actioned %}
             <h1>Selected Report Type: CARS</h1>
             <p>Select which filters you wish to include</p>
             <!-- add form to update customer -->
@@ -84,61 +145,63 @@ CRC Custom Report
                         {{ form_cars.car_filters }}
                         {{ form_cars.car_filters.help_text }}</p>
                 </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.series_year.errors }}
-                    <p>{{ form_cars.series_year.label_tag }}<br/>
+                <div class="filter-field-grid">
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.series_year.errors }}
-                        {{ form_cars.series_year }}
-                        {{ form_cars.series_year.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.bodytype.errors }}
-                    <p>{{ form_cars.bodytype.label_tag }}<br/>
+                        <p>{{ form_cars.series_year.label_tag }}<br/>
+                            {{ form_cars.series_year.errors }}
+                            {{ form_cars.series_year }}
+                            {{ form_cars.series_year.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.bodytype.errors }}
-                        {{ form_cars.bodytype }}
-                        {{ form_cars.bodytype.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.seating_capacity.errors }}
-                    <p>{{ form_cars.seating_capacity.label_tag }}<br/>
+                        <p>{{ form_cars.bodytype.label_tag }}<br/>
+                            {{ form_cars.bodytype.errors }}
+                            {{ form_cars.bodytype }}
+                            {{ form_cars.bodytype.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.seating_capacity.errors }}
-                        {{ form_cars.seating_capacity }}
-                        {{ form_cars.seating_capacity.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.makename.errors }}
-                    <p>{{ form_cars.makename.label_tag }}<br/>
+                        <p>{{ form_cars.seating_capacity.label_tag }}<br/>
+                            {{ form_cars.seating_capacity.errors }}
+                            {{ form_cars.seating_capacity }}
+                            {{ form_cars.seating_capacity.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.makename.errors }}
-                        {{ form_cars.makename }}
-                        {{ form_cars.makename.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.engine_size.errors }}
-                    <p>{{ form_cars.engine_size.label_tag }}<br/>
+                        <p>{{ form_cars.makename.label_tag }}<br/>
+                            {{ form_cars.makename.errors }}
+                            {{ form_cars.makename }}
+                            {{ form_cars.makename.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.engine_size.errors }}
-                        {{ form_cars.engine_size }}
-                        {{ form_cars.engine_size.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.fuel_system.errors }}
-                    <p>{{ form_cars.fuel_system.label_tag }}<br/>
+                        <p>{{ form_cars.engine_size.label_tag }}<br/>
+                            {{ form_cars.engine_size.errors }}
+                            {{ form_cars.engine_size }}
+                            {{ form_cars.engine_size.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.fuel_system.errors }}
-                        {{ form_cars.fuel_system }}
-                        {{ form_cars.fuel_system.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.tank_capacity.errors }}
-                    <p>{{ form_cars.tank_capacity.label_tag }}<br/>
+                        <p>{{ form_cars.fuel_system.label_tag }}<br/>
+                            {{ form_cars.fuel_system.errors }}
+                            {{ form_cars.fuel_system }}
+                            {{ form_cars.fuel_system.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.tank_capacity.errors }}
-                        {{ form_cars.tank_capacity }}
-                        {{ form_cars.tank_capacity.help_text }}</p>
-                </div>
-                <div class="filter-field-car" style="display:none">
-                    {{ form_cars.power.errors }}
-                    <p>{{ form_cars.power.label_tag }}<br/>
+                        <p>{{ form_cars.tank_capacity.label_tag }}<br/>
+                            {{ form_cars.tank_capacity.errors }}
+                            {{ form_cars.tank_capacity }}
+                            {{ form_cars.tank_capacity.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
                         {{ form_cars.power.errors }}
-                        {{ form_cars.power }}
-                        {{ form_cars.power.help_text }}</p>
+                        <p>{{ form_cars.power.label_tag }}<br/>
+                            {{ form_cars.power.errors }}
+                            {{ form_cars.power }}
+                            {{ form_cars.power.help_text }}</p>
+                    </div>
                 </div>
                 <div class="filter-selection">
                     {{ form_cars.orders_include.errors }}
@@ -147,33 +210,273 @@ CRC Custom Report
                         {{ form_cars.orders_include }}
                         {{ form_cars.orders_include.help_text }}</p>
                 </div>
-                <div class="filter-field-order" style="display:none">
-                    {{ form_cars.more_than_orders.errors }}
-                    <p>{{ form_cars.more_than_orders.label_tag }}<br/>
+                <div class="filter-field-grid">
+                    <div class="filter-field-order" style="display:none">
                         {{ form_cars.more_than_orders.errors }}
-                        {{ form_cars.more_than_orders }}
-                        {{ form_cars.more_than_orders.help_text }}</p>
-                </div>
-                <div class="filter-field-order" style="display:none">
-                    {{ form_cars.num_orders.errors }}
-                    <p>{{ form_cars.num_orders.label_tag }}<br/>
+                        <p>{{ form_cars.more_than_orders.label_tag }}<br/>
+                            {{ form_cars.more_than_orders.errors }}
+                            {{ form_cars.more_than_orders }}
+                            {{ form_cars.more_than_orders.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
                         {{ form_cars.num_orders.errors }}
-                        {{ form_cars.num_orders }}
-                        {{ form_cars.num_orders.help_text }}</p>
-                </div>
-                <div class="filter-field-order" style="display:none">
-                    {{ form_cars.ordered_between_start.errors }}
-                    <p>{{ form_cars.ordered_between_start.label_tag }}<br/>
+                        <p><label for="id_num_orders">Display number of orders?</label><br/>
+                            {{ form_cars.num_orders.errors }}
+                            {{ form_cars.num_orders }}
+                            {{ form_cars.num_orders.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
                         {{ form_cars.ordered_between_start.errors }}
-                        {{ form_cars.ordered_between_start }}
-                        {{ form_cars.ordered_between_start.help_text }}</p>
-                </div>
-                <div class="filter-field-order" style="display:none">
-                    {{ form_cars.ordered_between_end.errors }}
-                    <p>{{ form_cars.ordered_between_end.label_tag }}<br/>
+                        <p>{{ form_cars.ordered_between_start.label_tag }}<br/>
+                            {{ form_cars.ordered_between_start.errors }}
+                            {{ form_cars.ordered_between_start }}
+                            {{ form_cars.ordered_between_start.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
                         {{ form_cars.ordered_between_end.errors }}
-                        {{ form_cars.ordered_between_end }}
-                        {{ form_cars.ordered_between_end.help_text }}</p>
+                        <p>{{ form_cars.ordered_between_end.label_tag }}<br/>
+                            {{ form_cars.ordered_between_end.errors }}
+                            {{ form_cars.ordered_between_end }}
+                            {{ form_cars.ordered_between_end.help_text }}</p>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="button">Create Report</button>
+                </div>
+            </form>
+        {% endif %}
+        {% if customers_selected and not report_actioned %}
+            <h1>Selected Report Type: CUSTOMERS</h1>
+            <p>Select which filters you wish to include</p>
+            <form id="customers-custom-report" method="POST" action="/reports/custom_report/">{% csrf_token %}
+                {{ form_customers.non_field_errors }}
+                {% for hidden_field in form_customers.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                <div class="filter-selection">
+                    {{ form_customers.car_filters.errors }}
+                    <p>{{ form_customers.customer_filters.label_tag }}<br/>
+                        {{ form_customers.customer_filters.errors }}
+                        {{ form_customers.customer_filters }}
+                        {{ form_customers.customer_filters.help_text }}</p>
+                </div>
+                <div class="filter-field-grid">
+                    <div class="filter-field-customer" style="display:none">
+                        {{ form_customers.occupation.errors }}
+                        <p>{{ form_customers.occupation.label_tag }}<br/>
+                            {{ form_customers.occupation.errors }}
+                            {{ form_customers.occupation }}
+                            {{ form_customers.occupation.help_text }}</p>
+                    </div>
+                    <div class="filter-field-customer" style="display:none">
+                        {{ form_customers.from_age.errors }}
+                        <p>{{ form_customers.from_age.label_tag }}<br/>
+                            {{ form_customers.from_age.errors }}
+                            {{ form_customers.from_age }}
+                            {{ form_customers.from_age.help_text }}</p>
+                    </div>
+                    <div class="filter-field-customer" style="display:none">
+                        {{ form_customers.to_age.errors }}
+                        <p>{{ form_customers.to_age.label_tag }}<br/>
+                            {{ form_customers.to_age.errors }}
+                            {{ form_customers.to_age }}
+                            {{ form_customers.to_age.help_text }}</p>
+                    </div>
+                    <div class="filter-field-customer" style="display:none">
+                        {{ form_customers.gender.errors }}
+                        <p>{{ form_customers.gender.label_tag }}<br/>
+                            {{ form_customers.gender.errors }}
+                            {{ form_customers.gender }}
+                            {{ form_customers.gender.help_text }}</p>
+                    </div>
+                </div>
+                <div class="filter-selection">
+                    {{ form_customers.orders_include_customer.errors }}
+                    <p>{{ form_customers.orders_include_customer.label_tag }}<br/>
+                        {{ form_customers.orders_include_customer.errors }}
+                        {{ form_customers.orders_include_customer }}
+                        {{ form_customers.orders_include_customer.help_text }}</p>
+                </div>
+                <div class="filter-field-grid">
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_customers.more_than_orders.errors }}
+                        <p>{{ form_customers.more_than_orders.label_tag }}<br/>
+                            {{ form_customers.more_than_orders.errors }}
+                            {{ form_customers.more_than_orders }}
+                            {{ form_customers.more_than_orders.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_customers.num_orders.errors }}
+                        <p><label for="id_num_orders">Display number of orders?</label><br/>
+                            {{ form_customers.num_orders.errors }}
+                            {{ form_customers.num_orders }}
+                            {{ form_customers.num_orders.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_customers.ordered_between_start.errors }}
+                        <p>{{ form_customers.ordered_between_start.label_tag }}<br/>
+                            {{ form_customers.ordered_between_start.errors }}
+                            {{ form_customers.ordered_between_start }}
+                            {{ form_customers.ordered_between_start.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_customers.ordered_between_end.errors }}
+                        <p>{{ form_customers.ordered_between_end.label_tag }}<br/>
+                            {{ form_customers.ordered_between_end.errors }}
+                            {{ form_customers.ordered_between_end }}
+                            {{ form_customers.ordered_between_end.help_text }}</p>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="button">Create Report</button>
+                </div>
+            </form>
+        {% endif %}
+        {% if orders_selected and not report_actioned %}
+            <h1>Selected Report Type: ORDERS</h1>
+            <p>Select which filters you wish to include</p>
+            <form id="orders-custom-report" method="POST" action="/reports/custom_report/">{% csrf_token %}
+                {{ form_orders.non_field_errors }}
+                {% for hidden_field in form_orders.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                <div class="filter-selection">
+                    {{ form_orders.order_filters_order.errors }}
+                    <p>{{ form_orders.order_filters_order.label_tag }}<br/>
+                        {{ form_orders.order_filters_order.errors }}
+                        {{ form_orders.order_filters_order }}
+                        {{ form_orders.order_filters_order.help_text }}</p>
+                </div>
+                <div class="filter-field-grid">
+                    <div class="filter-field-order" style="display:none">
+                        {{ form_orders.pickup_location.errors }}
+                        <p>{{ form_orders.pickup_location.label_tag }}<br/>
+                            {{ form_orders.pickup_location.errors }}
+                            {{ form_orders.pickup_location }}
+                            {{ form_orders.pickup_location.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
+                        {{ form_orders.return_location.errors }}
+                        <p>{{ form_orders.return_location.label_tag }}<br/>
+                            {{ form_orders.return_location.errors }}
+                            {{ form_orders.return_location }}
+                            {{ form_orders.return_location.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
+                        {{ form_orders.ordered_between_start.errors }}
+                        <p>{{ form_orders.ordered_between_start.label_tag }}<br/>
+                            {{ form_orders.ordered_between_start.errors }}
+                            {{ form_orders.ordered_between_start }}
+                            {{ form_orders.ordered_between_start.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
+                        {{ form_orders.ordered_between_end.errors }}
+                        <p>{{ form_orders.ordered_between_end.label_tag }}<br/>
+                            {{ form_orders.ordered_between_end.errors }}
+                            {{ form_orders.ordered_between_end }}
+                            {{ form_orders.ordered_between_end.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order" style="display:none">
+                        {{ form_orders.order_checked.errors }}
+                        <p>{{ form_orders.order_checked.label_tag }}<br/>
+                            {{ form_orders.order_checked.errors }}
+                            {{ form_orders.order_checked }}
+                            {{ form_orders.order_checked.help_text }}</p>
+                    </div>
+                </div>
+                <div class="filter-selection">
+                    {{ form_orders.customers_include_order.errors }}
+                    <p>{{ form_orders.customers_include_order.label_tag }}<br/>
+                        {{ form_orders.customers_include_order.errors }}
+                        {{ form_orders.customers_include_order }}
+                        {{ form_orders.customers_include_order.help_text }}</p>
+                </div>
+                <div class="filter-field-grid">
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_orders.occupation_orders.errors }}
+                        <p>{{ form_orders.occupation_orders.label_tag }}<br/>
+                            {{ form_orders.occupation_orders.errors }}
+                            {{ form_orders.occupation_orders }}
+                            {{ form_orders.occupation_orders.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_orders.from_age.errors }}
+                        <p>{{ form_orders.from_age.label_tag }}
+                            {{ form_orders.from_age.errors }}
+                            {{ form_orders.from_age }}
+                            {{ form_orders.from_age.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_orders.to_age.errors }}
+                        <p>{{ form_orders.to_age.label_tag }}<br/>
+                            {{ form_orders.to_age.errors }}
+                            {{ form_orders.to_age }}
+                            {{ form_orders.to_age.help_text }}</p>
+                    </div>
+                    <div class="filter-field-order-customer" style="display:none">
+                        {{ form_orders.gender.errors }}
+                        <p>{{ form_orders.gender.label_tag }}<br/>
+                            {{ form_orders.gender.errors }}
+                            {{ form_orders.gender }}
+                            {{ form_orders.gender.help_text }}</p>
+                    </div>
+                </div>
+                <div class="filter-selection">
+                    {{ form_orders.cars_include_order.errors }}
+                    <p>{{ form_orders.cars_include_order.label_tag }}<br/>
+                        {{ form_orders.cars_include_order.errors }}
+                        {{ form_orders.cars_include_order }}
+                        {{ form_orders.cars_include_order.help_text }}</p>
+                </div>
+                <div class="filter-field-grid">
+                    <div class="filter-field-car" style="display:none">
+                        {{ form_orders.make.errors }}
+                        <p>{{ form_orders.make.label_tag }}<br/>
+                            {{ form_orders.make.errors }}
+                            {{ form_orders.make }}
+                            {{ form_orders.make.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
+                        {{ form_orders.body_type_orders.errors }}
+                        <p>{{ form_orders.body_type_orders.label_tag }}<br/>
+                            {{ form_orders.body_type_orders.errors }}
+                            {{ form_orders.body_type_orders }}
+                            {{ form_orders.body_type_orders.help_text }}</p>
+                    </div>
+                    <div class="filter-field-car" style="display:none">
+                        {{ form_orders.transmission.errors }}
+                        <p>{{ form_orders.transmission.label_tag }}<br/>
+                            {{ form_orders.transmission.errors }}
+                            {{ form_orders.transmission }}
+                            {{ form_orders.transmission.help_text }}</p>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="button">Create Report</button>
+                </div>
+            </form>
+        {% endif %}
+        {% if locations_selected and not report_actioned %}
+            <h1>Selected Report Type: LOCATIONS</h1>
+            <p>Select which filters you wish to include</p>
+            <form id="locations-custom-report" method="POST" action="/reports/custom_report/">{% csrf_token %}
+                {{ form_locations.non_field_errors }}
+                {% for hidden_field in form_locations.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                <div class="filter-field-grid">
+                    {% for field in form_locations %}
+                        <div>
+                            {{ field.errors }}
+                            <p>{{ field.label_tag }}<br/>
+                                {{ field.errors }}
+                                {{ field }}
+                                {{ field.help_text }}</p>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div>
                     <button type="submit" class="button">Create Report</button>
@@ -181,9 +484,118 @@ CRC Custom Report
             </form>
         {% endif %}
         {% if report_actioned %}
-            {% for field, value in fields %}
-                <p>{{ field }}: {{ value }}</p>
-            {% endfor %}
+            <h1>Results</h1>
+            {% if cars_selected %}
+                <table>
+                    <tr class="table-heading">
+                        <td>Car Make</td>
+                        <td>Car Model</td>
+                        <td>Series</td>
+                        <td>Series Year</td>
+                        <td>Body Type</td>
+                        {% if 'number_of_orders' in query_field_names %}
+                            <td>Number of Orders</td>
+                        {% endif %}
+                    </tr>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.car_makename }}</td>
+                            <td>{{ result.car_model }}</td>
+                            <td>{{ result.car_series }}</td>
+                            <td>{{ result.car_series_year }}</td>
+                            <td>{{ result.car_bodytype }}</td>
+                            {% if "number_of_orders" in query_field_names %}
+                                <td>{{ result.number_of_orders }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            {% if customers_selected %}
+                <table>
+                    <tr class="table-heading">
+                        <td>Customer Name</td>
+                        <td>Gender</td>
+                        <td>Birthday</td>
+                        <td>Occupation</td>
+                        <td>Phone</td>
+                        {% if 'number_of_orders' in query_field_names %}
+                            <td>Number of Orders</td>
+                        {% endif %}
+                    </tr>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.user_name }}</td>
+                            <td>{{ result.user_gender }}</td>
+                            <td>{{ result.user_birthday }}</td>
+                            <td>{{ result.user_occupation }}</td>
+                            <td>{{ result.user_phone }}</td>
+                            {% if "number_of_orders" in query_field_names %}
+                                <td>{{ result.number_of_orders }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            {% if orders_selected %}
+                <table>
+                    <tr class="table-heading">
+                        <td>ID</td>
+                        <td>Customer</td>
+                        <td>Car make</td>
+                        <td>Car Model</td>
+                        <td>Pickup Store</td>
+                        <td>Pickup Date</td>
+                        <td>Return Store</td>
+                        <td>Return Date</td>
+                        <td>Order Checked</td>
+                    </tr>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.id }}</td>
+                            <td>{{ result.customer_id.user_name }}</td>
+                            <td>{{ result.car_id.car_makename }}</td>
+                            <td>{{ result.car_id.car_model }}</td>
+                            <td>{{ result.order_pickup_store_id.store_city }}</td>
+                            <td>{{ result.order_pickup_date }}</td>
+                            <td>{{ result.order_return_store_id.store_city }}</td>
+                            <td>{{ result.order_return_date }}</td>
+                            <td>{{ result.order_checked }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            {% if locations_selected %}
+                <table>
+                    <tr class="table-heading">
+                        <td>Store</td>
+                        <td>Address</td>
+                        <td>State</td>
+                        <td>Phone</td>
+                        {% if 'number_of_customers' in query_field_names %}
+                            <td>Number of Customers</td>
+                        {% endif %}
+                        {% if 'number_of_orders' in query_field_names %}
+                            <td>Number of Orders</td>
+                        {% endif %}
+                    </tr>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.store_city }}</td>
+                            <td>{{ result.store_address }}</td>
+                            <td>{{ result.store_state }}</td>
+                            <td>{{ result.store_phone }}</td>
+                            {% if 'number_of_customers' in query_field_names %}
+                                <td>{{ result.number_of_customers }}</td>
+                            {% endif %}
+                            {% if "number_of_orders" in query_field_names %}
+                                <td>{{ result.number_of_orders }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            <a href="/reports/custom_report/" class="customer-button button">Create another report</a>
         {% endif %}
     </div>
 {% endblock %}
