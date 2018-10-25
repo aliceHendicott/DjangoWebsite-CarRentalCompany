@@ -23,10 +23,16 @@ pass
 ' SPRINT 2
 ' The following are sprint 2:
 '''
+
+# Stores page
 def stores(request):
+    # Get a list of all the stores and their locations
     locations = []
     for store in Store.objects.all():
-        locations.append([eval(store.store_latitude), eval(store.store_longitude), [store.store_name, store.id]])
+        locations.append([eval(store.store_latitude), # latitude
+                          eval(store.store_longitude),  # longitude
+                          [store.store_name, store.id]]) # [name, id]
+    # Pass the context to a render
     return render(request,
                   'CarRentalCompany/stores.html',
                   {'stores_list': Store.objects.all(),

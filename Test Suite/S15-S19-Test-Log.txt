@@ -1,0 +1,63 @@
+Running 'S15_Filter_Car_List_tst'
+1.open on /... OK
+2.setWindowSize on 1619x993... OK
+3.click on id=cars... OK
+4.click on id=id_series_year... OK
+5.select on id=id_series_year with value label=1978... OK
+6.click on css=option[value="1978"]... OK
+7.click on id=id_seating_capacity... OK
+8.select on id=id_seating_capacity with value label=5... OK
+9.click on css=option[value="5"]... OK
+10.click on css=button.button... OK
+11.click on id=id_fuel_system... OK
+12.select on id=id_fuel_system with value label=SUPERCHARGED MPFI... OK
+13.click on css=option[value="SUPERCHARGED MPFI"]... OK
+14.click on css=button.button... OK
+15.click on id=id_series_year... OK
+16.select on id=id_series_year with value label=1978... OK
+17.click on css=option[value="1978"]... OK
+18.click on css=button.button... OK
+19.click on id=id_engine_size... OK
+20.select on id=id_engine_size with value label=2.3L... OK
+21.click on css=option[value="2.3L"]... OK
+22.click on css=button.button... OK
+23.close on win_ser_local... OK
+'S15_Filter_Car_List_tst' completed successfully
+Running 'S19_Customer_Recommendation_Feedback_tst'
+1.open on /... OK
+2.setWindowSize on 1619x993... OK
+3.click on id=recommend-button... OK
+4.click on id=id_seats... OK
+5.select on id=id_seats with value label=more than 5... OK
+6.click on css=#id_seats > option[value="3"]... OK
+7.click on css=button.button... OK
+8.click on id=id_comment... OK
+9.type on id=id_comment with value helpful... OK
+10.click on css=div:nth-child(4) > .button... OK
+11.close on win_ser_local... OK
+'S19_Customer_Recommendation_Feedback_tst' completed successfully
+Running 'S20_Customer_Register_tst'
+1.open on /... OK
+2.setWindowSize on 1619x993... OK
+3.click on id=register... OK
+4.type on css=p > #id_username with value Test1... OK
+5.click on id=id_customer_number... OK
+6.type on id=id_customer_number with value 234... OK
+7.click on id=id_password1... OK
+8.type on id=id_password1 with value testaccount... OK
+9.type on id=id_password2 with value testaccount... OK
+10.click on css=button[type="submit"]... OK
+11.close on win_ser_local... OK
+'S20_Customer_Register_tst' completed successfully
+Running 'S22_Customer_Upcoming_Bookings_tst'
+1.open on /... OK
+2.setWindowSize on 1619x993... OK
+3.click on id=id_username... OK
+4.click on id=id_username... OK
+5.type on id=id_username with value customer... OK
+6.type on id=id_password with value noaccess... OK
+7.click on css=input.button... OK
+8.click on id=account-link... OK
+9.click on id=logout... OK
+10.close on win_ser_local... OK
+'S22_Customer_Upcoming_Bookings_tst' completed successfully
