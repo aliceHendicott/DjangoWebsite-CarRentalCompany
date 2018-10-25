@@ -12,31 +12,158 @@ CRC Reports Dashboard
 <!-- Extra javascript goes here -->
 {% block javascript %}
 <script>
-    $(document).on('click', '.press_me', function (e) {
-        var start_date = 1
-        var end_date = 2
+    function ajax_reset(inner_string) {
+        var skip = document.getElementById("timeframe_press").innerHTML.toLowerCase();
+
+        // Extract the dates
+        var end_date = document.getElementById("end_date").value;
+        var start_date = document.getElementById("start_date").value;
+
+        if (inner_string != "custom_set") {
+            // Extract the individual components
+            var end_split = end_date.split("-");
+            var start_split = start_date.split("-");
+            var end_year = parseInt(end_split[0]),
+                end_month = parseInt(end_split[1]),
+                end_day = parseInt(end_split[2]),
+                start_year = parseInt(start_split[0]),
+                start_month = parseInt(start_split[1]),
+                start_day = parseInt(start_split[2]);
+            // Make some date objects
+            var date_end = new Date(end_year, end_month - 1, end_day);
+            var date_start = new Date(start_year, start_month - 1, start_day);
+
+            // Choose how to update
+            if (inner_string.toLowerCase() == 'year' ||
+                inner_string.toLowerCase() == 'month' ||
+                inner_string.toLowerCase() == 'day') { // SETTING DATES
+                switch (skip) {
+                    case 'year':
+                        date_start.setFullYear(date_end.getFullYear() - 1);
+                        date_start.setMonth(date_end.getMonth());
+                        date_start.setDate(date_end.getDate());
+                        break;
+                    case 'month':
+                        date_start.setFullYear(date_end.getFullYear());
+                        date_start.setMonth(date_end.getMonth() - 1);
+                        date_start.setDate(date_end.getDate());
+                        break;
+                    case 'day':
+                        date_start.setFullYear(date_end.getFullYear());
+                        date_start.setMonth(date_end.getMonth());
+                        date_start.setDate(date_end.getDate() - 1);
+                        break;
+                }
+            } else { // SHIFT IN DATES
+                var increment = (inner_string == '&gt;') ? 1 : -1;
+                if (skip == 'custom') {
+                    var timeDiff = Math.abs(date_end.getTime() - date_start.getTime());
+                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    increment = increment * diffDays;
+                    skip = 'day';
+                }
+                switch (skip) {
+                    case 'year':
+                        date_start.setFullYear(date_start.getFullYear() + increment);
+                        date_end.setFullYear(date_end.getFullYear() + increment);
+                        break;
+                    case 'month':
+                        date_start.setMonth(date_start.getMonth() + increment);
+                        date_end.setMonth(date_end.getMonth() + increment);
+                        break;
+                    case 'day':
+                        date_start.setDate(date_start.getDate() + increment);
+                        date_end.setDate(date_end.getDate() + increment);
+                        break;
+                }
+            }
+            function toDisplay(update_me) {
+                update_me = (update_me < 10) ? ("0" + update_me.toString()) : update_me.toString();
+                return update_me
+            }
+
+            // end string
+            end_year = toDisplay(date_end.getFullYear());
+            end_month = toDisplay(date_end.getMonth() + 1);
+            end_day = toDisplay(date_end.getDate());
+            // start string
+            start_year = toDisplay(date_start.getFullYear());
+            start_month = toDisplay(date_start.getMonth() + 1);
+            start_day = toDisplay(date_start.getDate());
+            // full strings
+            end_date = end_year + "-" + end_month + "-" + end_day
+            start_date = start_year + "-" + start_month + "-" + start_day
+        }
+
         $.ajax({
             url: '{% url "json_dashboard_context" %}',
             dataType: 'json',
             data: {
-                'username': start_date,
+                'start_date': start_date,
                 'end_date': end_date
             },
             success: function (data) {
                 document.getElementById("report_content").innerHTML = data.html_response
             }
         });
-    })
+    }
+
+    function changeTimeframe() {
+        current = document.getElementById("timeframe_press").innerHTML.toLowerCase()
+        switch (current) {
+            case 'custom':
+                next = 'month'
+                break;
+            case 'year':
+                next = 'day'
+                break;
+            case 'month':
+                next = 'year'
+                break;
+            case 'day':
+                next = 'month'
+                break;
+        }
+        document.getElementById("timeframe_press").innerHTML = next.toUpperCase()
+    }
+
+    // Make sure that the DOM updates 
+    function update_date() {
+        document.getElementById("timeframe_press").innerHTML = "CUSTOM";
+        var alertDelay = 100; // millisec
+        if (document.getElementById("timeframe_press").innerHTML  === "CUSTOM") {
+            setTimeout(function () {
+                ajax_reset("custom_set");
+            }, alertDelay);
+        }
+    }
+
+    // Export a csv
+    function exportCSV() {
+        document.getElementById("hidden_start_date").value = document.getElementById("start_date").innerHTML;
+        document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
+        document.getElementById("formCSV").submit();
+    }
 </script>
 {% endblock %}
 
 <!-- Content goes here -->
 {% block content %}
     <div id="content">
-        <h1>Reports</h1>
-        <button type="button" name="press_me" class="press_me">Click Me!</button>
+        <h1>Reports Dashboard</h1>
+        <button type="button" name="press_me" onclick="ajax_reset(this.innerHTML)"><</button>
+        <button type="button" id="timeframe_press" name="timeframe_press"  onclick="changeTimeframe(); ajax_reset(this.innerHTML)">MONTH</button>
+        <button type="button" name="press_me" onclick="ajax_reset(this.innerHTML)">></button>
+
         <div id="report_content">
             {% include './Includes/reports_dashboard_content.html' %}
         </div>
+
+        <form action="{% url 'export_report' %}" method="post" target="_blank" id="formCSV">
+            {% csrf_token %}
+            <input type="hidden" name="export_type" id="hidden_export_type" value="dashboard" />
+            <input type="hidden" name="start_date" id="hidden_start_date" value="{{ start_date }}">
+            <input type="hidden" name="end_date" id="hidden_end_date" value="{{ end_date }}">
+        </form>
     </div>
 {% endblock %}

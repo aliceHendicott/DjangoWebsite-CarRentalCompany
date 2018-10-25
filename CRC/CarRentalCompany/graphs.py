@@ -34,8 +34,10 @@ def bar(name, graphdata):
     x_data = []
     for data in graphdata:
         x_labels.append(data[0])
-        x_data.append({'value': data[1], 
-                       'xlink': '/cars/14806'})
+        diction = {'value': data[1]}
+        if len(data) > 2:
+             diction['xlink'] = str(data[2])
+        x_data.append(diction)
 
     # Insert the data
     chart.add('', x_data)
@@ -50,7 +52,7 @@ def bar(name, graphdata):
 def horizBar(name, graphdata):
     # Create horizontal bar chart object and set title
     chart = pygal.HorizontalBar(show_legend = False, style = custom_style,
-                                x_label_rotation = 15, y_labels_major_every = 1000)
+                                x_label_rotation = 30, y_labels_major_every = 1000)
     #chart.title = name
 
     # Turn data into respective data and label array
@@ -58,8 +60,10 @@ def horizBar(name, graphdata):
     x_data = []
     for data in graphdata:
         x_labels.append(data[0])
-        x_data.append({'value': data[1], 
-                       'xlink': '/cars/14806'})
+        diction = {'value': data[1]}
+        if len(data) > 2:
+             diction['xlink'] = str(data[2])
+        x_data.append(diction)
 
     # Insert the data
     chart.add('', x_data)
@@ -78,9 +82,10 @@ def pie(name, graphdata):
     #chart.title = name
     # Add data by iterating over input
     for data in graphdata:
-        chart.add(data[0], [{
-        'value': data[1],
-        'xlink': '/stores/1'}])
+        diction = {'value': data[1]}
+        if len(data) > 2:
+             diction['xlink'] = str(data[2])
+        chart.add(data[0], [diction])
     # Export to an svg file
     #chart.render_to_file('CarRentalCompany/templates/CarRentalCompany/Charts/' + name + '.svg') 
     return chart.render(is_unicode=True)

@@ -12,6 +12,7 @@ CRC {{ car.car_name }}
 <!-- Content goes here -->
 {% block content %}
     <div id="content">
+        <!-- display car details -->
         <h1>Car Details</h1>
         <p><b>Make name:</b> {{ car.car_makename }}<br/>
             <b>Model:</b> {{ car.car_model }}<br/>
@@ -35,7 +36,8 @@ CRC {{ car.car_name }}
             {% elif popularity_place_num == 2 %}nd
             {% elif popularity_place == 3 %}rd
             {% else %}th{% endif %}</span>
-            most popular car</p>
+            most popular car
+            {% if popularity_place_num >= 100 %}<br /><i>As this ranking is low, we are offering 10% off when renting this car, book now by clicking the link below</i>{% endif %}</p>
         <!--This is popular among age bracket / gender-->
         <p>This car is most popular among customers between <span class="stat">{{ popular_age_lower }} to {{ popular_age_upper }}</span> years of age</p>
         <!--Best suited to long distance driving(tank_capacity > 70)/ family trips / 4WD / general driving.-->

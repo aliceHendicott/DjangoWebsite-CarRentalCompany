@@ -1,0 +1,20 @@
+Test Instructions:
+
+Please use Django admin account to setup two accounts:
+
+User: Admin 
+Password: superuser 
+UserProfile: IsGeneralManager
+
+User: customer 
+Password: noaccess
+Userprofile:  set the Customer Number to 11014
+
+Once these have been created you can run each test suite, 
+be advised that sometimes the tests will fail if all run at once.
+
+Please run them individually. 
+Also make sure that you are not signed in before running the tests.
+
+If the test fails, please access the website normally, log anyone logged in off.
+Then retry the test.

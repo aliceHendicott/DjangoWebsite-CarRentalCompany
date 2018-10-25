@@ -24,12 +24,19 @@ pass
 ' The following are sprint 2:
 '''
 def stores(request):
+    locations = []
+    for store in Store.objects.all():
+        locations.append([eval(store.store_latitude), eval(store.store_longitude), [store.store_name, store.id]])
     return render(request,
                   'CarRentalCompany/stores.html',
-                  {'stores_list': Store.objects.all()})
+                  {'stores_list': Store.objects.all(),
+                   'location_maps': locations})
 
 def store(request, store_id):
     store = Store.objects.get(pk = store_id)
+
+    locations = [[eval(store.store_latitude), eval(store.store_longitude), [store.store_name, store.id]]]
     return render(request,
                   'CarRentalCompany/store.html',
-                  {'store': store})
+                  {'store': store,
+                   'location_maps': locations})

@@ -1,3 +1,10 @@
+<p>
+    BETWEEN
+    <input id="start_date" type="date" name="start_date" value="{{start_date}}" onchange="update_date()">
+    AND
+    <input id="end_date" type="date" name="end_date" value="{{end_date}}" onchange="update_date()">
+</p>
+
 <div class="grid listing" id="columns2">
     <div class="report-page">
         <a href="/reports/cars/seasonal/"><h3>Cars by Season</h3></a>
@@ -9,7 +16,7 @@
                 </tr>
                 {% for car in seasonal_cars %}
                 <tr>
-                    <td>{{ car }}</td>
+                    <td><a href="/cars/{{ car.id }}">{{ car }}</a></td>
                     <td>{{ car.number_of_orders }}</td>
                 </tr>
                 {% endfor %}
@@ -27,7 +34,7 @@
                 </tr>
                 {% for store in store_activity %}
                 <tr>
-                    <td>{{ store.store_city }}</td>
+                    <td><a href="/stores/{{ store.id }}">{{ store.store_city }}</a></td>
                     <td>{{ store.total_activity }}</td>
                 </tr>
                 {% endfor %}

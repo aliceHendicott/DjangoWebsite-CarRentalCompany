@@ -363,3 +363,18 @@ table td:last-of-type{
 	font-size:23px;
 	font-weight:bold;
 }
+.customer-button{
+	font-size:11px;
+	padding:5px;
+	display:block;
+	margin-top:10px;
+}
+.filter-selection label{
+	font-size:18px;
+	color: var(--secondary-color);
+	font-weight:bold;
+}
+.filter-field-grid{
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}
