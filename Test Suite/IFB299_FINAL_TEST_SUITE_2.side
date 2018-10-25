@@ -406,7 +406,161 @@
   }, {
     "id": "f13a2c22-5bd1-41ff-b48d-96408632528e",
     "name": "S09_Data_Export_tst",
-    "commands": []
+    "commands": [{
+      "id": "8331769c-cdff-4f25-8462-d7c10d166065",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "049ab0f7-7d25-4080-aa18-6fa28a8ab9a5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1619x995",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0f37f22e-e014-4197-a487-077ce388b825",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "400dcc2b-515a-44a5-8965-76cb692fc6ee",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Admin"
+    }, {
+      "id": "7caa0c91-21a7-4c99-9198-b6311a54b965",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "superuser"
+    }, {
+      "id": "af82b03f-b031-452c-88ba-327ac5971934",
+      "comment": "",
+      "command": "click",
+      "target": "css=input.button",
+      "targets": [
+        ["css=input.button", "css"],
+        ["css=.button:nth-child(4)", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//form[@id='log-in']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5aa3f911-4524-47ce-9925-e18e29a3f8ab",
+      "comment": "",
+      "command": "click",
+      "target": "css=#nav-bar-right > a:nth-child(2)",
+      "targets": [
+        ["css=#nav-bar-right > a:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Report')]", "xpath:link"],
+        ["xpath=//div[@id='nav-bar-right']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/reports/dashboard/')]", "xpath:href"],
+        ["xpath=//div[2]/a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2b72fb2-e4d8-478c-8043-09a499265896",
+      "comment": "",
+      "command": "click",
+      "target": "css=h3",
+      "targets": [
+        ["css=h3", "css"],
+        ["css=.report-page:nth-child(1) h3", "css:finder"],
+        ["xpath=//div[@id='columns2']/div/a/h3", "xpath:idRelative"],
+        ["xpath=//h3", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c17b9a19-98c2-404f-be00-616449a654a3",
+      "comment": "",
+      "command": "click",
+      "target": "css=input[type=\"button\"]",
+      "targets": [
+        ["css=input[type=\"button\"]", "css"],
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='EXPORT']", "xpath:attributes"],
+        ["xpath=//form[@id='formCSV']/input[5]", "xpath:idRelative"],
+        ["xpath=//input[5]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3951bb0-8b82-461a-a7cb-cb24436f0562",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "win_ser_1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bac81219-a69c-4fb6-9271-ae92a2df8e44",
+      "comment": "",
+      "command": "close",
+      "target": "win_ser_1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bcb3d5f4-1dbc-43f9-acdf-b3b9db2debcd",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "win_ser_local",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a58c9f2a-af93-45cf-9cc4-089cdf101204",
+      "comment": "",
+      "command": "click",
+      "target": "id=logout",
+      "targets": [
+        ["id=logout", "id"],
+        ["css=#logout", "css"],
+        ["css=#logout", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[@id='logout']", "xpath:attributes"],
+        ["xpath=//div[@id='header-right']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/logout/')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "86e9025b-d741-4c42-b4c8-eeeea875c66c",
+      "comment": "",
+      "command": "close",
+      "target": "win_ser_local",
+      "targets": [],
+      "value": ""
+    }]
   }, {
     "id": "3580a64d-e479-43e8-88e9-855087c3b3c5",
     "name": "S11_Car_Stats_tst",
