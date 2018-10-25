@@ -16,7 +16,7 @@
                 </tr>
                 {% for car in seasonal_cars %}
                 <tr>
-                    <td>{{ car }}</td>
+                    <td><a href="/cars/{{ car.id }}">{{ car }}</a></td>
                     <td>{{ car.number_of_orders }}</td>
                 </tr>
                 {% endfor %}
@@ -34,7 +34,7 @@
                 </tr>
                 {% for store in store_activity %}
                 <tr>
-                    <td>{{ store.store_city }}</td>
+                    <td><a href="/stores/{{ store.id }}">{{ store.store_city }}</a></td>
                     <td>{{ store.total_activity }}</td>
                 </tr>
                 {% endfor %}

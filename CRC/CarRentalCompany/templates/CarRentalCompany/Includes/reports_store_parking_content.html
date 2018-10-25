@@ -12,7 +12,7 @@
             </tr>
             {% for store in queried_stores %}
                 <tr>
-                    <td>{{ store.store_city }}</td>
+                    <td><a href="/stores/{{ store.id }}">{{ store.store_city }}</a></td>
                     <td>{{ store.parking }}</td>
                 </tr>
             {% endfor %}

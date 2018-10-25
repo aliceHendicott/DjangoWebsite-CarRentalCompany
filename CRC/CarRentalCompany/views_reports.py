@@ -81,22 +81,22 @@ def cars_seasonal_graph(data):
     graphdata = []
     for car in data:
         my_name = shorten_string(car)
-        graphdata.append([my_name, car.number_of_orders])
+        graphdata.append([my_name, car.number_of_orders, '/cars/' + str(car.id)])
     return drawGraph('bar', 'cars_seasonal', graphdata)
 def cars_inactive_graph(data, end_date = date.today()):
     graphdata = []
     for car in data:
-        graphdata.insert(0, [shorten_string(car), (end_date - car.Return_Date).days])
+        graphdata.insert(0, [shorten_string(car), (end_date - car.Return_Date).days, '/cars/' + str(car.id)])
     return drawGraph('horizBar', 'cars_inactive', graphdata)
 def store_parking_graph(data):
     graphdata = []
     for store in data:
-        graphdata.insert(0, [store.store_city.replace(" ", ""), store.parking])
+        graphdata.insert(0, [store.store_city.replace(" ", ""), store.parking, '/stores/' + str(store.id)])
     return drawGraph('horizBar', 'store_parking', graphdata)
 def store_activity_graph(data):
     graphdata = []
     for store in data:
-        graphdata.append([store.store_city, store.total_activity])
+        graphdata.append([store.store_city, store.total_activity, '/stores/' + str(store.id)])
     return drawGraph('pie', 'store_activity', graphdata)
 def customer_demographics_graph(data):
     graphdata = []

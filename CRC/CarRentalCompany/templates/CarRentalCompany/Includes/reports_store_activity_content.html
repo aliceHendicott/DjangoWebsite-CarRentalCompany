@@ -16,7 +16,7 @@
             </tr>
             {% for store in store_results %}
                 <tr>
-                    <td>{{ store.store_city }}</td>
+                    <td><a href="/stores/{{ store.id }}">{{ store.store_city }}</a></td>
                     <td>{{ store.number_of_pickups }}</td>
                     <td>{{ store.number_of_returns }}</td>
                     <td>{{ store.total_activity }}</td>

@@ -15,7 +15,7 @@
     </tr>
     {% for car in inactive_cars %}
         <tr>
-            <td>{{ car.car_makename }}</td>
+            <td><a href="/cars/{{ car.id }}">{{ car.car_makename }}</a></td>
             <td>{{ car.car_model }}</td>
             <td>{{ car.car_series }}</td>
             <td>{{ car.car_series_year }}</td>
