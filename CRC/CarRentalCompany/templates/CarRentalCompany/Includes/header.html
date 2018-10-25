@@ -35,8 +35,8 @@
             <div id="nav-bar-right">
                 <a href="/staff/" {% if "data" in request.path %} class="current-page" {% endif %}>Data</a>
                 {% if not request.user.userprofile.is_customer and not request.user.userprofile.is_floor_staff %}
-                    <a href="/reports/dashboard/" {% if "reports" in request.path and not "custom" in request.path%} class="current-page" {% endif %}>Report</a>
-                    <a href="/reports/custom_report/" {% if "custom" in request.path %} class="current-page" {% endif %}>Custom Report</a>
+                    <a href="/reports/dashboard/" {% if "reports" in request.path and not "custom_" in request.path%} class="current-page" {% endif %}>Report</a>
+                    <a href="/reports/custom_report/" {% if "custom" in request.path and "customer" not in request.path %} class="current-page" {% endif %}>Custom Report</a>
                 {% endif %}
             </div>
         {% endif %}
