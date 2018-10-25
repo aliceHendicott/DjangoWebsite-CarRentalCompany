@@ -11,6 +11,6 @@
     "\\CarRentalCompany\\templates\\CarRentalCompany\\Includes",
     "\\CRC"
   ],
-  "SelectedNode": "\\CarRentalCompany\\graphs.py",
+  "SelectedNode": "\\CarRentalCompany\\templates\\CarRentalCompany\\Includes\\reports_store_activity_content.html",
   "PreviewInSolutionExplorer": false
 }

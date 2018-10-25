@@ -140,8 +140,8 @@ CRC Cars Seasonal
 
     // Export a csv
     function exportCSV() {
-        document.getElementById("hidden_start_date").value = document.getElementById("start_date").innerHTML;
-        document.getElementById("hidden_end_date").value = document.getElementById("end_date").innerHTML;
+        document.getElementById("hidden_start_date").value = document.getElementById("start_date").value;
+        document.getElementById("hidden_end_date").value = document.getElementById("end_date").value;
         document.getElementById("formCSV").submit();
     }
 </script>
