@@ -19,8 +19,7 @@ SELECT CarRentalCompany_car.*, count(CarRentalCompany_order.car_id_id) as number
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Location Activity
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
+USE crc_central_database;
 
 SELECT CarRentalCompany_store.*, count(CarRentalCompany_order.order_pickup_store_id_id) as number_of_orders
                 FROM CarRentalCompany_store
@@ -131,3 +130,4 @@ INNER JOIN carrentalcompany_car ON carrentalcompany_order.car_id_id=carrentalcom
 WHERE MONTH(carrentalcompany_order.order_return_date)=2 AND YEAR(carrentalcompany_order.order_return_date)=2007
 GROUP BY car_bodytype
 ORDER BY `Return Date` ASC;
+
